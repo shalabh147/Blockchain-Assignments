@@ -55,9 +55,9 @@ class Node{
 
 
 
-    void generateBlock(int T)
+    void generateBlock(set<int> transac_pool,int T)
     {
-        //choose some subset of transactions from transaction_pool, say sub
+        //choose some subset of transactions from transac_pool, say sub
         b = Block(sub);
         last_block_created_time = T;
 
@@ -72,23 +72,39 @@ class Node{
     }
 
     void receiveBlock(Block *b, int T)
-    {
-        set<Transaction> txns = b->transactions;
-        bool invalid = false;
-        for(auto txn: txns)
-        {
-            int idx = txn->idx;
-            int c = txn->c;
-            int idy = txn->idy;
+    {   
+        BroadcastBlock(b,T);
+        int parent_id = b->previous_id; 
+        //if parent not yet present with node, then wait till it comes
 
-            if(bitcoin_map[idx] < c)
+        //if parent present
+        
+
+        bool invalid = false;
+        //validate transactions of received block using this chain of parents.
+
+        if(invalid == true)
+        {
+            return;
+        }
+            
+        if(height[parent_id] == max_height)
+        {
+            if(last_block_created_time + last_wait_interval > T)
             {
-                invalid = true;
-                break;
+                //cancel event scheduled
+                int time_to_cancel = last_block_created_time + last_wait_interval;
+                Simulator.removeEvent(id_for_broadcasting_block,uniq_id,time_to_cancel);
             }
 
-            bitcoin_map[idx] -= c;
-            bitcoin_map[idy] += c;   
+
+            tree_blocks[parent_id].push_back(b->id);
+            height[b->id] = height[parent_id] + 1;
+            max_height = height[b->id];
+
+            //calculate transaction pool by removing all transactions corresponding to this longest chain
+            generateBlock(transac_pool,T);
+       
         }
 
 /*
@@ -102,29 +118,7 @@ class Node{
                 }
             }
         }
-*/
-        if(invalid == false)
-        {
-            if(last_block_created_time + last_wait_interval > T)
-            {
-                //cancel event scheduled
-                int time_to_cancel = last_block_created_time + last_wait_interval;
-                Simulator.removeEvent(id_for_broadcasting_block,uniq_id,time_to_cancel);
-            }
-
-            int parent_id = b->previous_id;
-            tree_blocks[parent_id].push_back(b->id);
-            height[b->id] = height[parent_id] + 1;
-
-            if(height[b->id] > max_height)
-            {
-                max_height = height[b->id];
-                generateBlock(T);
-                //before generating, first need to remove from transaction pool all transactions of largest chain
-            }
-        }
-
-        
+*/  
         
         //Event e = Event(id_for_generating_block,block_id);
 
@@ -158,14 +152,17 @@ class Node{
 class Event{
     int block_id;
     int event_id; //0 for generating_trans, 1 for receiving_trans, 2 for broadcasting_block, 3 for receiving_block 
+    int node_id;
+
     Block b;
     Transaction txn;
 
     public:
-    Event(int e_id, int b_id)
+    Event(int e_id, int b_id, int n_id)
     {
         block_id = b_id;
         event_id = e_id;
+        node_id = n_id;
     }
 
     void addBlockInfo(Block c)
@@ -183,6 +180,30 @@ class Event{
 
 
 class Simulate{
+    map<int,vector<Event*> > event_queue;
+    public:
+    Simulate()
+    {
+
+    }
+
+    void AddEvent(Event *e, int time)
+    {
+        event_queue[time].push_back(e);
+    }
+
+    void removeEvent(int event_id, int node_id, int time)
+    {
+        for(int i=0;i<event_queue[time].size();i++)
+        {
+            if(event_queue[time][i]->event_id == event_id && event_queue[time][i]->node_id == node_id)
+            {
+                auto iterator = event_queue[time].begin() + i;
+                event_queue[time].erase(iterator);
+                break;
+            }
+        }
+    }
 
 
 };
@@ -190,12 +211,19 @@ class Simulate{
 
 class Transaction{
 
+    int transac_id;
+    int idx;        //sender
+    int idy;        //receiver
+    int c;          //coins
     
 };
 
 
 class Block{
 
+    int block_id;
+    int previous_id;
+    set<Transaction> transactions;
 
 };
 
