@@ -215,6 +215,20 @@ class Transaction{
     int idx;        //sender
     int idy;        //receiver
     int c;          //coins
+
+    public:
+
+    Transaction()
+    {
+
+    }
+
+    Transaction(int s_id, int r_id, int co)
+    {
+        idx = s_id;
+        idy = r_id;
+        c = co;
+    }
     
 };
 
@@ -224,6 +238,17 @@ class Block{
     int block_id;
     int previous_id;
     set<Transaction> transactions;
+
+    Block()
+    {
+
+    }
+
+    Block(set<Transaction> s, int prev_id)
+    {
+        previous_id = prev_id;
+        transactions = s;
+    }
 
 };
 
