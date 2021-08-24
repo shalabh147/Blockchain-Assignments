@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+map<int, Block*> id_block_mapping;  //to traverse the tree
+
 class Node{
     int uniq_id;
     vector<vector<int> > tree_blocks;
@@ -16,6 +18,35 @@ class Node{
     public:
     Node()
     {
+
+    }
+
+    bool findBalances(int block_id)         //traverse the tree up from block_id to find balances and validate transactions
+    {
+        bitcoin_map.clear();
+        vector<int> trav;
+        while(parent[block_id] != -1)
+        {
+            trav.push_back(block_id);
+            block_id = parent[block_id];
+        }
+
+        reverse(trav.begin(),trav.end());
+
+        for(int bl: trav)
+        {
+            Block* b = id_block_mapping[bl];
+            set<Transaction> txns = b->transactions;
+
+            for(auto txn: txns)
+            {
+                int idx = txn->idx;
+                int idy = txn->idy;
+                int c = txn->c;
+
+                //fill
+            }
+        }
 
     }
 
@@ -81,7 +112,7 @@ class Node{
         
 
         bool invalid = false;
-        //validate transactions of received block using this chain of parents.
+        invalid = !(findBalances(b->block_id));        //validate transactions of received block using this chain of parents.
 
         if(invalid == true)
         {
@@ -107,22 +138,6 @@ class Node{
        
         }
 
-/*
-        if(invalid == false)
-        {
-            for(auto txn: txns)
-            {
-                if(transaction_pool.find(txn->id)!=transaction_pool.end())
-                {
-                    transaction_pool.erase(txn->id);
-                }
-            }
-        }
-*/  
-        
-        //Event e = Event(id_for_generating_block,block_id);
-
-        //Simulator.Add_Event(e,new_time);
 
     }
 
