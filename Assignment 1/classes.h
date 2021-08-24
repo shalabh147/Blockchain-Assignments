@@ -1,16 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define block_id_type int
+
 
 int COINBASE_REWARD = 50;
 int ID_FOR_GEN_TRANS = 0;
 int ID_FOR_RECEIVE_TRANS = 1;
 int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
-unsigned seed = 
-     chrono::system_clock::now().time_since_epoch().count();
-  default_random_engine generator (seed);
+
 class Event;
 
 class Simulate{
@@ -89,7 +87,7 @@ map<int, Block*> id_block_mapping;  //to traverse the tree
 class Block{
     static int total_blocks_created;
 public:
-    int block_id;
+    block_id_type block_id;
     int previous_id;
    
 
@@ -374,7 +372,7 @@ class Event{
     int sender_id;
     int event_id; //0 for generating_trans, 1 for receiving_trans, 2 for broadcasting_block, 3 for receiving_block 
     int node_id; // id at which event occurs
-    block_id_type block_id
+    int block_id
 
     Block * b;
     Transaction * txn;
@@ -391,11 +389,7 @@ class Event{
         event_id = e_id;
         node_id = n_id;
     }
-    Event(int e_id, block_id_type b_id, int n_id){
-        node_id = n_id;
-        block_id = b_id;
-        event_id = e_id;
-    }
+   
 
     
 
