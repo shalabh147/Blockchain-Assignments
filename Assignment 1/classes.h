@@ -1,12 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+#define block_id_type int
 
 int COINBASE_REWARD = 50;
 int ID_FOR_GEN_TRANS = 0;
 int ID_FOR_RECEIVE_TRANS = 1;
 int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
+unsigned seed = 
+     chrono::system_clock::now().time_since_epoch().count();
+  default_random_engine generator (seed);
 class Event;
 
 class Simulate{
@@ -145,6 +149,12 @@ class Node{
     Block b;
 
     public:
+
+     
+  
+  static exponential_distribution<int> transac_exp_distr (1/T_tx);
+  static mt19937 gen(1);
+  
     static int num_nodes;
 
     int num_node = 0;
@@ -232,30 +242,39 @@ class Node{
         broadcastTransaction(Txn,T);
 
 
-        int sampled_next_interarrival_time; // fill this
+        int sampled_next_interarrival_time = transc_exp_distr(gen); // fill this
         int next_txn_time = T + sampled_next_interarrival_time;
-        Event * e = new Event(ID_FOR_GEN_TRANS, node_id);
+        Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
         
         Simulate::AddEvent(e,next_txn_time);
     }
 
-    void receiveTransaction(Transaction *Txn, int T)
+    void receiveTransaction(Transaction *Txn, int T, int sender_node_id)
     {
         all_transactions.insert(Txn->transac_id);
-        broadcastTransaction(Txn,T);
+
+                                    // sender_node_id
+        broadcastTransaction(Txn,T, node_id);
     }
 
-    void broadcastTransaction(Transaction *txn, int T)
+    void broadcastTransaction(Transaction *txn, int T, int sender_node_id)
     {
+        // node already has received this txn, and has already broadcasted.
+        if(all_transactions.find(txn->transac_id) != all_transactions.end()){ 
+            return;
+        }
         vector<int> neighbours = adj[node_id];
 
-        for(int v: neighbours)
+        for(int neighbour: neighbours)
         {
-            //ensure loopless forwarding
-            int l = latency[node_id][v];
-            //some calculation
+            if(neighbour == sender_node_id){ // dont broadcast to sender again. It has the transaction.
+                continue;
+            }
 
-            Event * f = new Event(ID_FOR_RECEIVE_TRANS, v);
+            int l = latency[node_id][neighbour];
+            //some calculation
+                                                        // sender  // receiver
+            Event * f = new Event(ID_FOR_RECEIVE_TRANS, node_id, neighbour);
             f->addTransactionInfo(txn);
             Simulate::AddEvent(f,T+l);
         }
@@ -330,7 +349,7 @@ class Node{
 
     void BroadcastBlock(Block *b, int T)
     {
-        if(max_height == height[b->id])         //if still the largest chain, only then broadcast last formed block
+        if(max_height == heights[b->id])         //if still the largest chain, only then broadcast last formed block
         {
             vector<int> neighbours = adj[uniq_id];
 
@@ -352,25 +371,33 @@ class Node{
 
 
 class Event{
-    int block_id;
+    int sender_id;
     int event_id; //0 for generating_trans, 1 for receiving_trans, 2 for broadcasting_block, 3 for receiving_block 
-    int node_id;
+    int node_id; // id at which event occurs
+    block_id_type block_id
 
     Block * b;
     Transaction * txn;
 
     public:
-    Event(int e_id, int b_id, int n_id)
+    Event(int e_id, int s_id, int n_id)
     {
-        block_id = b_id;
+        sender_id = s_id;
         event_id = e_id;
         node_id = n_id;
     }
 
     Event(int e_id, int n_id){
+        event_id = e_id;
         node_id = n_id;
+    }
+    Event(int e_id, block_id_type b_id, int n_id){
+        node_id = n_id;
+        block_id = b_id;
         event_id = e_id;
     }
+
+    
 
     void addBlockInfo(Block * c)
     {
@@ -382,15 +409,15 @@ class Event{
         txn = t;
     }
 
-    void gen_trans_event(int curr_time, int node_id){
+    void gen_trans_event(int curr_time){
         id_node_mapping.find(node_id)->second->generateTransaction(curr_time);
     }
 
-    void receive_trans_event(int curr_time, int node_id){
-        id_node_mapping.find(node_id)->second->receiveTransaction(this->txn, curr_time);
+    void receive_trans_event(int curr_time){
+        id_node_mapping.find(node_id)->second->receiveTransaction(this->txn, curr_time, sender_id);
     }
 
-    void receive_block_event(int curr_time, int node_id){
+    void receive_block_event(int curr_time){
         id_node_mapping.find(node_id)->second->receiveBlock(this->b, curr_time);
     }
 

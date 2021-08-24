@@ -31,6 +31,10 @@ int main()
        id_node_mapping.find(id)->second->set_speed_to_slow();
    }
 
+    double T_tx;
+   cout<<"Enter mean interarrival time for transactions: ";
+   cin>>T_tx;
+
    
     
 
