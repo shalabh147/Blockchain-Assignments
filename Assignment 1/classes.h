@@ -5,6 +5,8 @@ using namespace std;
 int COINBASE_REWARD = 50;
 int ID_FOR_GEN_TRANS = 0;
 int ID_FOR_RECEIVE_TRANS = 1;
+int ID_FOR_BROADCASTING_BLOCK = 2;
+int ID_FOR_RECEIVE_BLOCK = 3;
 class Event;
 
 class Simulate{
@@ -125,9 +127,13 @@ class Node{
     // map[i] gives the balance of node i in longest chain of the node. correctness ensured only after findbalances called.
     map<int,int> bitcoin_map;
 
+    // heights[i] gives the height of i th block in the tree of blocks
     map<int,int> heights;
 
-    set<int> transaction_pool;
+    set<int> all_transactions;
+
+    // all transactions - transactions in longest chain
+    set<int> current_transaction_pool;
 
     
     int last_block_created_time;
@@ -149,16 +155,15 @@ class Node{
         id_node_mapping[node_id] = this;
         
         parent[0] = -1; // genesis block has no parent
+        heights[0] =1;
+        max_height = 1;
+        speed = fast;
        
     }
 
-    Node(node_speed speed){
-        node_id = num_nodes;
-        num_nodes++;
-        id_node_mapping[node_id]= this;
-        parent[0] = -1; // genesis block has no parent
-  
-    }
+   void set_speed_to_slow(){
+       this->speed = slow;  
+   }
 
 
     // vrinda does not like this :(
@@ -230,12 +235,13 @@ class Node{
         int sampled_next_interarrival_time; // fill this
         int next_txn_time = T + sampled_next_interarrival_time;
         Event * e = new Event(ID_FOR_GEN_TRANS, node_id);
+        
         Simulate::AddEvent(e,next_txn_time);
     }
 
     void receiveTransaction(Transaction *Txn, int T)
     {
-        transaction_pool.insert(Txn->transac_id);
+        all_transactions.insert(Txn->transac_id);
         broadcastTransaction(Txn,T);
     }
 
@@ -261,16 +267,16 @@ class Node{
     {
         //choose some subset of transactions from transac_pool, say sub
 
-        b = Block(sub);
+       Block* b =new  Block(); // give transactions
         last_block_created_time = T;
 
         int t_k = rand(something);
         last_wait_interval = t_k;
 
         int new_time = T + t_k;
-        Event e = Event(id_for_broadcasting_block,block_id);
-
-        Simulator.Add_Event(e,new_time);
+        Event * e = new Event(ID_FOR_BROADCASTING_BLOCK,b->block_id);
+        e->addBlockInfo(b);
+        Simulate::AddEvent(e,new_time);
 
     }
 
@@ -278,7 +284,13 @@ class Node{
     {   
         BroadcastBlock(b,T);
         int parent_id = b->previous_id; 
+
+       
+
+        }
         //if parent not yet present with node, then wait till it comes
+
+
 
         //if parent present
         
@@ -327,9 +339,9 @@ class Node{
                 int l = latency[uniq_id][v];
                 //some calculation
 
-                Event f = Event(id_for_receiving_block_event, v);
+                Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
                 f->addBlockInfo(b);
-                Simulator.Add_Event(f,T+l);
+                Simulate::AddEvent(f,T+l);
             }
 
         }
@@ -369,6 +381,19 @@ class Event{
     {
         txn = t;
     }
+
+    void gen_trans_event(int curr_time, int node_id){
+        id_node_mapping.find(node_id)->second->generateTransaction(curr_time);
+    }
+
+    void receive_trans_event(int curr_time, int node_id){
+        id_node_mapping.find(node_id)->second->receiveTransaction(this->txn, curr_time);
+    }
+
+    void receive_block_event(int curr_time, int node_id){
+        id_node_mapping.find(node_id)->second->receiveBlock(this->b, curr_time);
+    }
+
 
 
 };

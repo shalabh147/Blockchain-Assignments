@@ -11,6 +11,29 @@ int main()
     cout<<"Enter the number of nodes in the network: "<<endl;
     cin>>n;
 
+    for(int i=0;i<n;i++){
+        Node node = Node();
+
+    }
+
+    int z;
+    cout<<"Enter fraction of slow nodes in the network: "<<endl;
+    cin>>z;
+
+    int frac_slow_nodes = (int) z * n;
+
+   set<int> id_slow_nodes;
+   while(id_slow_nodes.size()<frac_slow_nodes){
+       id_slow_nodes.insert(rand() % n);
+
+   }
+   for(auto id : id_slow_nodes){
+       id_node_mapping.find(id)->second->set_speed_to_slow();
+   }
+
+   
+    
+
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
 
     //create latency matrix (again global variable)
