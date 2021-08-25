@@ -174,7 +174,7 @@ class Node{
    }
 
 
-    // vrinda does not like this :(
+    // vrinda does not like this :( its okay, we'll find a better way for you :)
     bool findBalances(int block_id)         //traverse the tree up from block_id to find balances and validate transactions
     {
         bitcoin_map.clear();
