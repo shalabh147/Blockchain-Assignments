@@ -37,6 +37,36 @@ class Simulate{
         }
     }
 
+    void runSimulation()
+    {
+        int sim_time = 0;
+        while(sim_time < threshold)
+        {
+            sim_time = event_queue.begin() -> first;
+            vector<Event*> v = event_queue.begin() -> second;
+
+            for(Event* e: v)
+            {
+                if(e->event_id == ID_FOR_RECEIVE_BLOCK)
+                {
+                    e->receive_block_event(sim_time);
+                }
+                else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
+                {
+                    e->broadcast_block_event(sim_time);
+                }
+                else if(e->event_id == ID_FOR_GEN_TRANS)
+                {
+                    e->gen_trans_event(sim_time);
+                }
+                else if(e->event_id == ID_FOR_RECEIVE_TRANS)
+                {
+                    e->receive_trans_event(sim_time);
+                }
+            }
+        }
+    }
+
 
 
 };
@@ -299,12 +329,12 @@ class Node{
 
     void receiveBlock(Block *b, int T)
     {   
-        BroadcastBlock(b,T);
+        broadcastBlock(b,T);
         int parent_id = b->previous_id; 
 
        
 
-        }
+        
         //if parent not yet present with node, then wait till it comes
 
 
@@ -326,7 +356,7 @@ class Node{
             {
                 //cancel event scheduled
                 int time_to_cancel = last_block_created_time + last_wait_interval;
-                Simulator.removeEvent(id_for_broadcasting_block,uniq_id,time_to_cancel);
+                Simulator.removeEvent(ID_FOR_BROADCASTING_BLOCK,node_id,time_to_cancel);
             }
 
 
@@ -345,15 +375,15 @@ class Node{
 
     }
 
-    void BroadcastBlock(Block *b, int T)
+    void broadcastBlock(Block *b, int T)
     {
         if(max_height == heights[b->id])         //if still the largest chain, only then broadcast last formed block
         {
-            vector<int> neighbours = adj[uniq_id];
+            vector<int> neighbours = adj[node_id];
 
             for(int v: neighbours)
             {
-                int l = latency[uniq_id][v];
+                int l = latency[node_id][v];
                 //some calculation
 
                 Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
@@ -372,7 +402,7 @@ class Event{
     int sender_id;
     int event_id; //0 for generating_trans, 1 for receiving_trans, 2 for broadcasting_block, 3 for receiving_block 
     int node_id; // id at which event occurs
-    int block_id
+    int block_id;
 
     Block * b;
     Transaction * txn;
@@ -404,19 +434,20 @@ class Event{
     }
 
     void gen_trans_event(int curr_time){
-        id_node_mapping.find(node_id)->second->generateTransaction(curr_time);
+        id_node_mapping[node_id]->generateTransaction(curr_time);
     }
 
     void receive_trans_event(int curr_time){
-        id_node_mapping.find(node_id)->second->receiveTransaction(this->txn, curr_time, sender_id);
+        id_node_mapping[node_id]->receiveTransaction(this->txn, curr_time, sender_id);
     }
 
     void receive_block_event(int curr_time){
-        id_node_mapping.find(node_id)->second->receiveBlock(this->b, curr_time);
+        id_node_mapping[node_id]->receiveBlock(this->b, curr_time);
     }
 
-
-
+    void broadcast_block_event(int curr_time){
+        id_node_mapping[node_id]->broadcastBlock(this->b, curr_time);
+    }
 };
 
 
