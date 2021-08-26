@@ -98,7 +98,7 @@ class Transaction{
     }
 
 
-    // this constructor is only used for creating coinbase transactions
+    // this constructor is only used for creating coinbase transactions (r_id?)
     Transaction(int s_id){
         transac_id = num_transactions;
         num_transactions++;
@@ -124,7 +124,7 @@ public:
 
      set<Transaction> transactions;
     // this constructor to be only used of genesis block creation.
-    Block()
+    Block(Transaction t)
     {
         block_id = total_blocks_created;
         total_blocks_created++;
@@ -167,6 +167,9 @@ class Node{
     // all transactions - transactions in longest chain
     set<int> current_transaction_pool;
 
+    //those blocks recieved whose parent not received yet
+    set<int> pending_blocks;
+
     
     int last_block_created_time;
     int last_wait_interval;
@@ -204,7 +207,7 @@ class Node{
    }
 
 
-    // vrinda does not like this :( its okay, we'll find a better way for you :)
+    // vrinda does not like this :( hmm
     bool findBalances(int block_id)         //traverse the tree up from block_id to find balances and validate transactions
     {
         bitcoin_map.clear();
@@ -313,8 +316,8 @@ class Node{
     void generateBlock(set<int> transac_pool,int T)
     {
         //choose some subset of transactions from transac_pool, say sub
-
-       Block* b =new  Block(); // give transactions
+        Transaction coinbase_tr = Transaction(node_id);       //coinbase transaction
+        Block* b =new Block(coinbase_tr); // give transactions
         last_block_created_time = T;
 
         int t_k = rand(something);

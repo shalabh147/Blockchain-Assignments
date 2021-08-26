@@ -28,25 +28,28 @@ int main()
 
    }
    for(auto id : id_slow_nodes){
-       id_node_mapping.find(id)->second->set_speed_to_slow();
+       id_node_mapping[id]->set_speed_to_slow();
    }
 
     double T_tx;
    cout<<"Enter mean interarrival time for transactions: ";
    cin>>T_tx;
 
-   
+   //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
+    Transaction t = Transaction(idx);       //coinbase transaction
+    Block genesis = Block(t);               //genesis block
     
 
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
 
     //create latency matrix (again global variable)
 
-
+    //broadcast genesis block to all nodes
     
 
     Simulate Simulator = Simulate();
-    
+
+    Simulator.runSimulation();    
 
 
 }
