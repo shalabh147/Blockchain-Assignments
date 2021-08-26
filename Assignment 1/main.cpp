@@ -3,8 +3,6 @@ using namespace std;
 
 int main()
 {
-    //creating the genesis block
-    Block gen_block = Block();
     
     int n; 
 
