@@ -7,6 +7,7 @@ int ID_FOR_GEN_TRANS = 0;
 int ID_FOR_RECEIVE_TRANS = 1;
 int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
+int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
 int MAX_TXNS = 900;
 
 
@@ -26,10 +27,10 @@ class Simulate{
     
     public:
     
-    static map<int,vector<Event*> > event_queue;
-    Simulate();
-    void static AddEvent(Event *e, int time);
-    void static removeEvent(int event_id, int node_id, int time);
+     map<int,vector<Event*> > event_queue;
+   
+    void  AddEvent(Event *e, int time);
+
     void runSimulation();
 
 };
@@ -105,16 +106,18 @@ class Node{
     set<int> longest_chain_txns;
 
     //those blocks recieved whose parent not received yet
-
-
     set<int> pending_blocks;
 
-    //true if block i has been received already
+    //true if block i is in the tree.
     map<int, bool> present;
 
+    // true if block i was received;
+    map<int, bool> received;
+
+    Block* block_at_t;
     
-    int last_block_created_time;
-    int last_wait_interval;
+
+    
     int max_height;
 
     node_speed speed;
@@ -143,6 +146,8 @@ class Node{
     bool validateAndAddTreeNode(int arrival_time, int parent_id, int b_id);
     
     void generateBlock(set<int> transac_pool,int T, int parent_id);
+
+    void checkAndBroadcastBlock(Block *b, int T);
 
     void receiveBlock(Block *b, int T);
     void broadcastBlock(Block *b, int T);
@@ -176,6 +181,8 @@ class Event{
     void receive_block_event(int curr_time);
 
     void broadcast_block_event(int curr_time);
+
+    void check_and_broadcast_block_event(int curr_time);
 };
 
 

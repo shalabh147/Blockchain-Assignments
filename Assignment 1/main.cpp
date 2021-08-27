@@ -3,6 +3,9 @@ using namespace std;
 
 int main()
 {
+
+    /////////////////////// simulator class?????????????????????????????????????????
+    Simulate Simulator = Simulate();
     
     int n; 
 
@@ -43,8 +46,17 @@ int main()
 
     Block * genesis = new Block(t);               //genesis block
 
-   
-    id_node_mapping[idx]->receiveBlock(genesis, 0);
+    for(int i=0; i<n;i++){
+    Event *e = new Event(ID_FOR_RECEIVE_BLOCK, i);
+    e->addBlockInfo(genesis);
+    Simulator.AddEvent(e,0);
+    }
+    
+    // trigger transaction generation for each node
+    for(int i=0;i<n;i++){
+        Event *e = new Event(ID_FOR_GEN_TRANS, i);
+        Simulator.AddEvent(e,0);
+    }
     
 
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
@@ -54,7 +66,7 @@ int main()
     //broadcast genesis block to all nodes
     
 
-    Simulate Simulator = Simulate();
+    
 
     Simulator.runSimulation();    
 

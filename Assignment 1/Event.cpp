@@ -37,3 +37,7 @@ void Event::receive_block_event(int curr_time){
 void Event::broadcast_block_event(int curr_time){
     id_node_mapping[node_id]->broadcastBlock(this->b, curr_time);
 }
+
+void Event::check_and_broadcast_block_event(int curr_time){
+    id_node_mapping[node_id]->checkAndBroadcastBlock(this->b, curr_time);
+}

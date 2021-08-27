@@ -32,10 +32,15 @@ void Node::generateTransaction(int T)
     
     // teke bitcoin balance from head of longest chain
   
-    int coins = rand() % 100;
-    Transaction * Txn = new Transaction(node_id, receiving_id, coins);
-    broadcastTransaction(Txn,T);
+    
+    if(T!=0){
 
+        if(longest_chain_head->bitcoin_balances[node_id] != 0){
+            int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
+            Transaction * Txn = new Transaction(node_id, receiving_id, coins);
+            broadcastTransaction(Txn,T);
+        }
+    }
 
     int sampled_next_interarrival_time = (int) transac_exp_distr(gen); // fill this
     int next_txn_time = T + sampled_next_interarrival_time;
@@ -89,16 +94,18 @@ void Node::generateBlock(set<int> transac_pool,int T, int parent_id)
     }
     Block* b =new Block(txns, parent_id ); // give transactions
 
-    last_block_created_time = T;
     int t_k = (int) mining_exp_distr(gen);
-    last_wait_interval = t_k;
 
     int new_time = T + t_k;
-    Event * e = new Event(ID_FOR_BROADCASTING_BLOCK,b->block_id);
+
+
+    Event * e = new Event(ID_FOR_CHECK_AND_BROADCAST_BLOCK,node_id);
     e->addBlockInfo(b);
     Simulate::AddEvent(e,new_time);
 
 }
+
+
 
 bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
     BlockTreeNode* parent_tree_node = id_blockTreeNode_mapping[parent_id];
@@ -162,6 +169,15 @@ bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
 
 }
 
+void Node::checkAndBroadcastBlock(Block *b, int T){
+    int parent_id = id_block_mapping[b->block_id]->previous_id;
+    if(longest_chain_head == id_block_mapping[parent_id]){
+        Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
+        e->addBlockInfo(b);
+        Simulate::AddEvent(e, T);
+
+    }
+}
 void Node::receiveBlock(Block *b, int T)
 {   
     received[b->block_id] = true;
@@ -220,7 +236,7 @@ void Node::receiveBlock(Block *b, int T)
 
         present[b->block_id] = true;
 
-        if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){
+        if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){ // block on which mining is done is changed
 
 
             if(longest_chain_head->block_id == parent_id){
@@ -250,12 +266,6 @@ void Node::receiveBlock(Block *b, int T)
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
 
-            if(last_block_created_time + last_wait_interval > T)
-            {
-                //cancel event scheduled
-                int time_to_cancel = last_block_created_time + last_wait_interval;
-                Simulate::removeEvent(ID_FOR_BROADCASTING_BLOCK,node_id,time_to_cancel);
-            }
 
             /////// create new txn set //////////////////////
             set<int> utxos;
@@ -311,6 +321,7 @@ void Node::receiveBlock(Block *b, int T)
 // ********************** discuss this *********************************** //
             if(valid || present[id_block_mapping[blck_id]->previous_id]){ // same bools??
             Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
+            e->addBlockInfo(id_block_mapping[blck_id]);
             Simulate::AddEvent(e,T);
             }
         }
