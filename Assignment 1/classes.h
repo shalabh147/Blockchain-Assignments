@@ -11,14 +11,13 @@ int ID_FOR_RECEIVE_BLOCK = 3;
 class Event;
 
 class Simulate{
-    static map<int,vector<Event*> > event_queue;
+    
     public:
+    
+    static map<int,vector<Event*> > event_queue;
     Simulate();
-
     void static AddEvent(Event *e, int time);
-
     void static removeEvent(int event_id, int node_id, int time);
-
     void runSimulation();
 
 };
@@ -53,6 +52,8 @@ public:
     int previous_id;
 
     set<Transaction> transactions;
+    Block();
+    
     // this constructor to be only used of genesis block creation.
     Block(Transaction t);
 
@@ -122,6 +123,9 @@ class Node{
 };
 
 class Event{
+    
+    public:
+
     int sender_id;
     int event_id; //0 for generating_trans, 1 for receiving_trans, 2 for broadcasting_block, 3 for receiving_block 
     int node_id; // id at which event occurs
@@ -129,8 +133,6 @@ class Event{
 
     Block * b;
     Transaction * txn;
-
-    public:
 
     Event(int e_id, int s_id, int n_id);
 

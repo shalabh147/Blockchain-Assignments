@@ -1,5 +1,9 @@
 #include "classes.h"
 
+Block::Block()
+{
+    
+}
 Block::Block(Transaction t)
 {
     block_id = total_blocks_created;
