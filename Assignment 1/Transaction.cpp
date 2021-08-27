@@ -19,8 +19,8 @@ Transaction::Transaction(int s_id, int r_id, int co)
 Transaction::Transaction(int s_id){
     transac_id = num_transactions;
     num_transactions++;
-    idx = s_id;
-    idy = -1;
+    idx = -1;
+    idy = s_id;
     c = COINBASE_REWARD;
 
 }

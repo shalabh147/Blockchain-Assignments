@@ -1,5 +1,7 @@
 #include "classes.h"
 
+
+
 Node::Node()
 {
     node_id = num_nodes;
@@ -10,6 +12,8 @@ Node::Node()
     heights[0] =1;
     max_height = 1;
     speed = fast;
+
+   
     
 }
 
@@ -40,22 +44,24 @@ bool Node::findBalances(int block_id)         //traverse the tree up from block_
             int idx = txn.idx;
             int idy = txn.idy;
             int c = txn.c;
-
-            if(bitcoin_map.find(idx) == bitcoin_map.end()){
-                bitcoin_map[idx] = -c;
+            
+            if(idx != -1){
+                if(bitcoin_map.find(idx) == bitcoin_map.end()){
+                    bitcoin_map[idx] = -c;
+                }
+                else{
+                    bitcoin_map[idx] = bitcoin_map.find(idx)->second - c;
+                }
             }
-            else{
-                bitcoin_map[idx] = bitcoin_map.find(idx)->second - c;
-            }
 
-            if(idy != -1){
+            
                 if(bitcoin_map.find(idy) == bitcoin_map.end()){
                     bitcoin_map[idy] = c;
                 }
                 else{
                     bitcoin_map[idy] = bitcoin_map.find(idy)->second + c;
                 }
-            }
+            
 
         // if balance becomes negtive at any point not valid chain.
 
@@ -78,13 +84,14 @@ void Node::generateTransaction(int T)
 {
     int receiving_id = rand()% num_nodes ;
     
-    // ??????
+    // teke bitcoin balance from head of longest chain
+  
     int coins = rand() % 100;
     Transaction * Txn = new Transaction(node_id, receiving_id, coins);
     broadcastTransaction(Txn,T);
 
 
-    int sampled_next_interarrival_time = transc_exp_distr(gen); // fill this
+    int sampled_next_interarrival_time = transac_exp_distr(gen); // fill this
     int next_txn_time = T + sampled_next_interarrival_time;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
@@ -141,11 +148,81 @@ void Node::generateBlock(set<int> transac_pool,int T)
 
 }
 
+bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
+    BlockTreeNode* parent_tree_node = id_blockTreeNode_mapping[parent_id];
+    map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
+    set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
+    map<int,int> new_btc_balances;
+    for(auto txn : current_txns){
+         int idx = txn->idx;
+            int idy = txn->idy;
+            int c = txn->c;
+            
+            if(idx != -1){
+                if(parent_btc_balances.find(idx) == parent_btc_balances.end()){
+                    new_btc_balances[idx] = -c;
+                }
+                else{
+                    new_btc_balances[idx] = parent_btc_balances[idx] - c;
+                }
+            }
+
+            
+                if(parent_btc_balances.find(idy) == parent_btc_balances.end()){
+                    new_btc_balances[idy] = c;
+                }
+                else{
+                    new_btc_balances[idy] = parent_btc_balances[idy] + c;
+                }
+
+            if(idx!=-1 && new_btc_balances[idx] < 0){
+                return false;
+            }
+
+            if(new_btc_balances[idy] < 0){
+                return false;
+            }
+            
+
+        // if balance becomes negtive at any point not valid chain.
+
+        }
+
+        // block is valid. Add to blockTree.
+    
+
+    BlockTreeNode* tree_node = new BlockTreeNode();
+    tree_node->arrival_time = arrival_time;
+    tree_node->parent = parent_tree_node;
+    tree_node->block_id = b_id;
+    tree_node->level = parent_tree_node->level+1;
+    tree_node->bitcoin_balances = new_btc_balances;
+    id_blockTreeNode_mapping[b_id] = tree_node;
+
+    if(block_chain_leaves.find(parent_id) != block_chain_leaves.end()){
+        block_chain_leaves.erase(parent_id);
+        block_chain_leaves.insert(b_id);
+    }
+
+   
+    return true;
+
+
+}
+
 void Node::receiveBlock(Block *b, int T)
 {   
-    present[b->block_id] = true;
+    
     broadcastBlock(b,T);
     int parent_id = b->previous_id; 
+
+
+
+    // received genesis block
+    if(parent_id == -1){
+        BlockTreeNode* genesis_tree_node = new BlockTreeNode();
+        
+    }
 
     //if parent not yet present with node, then wait till it comes
     if(!present[parent_id])
@@ -157,47 +234,57 @@ void Node::receiveBlock(Block *b, int T)
     
 
     //if parent present
-    
 
-    bool invalid = false;
-    invalid = !(findBalances(b->block_id));        //validate transactions of received block using this chain of parents.
+    bool valid = validateAndAddTreeNode(T, parent_id, b->block_id);
 
-    if(invalid == true)
-    {
-        return;
-    }
-        
-    if(heights[parent_id] == max_height)
-    {
-        if(last_block_created_time + last_wait_interval > T)
-        {
-            //cancel event scheduled
-            int time_to_cancel = last_block_created_time + last_wait_interval;
-            Simulator.removeEvent(ID_FOR_BROADCASTING_BLOCK,node_id,time_to_cancel);
+
+    // new block is valid and added to tree.
+    if(valid){ 
+
+        present[b->block_id] = true;
+
+        if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){
+            // longest chain changed
+            longest_chain_head = id_blockTreeNode_mapping[b->block_id];
+
+
+            if(last_block_created_time + last_wait_interval > T)
+            {
+                //cancel event scheduled
+                int time_to_cancel = last_block_created_time + last_wait_interval;
+                Simulate::removeEvent(ID_FOR_BROADCASTING_BLOCK,node_id,time_to_cancel);
+            }
+
+            /////// create new txn set //////////////////////
+            generateBlock(transac_pool,T);
+
         }
 
 
-        tree_blocks[parent_id].push_back(b->id);
-        
-        parent[b->block_id] = b->previous_id;
-        heights[b->block_id] = heights[parent_id] + 1;
-        max_height = heights[b->block_id];
-    
-
-        //calculate transaction pool by removing all transactions corresponding to this longest chain
-        generateBlock(transac_pool,T);
-    
     }
+    
 
     //check in pending list if any block is waiting for the received block
+   set<int> to_remove; 
     for(int blck_id: pending_blocks)
     {
         if(id_block_mapping[blck_id]->previous_id == b->block_id)
-        {
+        {   
+            to_remove.insert(blck_id);
+//////////////////////////////////////// change to account for arrival time /////////////////////////////
             Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
             Simulate::AddEvent(e,T);
         }
     }
+
+   for(int id : to_remove){
+       pending_blocks.erase(id);
+   }
+
+    
+    
+
+
 
 
 }

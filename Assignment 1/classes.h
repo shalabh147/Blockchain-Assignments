@@ -8,6 +8,17 @@ int ID_FOR_RECEIVE_TRANS = 1;
 int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
 
+
+struct BlockTreeNode {
+    int arrival_time;
+    int block_id;
+    int level;
+    // node id, balance
+    map<int, int> bitcoin_balances;
+    BlockTreeNode * parent;
+
+};
+
 class Event;
 
 class Simulate{
@@ -48,16 +59,16 @@ map<int, Block*> id_block_mapping;  //to traverse the tree
 class Block{
     static int total_blocks_created;
 public:
-    block_id_type block_id;
+    int block_id;
     int previous_id;
 
-    set<Transaction> transactions;
+    set<Transaction* >  transactions;
     Block();
 
     // this constructor to be only used of genesis block creation.
-    Block(Transaction t);
+    Block(Transaction * t);
 
-    Block(set<Transaction> s, int prev_id);
+    Block(set<Transaction *> s, int prev_id);
 
 };
 
@@ -65,9 +76,13 @@ enum node_speed { fast, slow};
 map<int, Node*> id_node_mapping;
 
 class Node{
-    
+    public:
     int node_id;
-    vector<vector<int> > tree_blocks;
+    
+
+    vector<BlockTreeNode*> block_chain_leaves;
+    BlockTreeNode* longest_chain_head;
+    map<int, BlockTreeNode*> id_blockTreeNode_mapping;
     
     // parent[i] gives the id of the parent block for block i, in the tree of blocks
     map<int,int> parent;
@@ -98,7 +113,7 @@ class Node{
 
     Block b;
 
-    public:
+    
   
     static exponential_distribution<int> transac_exp_distr (1/T_tx);
     static mt19937 gen(1);

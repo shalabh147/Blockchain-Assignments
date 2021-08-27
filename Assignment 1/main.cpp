@@ -14,7 +14,7 @@ int main()
 
     }
 
-    int z;
+    double z;
     cout<<"Enter fraction of slow nodes in the network: "<<endl;
     cin>>z;
 
@@ -34,8 +34,12 @@ int main()
    cin>>T_tx;
 
    //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
-    Transaction t = Transaction(idx);       //coinbase transaction
-    Block genesis = Block(t);               //genesis block
+    int idx = rand() % n;
+    Transaction * t = new Transaction(idx);       //coinbase transaction
+    Block * genesis = new Block(t);               //genesis block
+
+
+    id_node_mapping[idx]->receiveBlock(genesis, 0);
     
 
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
