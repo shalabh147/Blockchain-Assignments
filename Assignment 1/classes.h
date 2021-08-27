@@ -80,7 +80,7 @@ class Node{
     int node_id;
     
 
-    vector<BlockTreeNode*> block_chain_leaves;
+    set<int> block_chain_leaves;
     BlockTreeNode* longest_chain_head;
     map<int, BlockTreeNode*> id_blockTreeNode_mapping;
     
@@ -99,6 +99,8 @@ class Node{
     set<int> current_transaction_pool;
 
     //those blocks recieved whose parent not received yet
+
+
     set<int> pending_blocks;
 
     //true if block i has been received already
@@ -132,7 +134,8 @@ class Node{
 
     void broadcastTransaction(Transaction *txn, int T, int sender_node_id);
 
-
+    bool validateAndAddTreeNode(int arrival_time, int parent_id, int b_id);
+    
     void generateBlock(set<int> transac_pool,int T);
 
     void receiveBlock(Block *b, int T);

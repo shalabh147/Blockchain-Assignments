@@ -281,10 +281,6 @@ void Node::receiveBlock(Block *b, int T)
        pending_blocks.erase(id);
    }
 
-    
-    
-
-
 
 
 }
