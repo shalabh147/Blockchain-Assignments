@@ -33,12 +33,17 @@ int main()
    cout<<"Enter mean interarrival time for transactions: ";
    cin>>T_tx;
 
+   double T_k;
+   cout<<"Enter mean block mining time: ";
+   cin>>T_k;
+
    //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
     int idx = rand() % n;
     Transaction * t = new Transaction(idx);       //coinbase transaction
+
     Block * genesis = new Block(t);               //genesis block
 
-
+   
     id_node_mapping[idx]->receiveBlock(genesis, 0);
     
 

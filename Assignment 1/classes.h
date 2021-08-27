@@ -7,6 +7,7 @@ int ID_FOR_GEN_TRANS = 0;
 int ID_FOR_RECEIVE_TRANS = 1;
 int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
+int MAX_TXNS = 900;
 
 
 struct BlockTreeNode {
@@ -32,7 +33,9 @@ class Simulate{
     void runSimulation();
 
 };
+class Transaction;
 
+map<int, Transaction*> id_txn_mapping;
 class Transaction{
     static int num_transactions;
     public:
@@ -63,6 +66,9 @@ public:
     int previous_id;
 
     set<Transaction* >  transactions;
+
+     static exponential_distribution<double> mining_exp_distr (1/T_k);
+    static mt19937 gen(1);
     Block();
 
     // this constructor to be only used of genesis block creation.
@@ -95,8 +101,8 @@ class Node{
 
     set<int> all_transactions;
 
-    // all transactions - transactions in longest chain
-    set<int> current_transaction_pool;
+    // transactions in current longest chain
+    set<int> longest_chain_txns;
 
     //those blocks recieved whose parent not received yet
 
@@ -117,7 +123,7 @@ class Node{
 
     
   
-    static exponential_distribution<int> transac_exp_distr (1/T_tx);
+    static exponential_distribution<double> transac_exp_distr(1/T_tx);
     static mt19937 gen(1);
   
     static int num_nodes;
@@ -136,7 +142,7 @@ class Node{
 
     bool validateAndAddTreeNode(int arrival_time, int parent_id, int b_id);
     
-    void generateBlock(set<int> transac_pool,int T);
+    void generateBlock(set<int> transac_pool,int T, int parent_id);
 
     void receiveBlock(Block *b, int T);
     void broadcastBlock(Block *b, int T);

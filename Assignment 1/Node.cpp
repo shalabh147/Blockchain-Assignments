@@ -22,61 +22,7 @@ void Node::set_speed_to_slow(){
 }
 
 
-// vrinda does not like this :( hmm
-bool Node::findBalances(int block_id)         //traverse the tree up from block_id to find balances and validate transactions
-{
-    bitcoin_map.clear();
-    
-    
-    stack<int> longest_chain;
-
-    while(parent[block_id] != -1) {
-        longest_chain.push(block_id);
-    }
-
-
-    while(!longest_chain.empty()) {
-        Block * b = id_block_mapping[longest_chain.top()];
-        longest_chain.pop();
-        set<Transaction> txns = b->transactions;
-        
-        for(auto txn: txns) {
-            int idx = txn.idx;
-            int idy = txn.idy;
-            int c = txn.c;
-            
-            if(idx != -1){
-                if(bitcoin_map.find(idx) == bitcoin_map.end()){
-                    bitcoin_map[idx] = -c;
-                }
-                else{
-                    bitcoin_map[idx] = bitcoin_map.find(idx)->second - c;
-                }
-            }
-
-            
-                if(bitcoin_map.find(idy) == bitcoin_map.end()){
-                    bitcoin_map[idy] = c;
-                }
-                else{
-                    bitcoin_map[idy] = bitcoin_map.find(idy)->second + c;
-                }
-            
-
-        // if balance becomes negtive at any point not valid chain.
-
-        if(bitcoin_map.find(idx)->second < 0){
-            return false;
-        }
-        if(idy!=-1 && bitcoin_map.find(idy) -> second < 0){
-            return false;
-        }
-        }
-    }
-
-    return true;
-}
-    
+ 
 
 
 
@@ -91,7 +37,7 @@ void Node::generateTransaction(int T)
     broadcastTransaction(Txn,T);
 
 
-    int sampled_next_interarrival_time = transac_exp_distr(gen); // fill this
+    int sampled_next_interarrival_time = (int) transac_exp_distr(gen); // fill this
     int next_txn_time = T + sampled_next_interarrival_time;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
@@ -131,14 +77,20 @@ void Node::broadcastTransaction(Transaction *txn, int T, int sender_node_id)
 
 
 
-void Node::generateBlock(set<int> transac_pool,int T)
+void Node::generateBlock(set<int> transac_pool,int T, int parent_id)
 {
     //choose some subset of transactions from transac_pool, say sub
-    Transaction coinbase_tr = Transaction(node_id);       //coinbase transaction
-    Block* b =new Block(coinbase_tr); // give transactions
-    last_block_created_time = T;
+    Transaction* coinbase_tr = new Transaction(node_id);       //coinbase transaction
+    transac_pool.insert(coinbase_tr->transac_id);
 
-    int t_k = rand(something);
+    set<Transaction*> txns ;
+    for(auto id : transac_pool){
+        txns.insert(id_txn_mapping[id]);
+    }
+    Block* b =new Block(txns, parent_id ); // give transactions
+
+    last_block_created_time = T;
+    int t_k = (int) mining_exp_distr(gen);
     last_wait_interval = t_k;
 
     int new_time = T + t_k;
@@ -212,7 +164,7 @@ bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
 
 void Node::receiveBlock(Block *b, int T)
 {   
-    
+    received[b->block_id] = true;
     broadcastBlock(b,T);
     int parent_id = b->previous_id; 
 
@@ -228,6 +180,8 @@ void Node::receiveBlock(Block *b, int T)
         map<int,int> btc_balances;
         for(auto txn : txns){ // only coin base transaction present
             btc_balances[txn->idy] = txn->c;
+            all_transactions.insert(txn->transac_id);
+            longest_chain_txns.insert(txn->transac_id);
         }
         genesis_tree_node->bitcoin_balances = btc_balances;
         genesis_tree_node->parent = NULL;
@@ -238,14 +192,23 @@ void Node::receiveBlock(Block *b, int T)
         
     }
 
-    //if parent not yet present with node, then wait till it comes
-    if(!present[parent_id])
+    //if parent not yet arrived at node, then wait till it comes
+    if(!received[parent_id])
     {
         pending_blocks.insert(b->block_id);
         return;
     }
     
-    
+    ////////////////////// if parent was received but discarded //////////
+    if(!present[parent_id]){
+
+        /////// discuss this ////////////////////////////////////////////////
+        // **** if parent was discared, this block also needs to be discarded. ***** //
+        return;
+
+
+
+    }
 
     //if parent present
 
@@ -258,6 +221,31 @@ void Node::receiveBlock(Block *b, int T)
         present[b->block_id] = true;
 
         if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){
+
+
+            if(longest_chain_head->block_id == parent_id){
+                // can use longest_chain_txns
+                set<Transaction*> txns = b->transactions;
+                for(auto txn : txns){
+                    longest_chain_txns.insert(txn->transac_id);
+                }
+            }
+
+            else{
+                // recompute longest_chain_txns
+                set<int> new_txns;
+                BlockTreeNode* n = id_blockTreeNode_mapping[b->block_id];
+                while(n->parent){
+                    Block* b = id_block_mapping[n->block_id];
+                    set<Transaction*> txns = b->transactions;
+                    for(auto txn : txns){
+                        new_txns.insert(txn->transac_id);
+                    }
+                    n = n->parent;
+                }
+                longest_chain_txns = new_txns;
+            }
+
             // longest chain changed
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
@@ -270,7 +258,39 @@ void Node::receiveBlock(Block *b, int T)
             }
 
             /////// create new txn set //////////////////////
-            generateBlock(transac_pool,T);
+            set<int> utxos;
+            set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), utxos.begin());
+            set<int> chosen_txns;
+            map<int, int> new_balances;
+            map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
+
+
+/////////////////// can try other strategies for picking txns////////////////////////////////////// 
+            for(auto txn_id : utxos){
+                if(chosen_txns.size() == MAX_TXNS){
+                    break;
+                }
+                Transaction* txn = id_txn_mapping[txn_id];
+                int idx = txn->idx;
+                int idy = txn->idy;
+                int coins = txn->c;
+
+                if(idx!= -1 && parent_balances.find(idx) == parent_balances.end()){
+                    continue;
+                }
+                if(idx!= -1 && parent_balances[idx] < coins){
+                    continue;
+                }
+
+                if(idx != -1){
+                    new_balances[idx] = parent_balances[idx] - coins;
+                }
+                new_balances[idy] = parent_balances[idy] + coins;
+                chosen_txns.insert(txn_id);
+                
+            }
+
+            generateBlock(chosen_txns,T, longest_chain_head->block_id);
 
         }
 
@@ -286,8 +306,13 @@ void Node::receiveBlock(Block *b, int T)
         {   
             to_remove.insert(blck_id);
 //////////////////////////////////////// change to account for arrival time /////////////////////////////
+
+
+// ********************** discuss this *********************************** //
+            if(valid || present[id_block_mapping[blck_id]->previous_id]){ // same bools??
             Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
             Simulate::AddEvent(e,T);
+            }
         }
     }
 
