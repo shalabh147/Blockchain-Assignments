@@ -221,6 +221,20 @@ void Node::receiveBlock(Block *b, int T)
     // received genesis block
     if(parent_id == -1){
         BlockTreeNode* genesis_tree_node = new BlockTreeNode();
+        genesis_tree_node->arrival_time = T;
+        genesis_tree_node->block_id = b->block_id;
+        genesis_tree_node->level = 1;
+        set<Transaction*> txns = b->transactions;
+        map<int,int> btc_balances;
+        for(auto txn : txns){ // only coin base transaction present
+            btc_balances[txn->idy] = txn->c;
+        }
+        genesis_tree_node->bitcoin_balances = btc_balances;
+        genesis_tree_node->parent = NULL;
+
+        block_chain_leaves.insert(genesis_tree_node->block_id);
+        longest_chain_head = genesis_tree_node;
+        return;
         
     }
 
