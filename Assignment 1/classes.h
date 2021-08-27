@@ -53,7 +53,7 @@ public:
 
     set<Transaction> transactions;
     Block();
-    
+
     // this constructor to be only used of genesis block creation.
     Block(Transaction t);
 
@@ -85,6 +85,9 @@ class Node{
 
     //those blocks recieved whose parent not received yet
     set<int> pending_blocks;
+
+    //true if block i has been received already
+    map<int, bool> present;
 
     
     int last_block_created_time;

@@ -143,15 +143,18 @@ void Node::generateBlock(set<int> transac_pool,int T)
 
 void Node::receiveBlock(Block *b, int T)
 {   
+    present[b->block_id] = true;
     broadcastBlock(b,T);
     int parent_id = b->previous_id; 
 
-    
-
-    
     //if parent not yet present with node, then wait till it comes
-
-
+    if(!present[parent_id])
+    {
+        pending_blocks.insert(b->block_id);
+        return;
+    }
+    
+    
 
     //if parent present
     
@@ -184,6 +187,16 @@ void Node::receiveBlock(Block *b, int T)
         //calculate transaction pool by removing all transactions corresponding to this longest chain
         generateBlock(transac_pool,T);
     
+    }
+
+    //check in pending list if any block is waiting for the received block
+    for(int blck_id: pending_blocks)
+    {
+        if(id_block_mapping[blck_id]->previous_id == b->block_id)
+        {
+            Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
+            Simulate::AddEvent(e,T);
+        }
     }
 
 

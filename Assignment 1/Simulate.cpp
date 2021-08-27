@@ -28,10 +28,11 @@ void Simulate::runSimulation()
     while(sim_time < threshold)
     {
         sim_time = event_queue.begin() -> first;
-        vector<Event*> v = event_queue.begin() -> second;
-
-        for(Event* e: v)
+        //vector<Event*> v = event_queue.begin() -> second;
+        vector<Event*> ::iterator it;
+        for(it = event_queue[sim_time].begin(); it != event_queue[sim_time].end(); it++)
         {
+            Event* e = *(it);
             if(e->event_id == ID_FOR_RECEIVE_BLOCK)
             {
                 e->receive_block_event(sim_time);
@@ -49,5 +50,7 @@ void Simulate::runSimulation()
                 e->receive_trans_event(sim_time);
             }
         }
+
+        event_queue.erase(event_queue.begin());
     }
 }
