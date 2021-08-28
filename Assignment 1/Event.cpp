@@ -22,22 +22,22 @@ void Event::addTransactionInfo(Transaction * t)
     txn = t;
 }
 
-void Event::gen_trans_event(int curr_time){
+void Event::gen_trans_event(double curr_time){
     id_node_mapping[node_id]->generateTransaction(curr_time);
 }
 
-void Event::receive_trans_event(int curr_time){
+void Event::receive_trans_event(double curr_time){
     id_node_mapping[node_id]->receiveTransaction(this->txn, curr_time, sender_id);
 }
 
-void Event::receive_block_event(int curr_time){
+void Event::receive_block_event(double curr_time){
     id_node_mapping[node_id]->receiveBlock(this->b, curr_time);
 }
 
-void Event::broadcast_block_event(int curr_time){
+void Event::broadcast_block_event(double curr_time){
     id_node_mapping[node_id]->broadcastBlock(this->b, curr_time);
 }
 
-void Event::check_and_broadcast_block_event(int curr_time){
+void Event::check_and_broadcast_block_event(double curr_time){
     id_node_mapping[node_id]->checkAndBroadcastBlock(this->b, curr_time);
 }

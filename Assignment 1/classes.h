@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<random>
 using namespace std;
 
 
@@ -10,9 +11,61 @@ int ID_FOR_RECEIVE_BLOCK = 3;
 int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
 int MAX_TXNS = 900;
 
+class Event;
+set<pair<double, Event*> > event_queue;
+   
+void AddEvent(Event *e, int time)
+{
+    event_queue.insert(make_pair(time,e));
+}
+
+void runSimulation()
+{
+    double sim_time = 0;
+    while(sim_time < threshold)
+    {
+        sim_time = event_queue.begin() -> first;
+        Event* e = event_queue.begin() -> second;
+        //vector<Event*> v = event_queue.begin() -> second;
+        
+        if(e->event_id == ID_FOR_RECEIVE_BLOCK)
+        {
+            e->receive_block_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
+        {
+            e->broadcast_block_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_GEN_TRANS)
+        {
+            e->gen_trans_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_RECEIVE_TRANS)
+        {
+            e->receive_trans_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
+            e->check_and_broadcast_block_event(sim_time);
+        }
+        
+
+        event_queue.erase(event_queue.begin());
+    }
+}
+
+
+
+std::mt19937 gen(1);
+
+std::random_device                  rand_dev;
+std::mt19937                        generator(rand_dev());
+std::uniform_real_distribution<double>  distr(0.01, 0.5);
+
+double rho = distr(generator);
+
 
 struct BlockTreeNode {
-    int arrival_time;
+    double arrival_time;
     int block_id;
     int level;
     // node id, balance
@@ -21,8 +74,8 @@ struct BlockTreeNode {
 
 };
 
-class Event;
 
+/*
 class Simulate{
     
     public:
@@ -34,6 +87,7 @@ class Simulate{
     void runSimulation();
 
 };
+*/
 class Transaction;
 
 map<int, Transaction*> id_txn_mapping;
@@ -68,8 +122,12 @@ public:
 
     set<Transaction* >  transactions;
 
-     static exponential_distribution<double> mining_exp_distr (1/T_k);
-    static mt19937 gen(1);
+    //std::random_device rd; 
+    //std::mt19937 gen(rd());
+    //std::exponential_distribution<> mining_exp_distr (1/1);
+    
+    
+    
     Block();
 
     // this constructor to be only used of genesis block creation.
@@ -126,8 +184,8 @@ class Node{
 
     
   
-    static exponential_distribution<double> transac_exp_distr(1/T_tx);
-    static mt19937 gen(1);
+    //static exponential_distribution<double> transac_exp_distr(1/T_tx);
+    //static mt19937 gen(1);
   
     static int num_nodes;
 
@@ -137,20 +195,20 @@ class Node{
     void set_speed_to_slow();
     bool findBalances(int block_id);
 
-    void generateTransaction(int T);
+    void generateTransaction(double T);
 
-    void receiveTransaction(Transaction *Txn, int T, int sender_node_id);
+    void receiveTransaction(Transaction *Txn, double T, int sender_node_id);
 
-    void broadcastTransaction(Transaction *txn, int T, int sender_node_id);
+    void broadcastTransaction(Transaction *txn, double T, int sender_node_id);
 
-    bool validateAndAddTreeNode(int arrival_time, int parent_id, int b_id);
+    bool validateAndAddTreeNode(double arrival_time, int parent_id, int b_id);
     
-    void generateBlock(set<int> transac_pool,int T, int parent_id);
+    void generateBlock(set<int> transac_pool,double T, int parent_id);
 
-    void checkAndBroadcastBlock(Block *b, int T);
+    void checkAndBroadcastBlock(Block *b, double T);
 
-    void receiveBlock(Block *b, int T);
-    void broadcastBlock(Block *b, int T);
+    void receiveBlock(Block *b, double T);
+    void broadcastBlock(Block *b, double T);
 
 };
 
@@ -174,15 +232,15 @@ class Event{
 
     void addTransactionInfo(Transaction * t);
 
-    void gen_trans_event(int curr_time);
+    void gen_trans_event(double curr_time);
 
-    void receive_trans_event(int curr_time);
+    void receive_trans_event(double curr_time);
 
-    void receive_block_event(int curr_time);
+    void receive_block_event(double curr_time);
 
-    void broadcast_block_event(int curr_time);
+    void broadcast_block_event(double curr_time);
 
-    void check_and_broadcast_block_event(int curr_time);
+    void check_and_broadcast_block_event(double curr_time);
 };
 
 

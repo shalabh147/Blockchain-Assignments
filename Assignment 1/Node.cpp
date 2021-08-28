@@ -12,21 +12,16 @@ Node::Node()
     heights[0] =1;
     max_height = 1;
     speed = fast;
-
-   
-    
 }
+
 
 void Node::set_speed_to_slow(){
     this->speed = slow;  
 }
 
 
- 
 
-
-
-void Node::generateTransaction(int T)
+void Node::generateTransaction(double T)
 {
     int receiving_id = rand()% num_nodes ;
     
@@ -38,18 +33,18 @@ void Node::generateTransaction(int T)
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
             Transaction * Txn = new Transaction(node_id, receiving_id, coins);
-            broadcastTransaction(Txn,T);
+            broadcastTransaction(Txn,T,node_id);
         }
     }
-
-    int sampled_next_interarrival_time = (int) transac_exp_distr(gen); // fill this
-    int next_txn_time = T + sampled_next_interarrival_time;
+    std::exponential_distribution<double> transac_exp_distr(1/T_tx);
+    double sampled_next_interarrival_time =  transac_exp_distr(gen); // fill this
+    double next_txn_time = T + sampled_next_interarrival_time;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
-    Simulate::AddEvent(e,next_txn_time);
+    AddEvent(e,next_txn_time);
 }
 
-void Node::receiveTransaction(Transaction *Txn, int T, int sender_node_id)
+void Node::receiveTransaction(Transaction *Txn, double T, int sender_node_id)
 {
     all_transactions.insert(Txn->transac_id);
 
@@ -57,7 +52,7 @@ void Node::receiveTransaction(Transaction *Txn, int T, int sender_node_id)
     broadcastTransaction(Txn,T, node_id);
 }
 
-void Node::broadcastTransaction(Transaction *txn, int T, int sender_node_id)
+void Node::broadcastTransaction(Transaction *txn, double T, int sender_node_id)
 {
     // node already has received this txn, and has already broadcasted.
     if(all_transactions.find(txn->transac_id) != all_transactions.end()){ 
@@ -71,18 +66,23 @@ void Node::broadcastTransaction(Transaction *txn, int T, int sender_node_id)
             continue;
         }
 
-        int l = latency[node_id][neighbour];
+        double c = (this->speed == fast && id_node_mapping[neighbour]->speed == fast)? 1e8 : 5e6 ;
+
+        std::exponential_distribution<double> exp_distr_for_d(c/96000);
+        double d = exp_distr_for_d(gen);
+
+        double latency = rho + 8000/c + d;
         //some calculation
                                                     // sender  // receiver
         Event * f = new Event(ID_FOR_RECEIVE_TRANS, node_id, neighbour);
         f->addTransactionInfo(txn);
-        Simulate::AddEvent(f,T+l);
+        AddEvent(f,T+latency);
     }
 }
 
 
 
-void Node::generateBlock(set<int> transac_pool,int T, int parent_id)
+void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
 {
     //choose some subset of transactions from transac_pool, say sub
     Transaction* coinbase_tr = new Transaction(node_id);       //coinbase transaction
@@ -93,21 +93,22 @@ void Node::generateBlock(set<int> transac_pool,int T, int parent_id)
         txns.insert(id_txn_mapping[id]);
     }
     Block* b =new Block(txns, parent_id ); // give transactions
+    
+    std::exponential_distribution<double> mining_exp_distr (1/1);
+    double t_k = mining_exp_distr(gen);
 
-    int t_k = (int) mining_exp_distr(gen);
-
-    int new_time = T + t_k;
+    double new_time = T + t_k;
 
 
     Event * e = new Event(ID_FOR_CHECK_AND_BROADCAST_BLOCK,node_id);
     e->addBlockInfo(b);
-    Simulate::AddEvent(e,new_time);
+    AddEvent(e,new_time);
 
 }
 
 
 
-bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
+bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id){
     BlockTreeNode* parent_tree_node = id_blockTreeNode_mapping[parent_id];
     map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
     set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
@@ -169,16 +170,16 @@ bool Node::validateAndAddTreeNode( int arrival_time, int parent_id, int b_id){
 
 }
 
-void Node::checkAndBroadcastBlock(Block *b, int T){
+void Node::checkAndBroadcastBlock(Block *b, double T){
     int parent_id = id_block_mapping[b->block_id]->previous_id;
     if(longest_chain_head == id_block_mapping[parent_id]){
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
-        Simulate::AddEvent(e, T);
+        AddEvent(e, T);
 
     }
 }
-void Node::receiveBlock(Block *b, int T)
+void Node::receiveBlock(Block *b, double T)
 {   
     received[b->block_id] = true;
     broadcastBlock(b,T);
@@ -300,7 +301,7 @@ void Node::receiveBlock(Block *b, int T)
                 
             }
 
-            generateBlock(chosen_txns,T, longest_chain_head->block_id);
+            generateBlock(chosen_txns, T, longest_chain_head->block_id);
 
         }
 
@@ -322,7 +323,7 @@ void Node::receiveBlock(Block *b, int T)
             if(valid || present[id_block_mapping[blck_id]->previous_id]){ // same bools??
             Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
             e->addBlockInfo(id_block_mapping[blck_id]);
-            Simulate::AddEvent(e,T);
+            AddEvent(e,T);
             }
         }
     }
@@ -335,21 +336,24 @@ void Node::receiveBlock(Block *b, int T)
 
 }
 
-void Node::broadcastBlock(Block *b, int T)
+void Node::broadcastBlock(Block *b, double T)
 {
-    if(max_height == heights[b->id])         //if still the largest chain, only then broadcast last formed block
-    {
-        vector<int> neighbours = adj[node_id];
+      vector<int> neighbours = adj[node_id];
 
         for(int v: neighbours)
         {
-            int l = latency[node_id][v];
+            double c = (this->speed == fast && id_node_mapping[v]->speed == fast)? 1e8 : 5e6 ;
+
+            std::exponential_distribution<double> exp_distr_for_d(c/96000);
+            double d = exp_distr_for_d(gen);
+
+            double latency = rho + 8000*(b->transactions).size()/c + d;
             //some calculation
 
             Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
             f->addBlockInfo(b);
-            Simulate::AddEvent(f,T+l);
+            AddEvent(f,T+latency);
         }
 
-    }
+    
 }
