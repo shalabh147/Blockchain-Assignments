@@ -94,7 +94,7 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     }
     Block* b =new Block(txns, parent_id ); // give transactions
     
-    std::exponential_distribution<double> mining_exp_distr (1/1);
+    std::exponential_distribution<double> mining_exp_distr (1/T_k);
     double t_k = mining_exp_distr(gen);
 
     double new_time = T + t_k;
@@ -172,7 +172,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
 
 void Node::checkAndBroadcastBlock(Block *b, double T){
     int parent_id = id_block_mapping[b->block_id]->previous_id;
-    if(longest_chain_head == id_block_mapping[parent_id]){
+    if(longest_chain_head == id_block_mapping[parent_id]){          //should be comparing block ids?
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
         AddEvent(e, T);

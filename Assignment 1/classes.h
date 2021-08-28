@@ -10,6 +10,11 @@ int ID_FOR_BROADCASTING_BLOCK = 2;
 int ID_FOR_RECEIVE_BLOCK = 3;
 int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
 int MAX_TXNS = 900;
+double T_tx;        //Transaction interarrival time mean
+double T_k;         //Block interarrival time mean
+double threshold;   //max time to run simulation
+
+vector<vector<int> > adj;
 
 class Event;
 set<pair<double, Event*> > event_queue;

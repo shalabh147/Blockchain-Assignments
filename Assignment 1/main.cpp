@@ -31,11 +31,11 @@ int main()
        id_node_mapping[id]->set_speed_to_slow();
    }
 
-    double T_tx;
+    
    cout<<"Enter mean interarrival time for transactions: ";
    cin>>T_tx;
 
-   double T_k;
+   
    cout<<"Enter mean block mining time: ";
    cin>>T_k;
 
@@ -58,6 +58,11 @@ int main()
     }
     
 
+    for(int i=0;i<n-1;i++)
+    {
+        adj[i].push_back(i+1);
+        adj[i+1].push_back(i);
+    }
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
 
     //create latency matrix (again global variable) or leave the code as it is
@@ -65,7 +70,7 @@ int main()
     //broadcast genesis block to all nodes
     
 
-    
+    threshold = 100.0;
 
     runSimulation();    
 

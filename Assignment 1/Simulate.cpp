@@ -1,3 +1,4 @@
+/*
 #include "classes.h"
 Simulate::Simulate()
 {
@@ -46,3 +47,5 @@ void Simulate::runSimulation()
         event_queue.erase(event_queue.begin());
     }
 }
+
+*/

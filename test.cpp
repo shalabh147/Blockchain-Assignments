@@ -1,5 +1,6 @@
 #include<iostream>
 #include<random>
+#include<set>
 using namespace std;
 
 
@@ -15,6 +16,12 @@ int main()
 		cout<<rng (rnd_gen)<<" ";
 	}
 
+	set<int> s;
+	s.insert(5);
+	for(auto i: s)
+	{
+		cout<<i<<endl;
+	}
 	cout<<endl;
 
 }
