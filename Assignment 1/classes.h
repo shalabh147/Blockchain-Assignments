@@ -1,25 +1,46 @@
+#ifndef CLASSES_H 
+#define CLASSES_H 
+
+
 #include<bits/stdc++.h>
 #include<random>
 using namespace std;
 
 
-int COINBASE_REWARD = 50;
-int ID_FOR_GEN_TRANS = 0;
-int ID_FOR_RECEIVE_TRANS = 1;
-int ID_FOR_BROADCASTING_BLOCK = 2;
-int ID_FOR_RECEIVE_BLOCK = 3;
-int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
-int MAX_TXNS = 900;
-double T_tx;        //Transaction interarrival time mean
-double T_k;         //Block interarrival time mean
-double threshold;   //max time to run simulation
+extern int COINBASE_REWARD = 50;
+extern int ID_FOR_GEN_TRANS = 0;
+extern int ID_FOR_RECEIVE_TRANS = 1;
+extern int ID_FOR_BROADCASTING_BLOCK = 2;
+extern int ID_FOR_RECEIVE_BLOCK = 3;
+extern int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
+extern int MAX_TXNS = 900;
+extern double T_tx;        //Transaction interarrival time mean
+extern double T_k;         //Block interarrival time mean
+extern double threshold;   //max time to run simulation
 
-vector<vector<int> > adj;
+extern vector<vector<int> > adj;
+
+extern std::mt19937 gen(1);
+
+extern std::random_device                  rand_dev;
+extern std::mt19937                        generator(rand_dev());
+extern std::uniform_real_distribution<double>  distr(0.01, 0.5);
+
+extern double rho = distr(generator);
 
 class Event;
-set<pair<double, Event*> > event_queue;
+class Block;
+class Node;
+class Transaction;
+
+extern set<pair<double, Event*> > event_queue;
+
+extern map<int, Transaction*> id_txn_mapping;
+
+enum node_speed { fast, slow};
+extern map<int, Node*> id_node_mapping;
    
-void AddEvent(Event *e, int time)
+extern void AddEvent(Event *e, int time)
 {
     event_queue.insert(make_pair(time,e));
 }
@@ -28,13 +49,7 @@ void AddEvent(Event *e, int time)
 
 
 
-std::mt19937 gen(1);
 
-std::random_device                  rand_dev;
-std::mt19937                        generator(rand_dev());
-std::uniform_real_distribution<double>  distr(0.01, 0.5);
-
-double rho = distr(generator);
 
 
 struct BlockTreeNode {
@@ -61,9 +76,7 @@ class Simulate{
 
 };
 */
-class Transaction;
 
-map<int, Transaction*> id_txn_mapping;
 class Transaction{
     static int num_transactions;
     public:
@@ -83,9 +96,9 @@ class Transaction{
     
 };
 
-class Block;
+
 // 0 is the genesis block
-map<int, Block*> id_block_mapping;  //to traverse the tree
+extern map<int, Block*> id_block_mapping;  //to traverse the tree
 
 class Block{
     static int total_blocks_created;
@@ -110,9 +123,8 @@ public:
 
 };
 
-class Node;
-enum node_speed { fast, slow};
-map<int, Node*> id_node_mapping;
+
+
 
 class Node{
     public:
@@ -186,6 +198,9 @@ class Node{
 
 };
 
+
+
+
 class Event{
     
     public:
@@ -218,7 +233,9 @@ class Event{
 };
 
 
-void runSimulation()
+
+
+extern void runSimulation()
 {
     double sim_time = 0;
     while(sim_time < threshold)
@@ -258,3 +275,4 @@ void runSimulation()
 
 
 
+#endif

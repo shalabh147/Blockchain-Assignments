@@ -1,5 +1,7 @@
 #include "classes.h"
 
+int Block::total_blocks_created; 
+
 Block::Block()
 {
     

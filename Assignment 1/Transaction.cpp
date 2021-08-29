@@ -1,5 +1,7 @@
 #include "classes.h"
 
+int Transaction::num_transactions;
+
 Transaction::Transaction()
 {
     transac_id = num_transactions;

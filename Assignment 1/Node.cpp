@@ -1,6 +1,7 @@
 #include "classes.h"
 
 
+int Node::num_nodes;
 
 Node::Node()
 {
