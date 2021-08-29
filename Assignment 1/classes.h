@@ -7,13 +7,13 @@
 using namespace std;
 
 
-extern int COINBASE_REWARD = 50;
-extern int ID_FOR_GEN_TRANS = 0;
-extern int ID_FOR_RECEIVE_TRANS = 1;
-extern int ID_FOR_BROADCASTING_BLOCK = 2;
-extern int ID_FOR_RECEIVE_BLOCK = 3;
-extern int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
-extern int MAX_TXNS = 900;
+const int COINBASE_REWARD = 50;
+const int ID_FOR_GEN_TRANS = 0;
+const int ID_FOR_RECEIVE_TRANS = 1;
+const int ID_FOR_BROADCASTING_BLOCK = 2;
+const int ID_FOR_RECEIVE_BLOCK = 3;
+const int ID_FOR_CHECK_AND_BROADCAST_BLOCK = 4;
+const int MAX_TXNS = 900;
 extern double T_tx;        //Transaction interarrival time mean
 extern double T_k;         //Block interarrival time mean
 extern double threshold;   //max time to run simulation
@@ -26,7 +26,7 @@ extern std::random_device                  rand_dev;
 extern std::mt19937                        generator(rand_dev());
 extern std::uniform_real_distribution<double>  distr(0.01, 0.5);
 
-extern double rho = distr(generator);
+const double rho = distr(generator);
 
 class Event;
 class Block;
