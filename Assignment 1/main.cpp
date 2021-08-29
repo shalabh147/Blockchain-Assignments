@@ -3,13 +3,32 @@ using namespace std;
 
 int main()
 {
+    // creating edge list from input file
 
-    /////////////////////// simulator class?????????????????????????????????????????
-    
-    int n; 
+    int n; // number of nodes
+    cin>>n; // reading from file
 
-    cout<<"Enter the number of nodes in the network: "<<endl;
-    cin>>n;
+    int num_edges;
+    cin>>num_edges; // reading from file
+
+    for(int i=0;i<n;i++){
+        vector<int> x;
+        adj.push_back(x);
+    }
+
+    //construction edge list
+    for(int i=0;i<num_edges;i++){
+        int x; int y;
+        cin>>x>>y; // reading from file
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+
+
+    // int n; 
+
+    // cout<<"Enter the number of nodes in the network: "<<endl;
+    // cin>>n;
 
     for(int i=0;i<n;i++){
         Node node = Node();
@@ -57,7 +76,9 @@ int main()
         AddEvent(e,0);
     }
     
+    
 
+    // simple 1-neighbour connected graph
     for(int i=0;i<n-1;i++)
     {
         adj[i].push_back(i+1);
@@ -67,7 +88,6 @@ int main()
 
     //create latency matrix (again global variable) or leave the code as it is
 
-    //broadcast genesis block to all nodes
     
 
     threshold = 100.0;

@@ -25,10 +25,9 @@ void Node::generateTransaction(double T)
 {
     int receiving_id = rand()% num_nodes ;
     
-    // teke bitcoin balance from head of longest chain
   
-    
-    if(T!=0){
+  
+    if(T!=0){ // if T==0, this is the trigger for generating transactions
 
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
@@ -37,7 +36,7 @@ void Node::generateTransaction(double T)
         }
     }
     std::exponential_distribution<double> transac_exp_distr(1/T_tx);
-    double sampled_next_interarrival_time =  transac_exp_distr(gen); // fill this
+    double sampled_next_interarrival_time =  transac_exp_distr(gen);
     double next_txn_time = T + sampled_next_interarrival_time;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
@@ -181,13 +180,16 @@ void Node::checkAndBroadcastBlock(Block *b, double T){
 }
 void Node::receiveBlock(Block *b, double T)
 {   
+    // block has already been received, broadcasted, validate. 
+    // Returning here, to unsure infinite loop in broadcasting.
+    if(received[b->block_id]){
+        return;
+    }
     received[b->block_id] = true;
-    broadcastBlock(b,T);
     int parent_id = b->previous_id; 
 
 
-
-    // received genesis block
+     // received genesis block
     if(parent_id == -1){
         BlockTreeNode* genesis_tree_node = new BlockTreeNode();
         genesis_tree_node->arrival_time = T;
@@ -208,6 +210,13 @@ void Node::receiveBlock(Block *b, double T)
         return;
         
     }
+    // no need to broadcast genesis block, as it is received by all nodes at T=0
+    broadcastBlock(b,T);
+    
+
+
+
+   
 
     //if parent not yet arrived at node, then wait till it comes
     if(!received[parent_id])
@@ -216,7 +225,7 @@ void Node::receiveBlock(Block *b, double T)
         return;
     }
     
-    ////////////////////// if parent was received but discarded //////////
+    ////////////////////// if parent was received but discarded, this block also needs to be discared.//////////
     if(!present[parent_id]){
 
         /////// discuss this ////////////////////////////////////////////////
@@ -337,7 +346,12 @@ void Node::receiveBlock(Block *b, double T)
 }
 
 void Node::broadcastBlock(Block *b, double T)
-{
+{   
+    if(received[b->block_id]){
+        return;
+    }
+   
+
       vector<int> neighbours = adj[node_id];
 
         for(int v: neighbours)
