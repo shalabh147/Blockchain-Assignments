@@ -24,39 +24,7 @@ void AddEvent(Event *e, int time)
     event_queue.insert(make_pair(time,e));
 }
 
-void runSimulation()
-{
-    double sim_time = 0;
-    while(sim_time < threshold)
-    {
-        sim_time = event_queue.begin() -> first;
-        Event* e = event_queue.begin() -> second;
-        //vector<Event*> v = event_queue.begin() -> second;
-        
-        if(e->event_id == ID_FOR_RECEIVE_BLOCK)
-        {
-            e->receive_block_event(sim_time);
-        }
-        else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
-        {
-            e->broadcast_block_event(sim_time);
-        }
-        else if(e->event_id == ID_FOR_GEN_TRANS)
-        {
-            e->gen_trans_event(sim_time);
-        }
-        else if(e->event_id == ID_FOR_RECEIVE_TRANS)
-        {
-            e->receive_trans_event(sim_time);
-        }
-        else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
-            e->check_and_broadcast_block_event(sim_time);
-        }
-        
 
-        event_queue.erase(event_queue.begin());
-    }
-}
 
 
 
@@ -142,6 +110,7 @@ public:
 
 };
 
+class Node;
 enum node_speed { fast, slow};
 map<int, Node*> id_node_mapping;
 
@@ -247,6 +216,41 @@ class Event{
 
     void check_and_broadcast_block_event(double curr_time);
 };
+
+
+void runSimulation()
+{
+    double sim_time = 0;
+    while(sim_time < threshold)
+    {
+        sim_time = event_queue.begin() -> first;
+        Event* e = event_queue.begin() -> second;
+        //vector<Event*> v = event_queue.begin() -> second;
+        
+        if(e->event_id == ID_FOR_RECEIVE_BLOCK)
+        {
+            e->receive_block_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
+        {
+            e->broadcast_block_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_GEN_TRANS)
+        {
+            e->gen_trans_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_RECEIVE_TRANS)
+        {
+            e->receive_trans_event(sim_time);
+        }
+        else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
+            e->check_and_broadcast_block_event(sim_time);
+        }
+        
+
+        event_queue.erase(event_queue.begin());
+    }
+}
 
 
 

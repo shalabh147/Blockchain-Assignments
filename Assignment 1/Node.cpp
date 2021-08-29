@@ -171,7 +171,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
 
 void Node::checkAndBroadcastBlock(Block *b, double T){
     int parent_id = id_block_mapping[b->block_id]->previous_id;
-    if(longest_chain_head == id_block_mapping[parent_id]){          //should be comparing block ids?
+    if(longest_chain_head->block_id == parent_id){      
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
         AddEvent(e, T);
@@ -227,17 +227,11 @@ void Node::receiveBlock(Block *b, double T)
     
     ////////////////////// if parent was received but discarded, this block also needs to be discared.//////////
     if(!present[parent_id]){
-
-        /////// discuss this ////////////////////////////////////////////////
-        // **** if parent was discared, this block also needs to be discarded. ***** //
         return;
-
-
 
     }
 
     //if parent present
-
     bool valid = validateAndAddTreeNode(T, parent_id, b->block_id);
 
 
@@ -279,7 +273,7 @@ void Node::receiveBlock(Block *b, double T)
 
             /////// create new txn set //////////////////////
             set<int> utxos;
-            set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), utxos.begin());
+            set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), inserter(utxos, utxos.begin()));
             set<int> chosen_txns;
             map<int, int> new_balances;
             map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
