@@ -39,7 +39,7 @@ set<pair<double, Event*> > event_queue;
 enum node_speed { fast, slow};
  map<int, Node*> id_node_mapping;
    
-void AddEvent(Event *e, int time)
+void AddEvent(Event *e, double time)
 {
     event_queue.insert(make_pair(time,e));
 }
@@ -178,6 +178,7 @@ class Event{
     }
 
     void receive_block_event(double curr_time){
+        cout<<node_id<<endl;
         id_node_mapping[node_id]->receiveBlock(this->b, curr_time);
     }
 
@@ -208,7 +209,7 @@ class Transaction{
     {
         transac_id = num_transactions;
         num_transactions++;
-        id_txn_mapping[transac_id] = this;
+        //id_txn_mapping[transac_id] = this;
     }
 
         Transaction(int s_id, int r_id, int co)
@@ -218,7 +219,7 @@ class Transaction{
         idx = s_id;
         idy = r_id;
         c = co;
-        id_txn_mapping[transac_id] = this;
+        //id_txn_mapping[transac_id] = this;
     }
 
     // this constructor is only used for creating coinbase transactions (r_id?)
@@ -228,7 +229,7 @@ class Transaction{
         idx = -1;
         idy = s_id;
         c = COINBASE_REWARD;
-        id_txn_mapping[transac_id] = this;
+        //id_txn_mapping[transac_id] = this;
 
     }
     
@@ -263,7 +264,7 @@ public:
     {
         block_id = total_blocks_created;
         total_blocks_created++;
-        id_block_mapping[block_id] = this;
+        //id_block_mapping[block_id] = this;
         set<Transaction *> s;
         s.insert(t);
         transactions = s;
@@ -276,7 +277,7 @@ public:
     {
         block_id = total_blocks_created;
         total_blocks_created++;
-        id_block_mapping[block_id] = this;
+        //id_block_mapping[block_id] = this;
         previous_id = prev_id;
         transactions = s;
     }
@@ -716,11 +717,15 @@ void runSimulation()
     while(sim_time < threshold)
     {
         sim_time = event_queue.begin() -> first;
+
+        if(sim_time > threshold)
+            break;
+        
         Event* e = event_queue.begin() -> second;
         //vector<Event*> v = event_queue.begin() -> second;
         
         if(e->event_id == ID_FOR_RECEIVE_BLOCK)
-        {
+        {   cout<<"Node "<<e->node_id<<" must now receive genesis block"<<endl;
             e->receive_block_event(sim_time);
         }
         else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
@@ -729,10 +734,11 @@ void runSimulation()
         }
         else if(e->event_id == ID_FOR_GEN_TRANS)
         {
+            //cout<<sim_time<<" Generating transaction"<<endl;
             e->gen_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_RECEIVE_TRANS)
-        {
+        {   //cout<<sim_time<<" Receiving transaction"<<endl;
             e->receive_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
@@ -749,7 +755,7 @@ Node::Node()
 {
     node_id = num_nodes;
     num_nodes++;
-    id_node_mapping[node_id] = this;
+    //id_node_mapping[node_id] = this;
     
     parent[0] = -1; // genesis block has no parent
     heights[0] =1;
@@ -766,6 +772,7 @@ void Node::set_speed_to_slow(){
 
 void Node::generateTransaction(double T)
 {
+    
     int receiving_id = rand()% num_nodes ;
     
   
@@ -775,12 +782,15 @@ void Node::generateTransaction(double T)
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
             Transaction * Txn = new Transaction(node_id, receiving_id, coins);
+            id_txn_mapping[Txn->transac_id] = Txn;
+            cout<<"Node "<<node_id<<" generated transaction "<<Txn->transac_id<<endl;
             broadcastTransaction(Txn,T,node_id);
         }
     }
     std::exponential_distribution<double> transac_exp_distr(1/T_tx);
     double sampled_next_interarrival_time =  transac_exp_distr(gen);
     double next_txn_time = T + sampled_next_interarrival_time;
+    //cout<<"Generate next trans at "<<next_txn_time<<endl;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
     AddEvent(e,next_txn_time);
@@ -788,6 +798,7 @@ void Node::generateTransaction(double T)
 
 void Node::receiveTransaction(Transaction *Txn, double T, int sender_node_id)
 {
+    cout<<"Node "<<node_id<<" received transaction "<<Txn->transac_id<<endl;
     all_transactions.insert(Txn->transac_id);
 
                                 // sender_node_id
@@ -828,6 +839,7 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
 {
     //choose some subset of transactions from transac_pool, say sub
     Transaction* coinbase_tr = new Transaction(node_id);       //coinbase transaction
+    id_txn_mapping[coinbase_tr->transac_id] = coinbase_tr;
     transac_pool.insert(coinbase_tr->transac_id);
 
     set<Transaction*> txns ;
@@ -835,6 +847,7 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
         txns.insert(id_txn_mapping[id]);
     }
     Block* b =new Block(txns, parent_id ); // give transactions
+    id_block_mapping[b->block_id] = b;
     
     std::exponential_distribution<double> mining_exp_distr (1/T_k);
     double t_k = mining_exp_distr(gen);
@@ -934,6 +947,7 @@ void Node::receiveBlock(Block *b, double T)
 
      // received genesis block
     if(parent_id == -1){
+        cout<<"Genesis block received by node "<<node_id<<endl;
         BlockTreeNode* genesis_tree_node = new BlockTreeNode();
         genesis_tree_node->arrival_time = T;
         genesis_tree_node->block_id = b->block_id;
@@ -950,6 +964,7 @@ void Node::receiveBlock(Block *b, double T)
 
         block_chain_leaves.insert(genesis_tree_node->block_id);
         longest_chain_head = genesis_tree_node;
+        //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
         return;
         
     }
@@ -1010,6 +1025,7 @@ void Node::receiveBlock(Block *b, double T)
             }
 
             // longest chain changed
+            cout<<"Longest chain for node "<<node_id<<" now becomes "<<b->block_id;
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
 
@@ -1144,7 +1160,8 @@ int main()
     // cin>>n;
 
     for(int i=0;i<n;i++){
-        Node node = Node();
+        Node *node = new Node();
+        id_node_mapping[i] = node;
 
     }
 
@@ -1173,15 +1190,24 @@ int main()
 
    //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
     int idx = rand() % n;
+    cout<<"idx is "<<idx<<endl;
     Transaction * t = new Transaction(idx);       //coinbase transaction
+    id_txn_mapping[t->transac_id] = t;
 
     Block * genesis = new Block(t);               //genesis block
+    id_block_mapping[genesis->block_id] = genesis;
 
     for(int i=0; i<n;i++){
     Event *e = new Event(ID_FOR_RECEIVE_BLOCK, i);
     e->addBlockInfo(genesis);
     AddEvent(e,0);
     }
+
+    for(auto x: event_queue)
+    {
+        cout<<x.second->node_id<<" ";
+    }
+    cout<<endl;
     
     // trigger transaction generation for each node
     for(int i=0;i<n;i++){
@@ -1203,7 +1229,7 @@ int main()
 
     
 
-    threshold = 100.0;
+    threshold = 5;
 
     runSimulation();    
 
