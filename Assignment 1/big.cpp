@@ -39,7 +39,7 @@ set<pair<double, Event*> > event_queue;
 enum node_speed { fast, slow};
  map<int, Node*> id_node_mapping;
    
-void AddEvent(Event *e, int time)
+void AddEvent(Event *e, double time)
 {
     event_queue.insert(make_pair(time,e));
 }
@@ -295,6 +295,10 @@ void runSimulation()
 
     {
         sim_time = event_queue.begin() -> first;
+
+        if(sim_time > threshold)
+            break;
+        
         Event* e = event_queue.begin() -> second;
         cout<<"Event dequeued at time: "<<sim_time;
         //vector<Event*> v = event_queue.begin() -> second;
@@ -310,10 +314,11 @@ void runSimulation()
         }
         else if(e->event_id == ID_FOR_GEN_TRANS)
         {
+            cout<<sim_time<<" Node "<<e->node_id<<"has to generate transaction "<<endl;
             e->gen_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_RECEIVE_TRANS)
-        {
+        {   //cout<<sim_time<<" Receiving transaction"<<endl;
             e->receive_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
@@ -347,12 +352,13 @@ void Node::set_speed_to_slow(){
 
 void Node::generateTransaction(double T)
 {
+    
     int receiving_id = rand()% num_nodes ;
     
   
   
     if(T!=0){ // if T==0, this is the trigger for generating transactions
-
+            //cout<<"About to generate txn, just checking balance\n";
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
             
@@ -365,6 +371,7 @@ void Node::generateTransaction(double T)
     std::exponential_distribution<double> transac_exp_distr(1/T_tx);
     double sampled_next_interarrival_time =  transac_exp_distr(gen);
     double next_txn_time = T + sampled_next_interarrival_time;
+    //cout<<"Generate next trans at "<<next_txn_time<<endl;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
     AddEvent(e,next_txn_time);
@@ -372,6 +379,7 @@ void Node::generateTransaction(double T)
 
 void Node::receiveTransaction(Transaction *Txn, double T, int sender_node_id)
 {
+    cout<<"Node "<<node_id<<" received transaction "<<Txn->transac_id<<endl;
     all_transactions.insert(Txn->transac_id);
 
                                 // sender_node_id
@@ -443,6 +451,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
     map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
     set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
     map<int,int> new_btc_balances;
+    
     for(auto txn : current_txns){
          int idx = txn->idx;
             int idy = txn->idy;
@@ -480,7 +489,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
 
         // block is valid. Add to blockTree.
     
-
+    
     BlockTreeNode* tree_node = new BlockTreeNode();
     tree_node->arrival_time = arrival_time;
     tree_node->parent = parent_tree_node;
@@ -530,6 +539,7 @@ void Node::receiveBlock(Block *b, double T)
         present[0] = true;
         cout<<" genesis block received"<<endl;
         BlockTreeNode* genesis_tree_node = new BlockTreeNode();
+        id_blockTreeNode_mapping[b->block_id] = genesis_tree_node;
         genesis_tree_node->arrival_time = T;
         genesis_tree_node->block_id = b->block_id;
         genesis_tree_node->level = 1;
@@ -546,45 +556,18 @@ void Node::receiveBlock(Block *b, double T)
 
         block_chain_leaves.insert(genesis_tree_node->block_id);
         longest_chain_head = genesis_tree_node;
-        
+
+
         /////// create new txn set //////////////////////
-        set<int> utxos;
-        set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), inserter(utxos, utxos.begin()));
         set<int> chosen_txns;
-        map<int, int> new_balances;
-        map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
-
-
-
-            for(auto txn_id : utxos){
-                if(chosen_txns.size() == MAX_TXNS){
-                    break;
-                }
-                Transaction* txn = id_txn_mapping[txn_id];
-                int idx = txn->idx;
-                int idy = txn->idy;
-                int coins = txn->c;
-
-                if(idx!= -1 && parent_balances.find(idx) == parent_balances.end()){
-                    continue;
-                }
-                if(idx!= -1 && parent_balances[idx] < coins){
-                    continue;
-                }
-
-                if(idx != -1){
-                    new_balances[idx] = parent_balances[idx] - coins;
-                }
-                new_balances[idy] = parent_balances[idy] + coins;
-                chosen_txns.insert(txn_id);
-                
-            }
-
-            generateBlock(chosen_txns, T, longest_chain_head->block_id);
+ 
+        generateBlock(chosen_txns, T, longest_chain_head->block_id);
+    //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
         return;
         
     }
-    bool valid;
+
+    cout<<"Non genesis block received by node "<<node_id<<" having block id "<<b->block_id<<endl;
     // no need to broadcast genesis block, as it is received by all nodes at T=0
     broadcastBlock(b,T);
     
@@ -609,9 +592,9 @@ void Node::receiveBlock(Block *b, double T)
     // cout<<"333333333333"<<endl;
 
     //if parent present
-    valid = validateAndAddTreeNode(T, parent_id, b->block_id);
+    bool valid = validateAndAddTreeNode(T, parent_id, b->block_id);
 
-    cout<<"444444444"<<endl;
+    
     // new block is valid and added to tree.
     if(valid){ 
         cout<<"received block valid"<<endl;
@@ -622,7 +605,7 @@ void Node::receiveBlock(Block *b, double T)
 
             if(longest_chain_head->block_id == parent_id){
                 // can use longest_chain_txns
-                cout<<"longest chain reused "<<endl;
+                cout<<"Adding transactions to already existing longest chain ones"<<endl;
                 set<Transaction*> txns = b->transactions;
                 for(auto txn : txns){
                     longest_chain_txns.insert(txn->transac_id);
@@ -645,6 +628,7 @@ void Node::receiveBlock(Block *b, double T)
             }
 
             // longest chain changed
+            cout<<"Longest chain for node "<<node_id<<" now becomes "<<b->block_id<<endl;
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
 
@@ -721,9 +705,9 @@ void Node::receiveBlock(Block *b, double T)
 
 void Node::broadcastBlock(Block *b, double T)
 {   
-    if(received[b->block_id]){
-        return;
-    }
+   // if(received[b->block_id]){
+    //    return;
+    //}
    
 
       vector<int> neighbours = adj[node_id];
@@ -737,7 +721,7 @@ void Node::broadcastBlock(Block *b, double T)
 
             double latency = rho + 8000*(b->transactions).size()/c + d;
             //some calculation
-
+            //cout<<"Node "<<v<" will receive this block "<<b->block_id<<" after "<<latency<<" seconds."<<endl;
             Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
             f->addBlockInfo(b);
             AddEvent(f,T+latency);
@@ -807,6 +791,7 @@ int main()
 
    //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
     int idx = rand() % n;
+    cout<<"idx is "<<idx<<endl;
     Transaction * t = new Transaction(idx);       //coinbase transaction
     id_txn_mapping[t->transac_id] = t;
 
@@ -817,6 +802,8 @@ int main()
     e->addBlockInfo(genesis);
     AddEvent(e,0);
     }
+
+    
     
     // trigger transaction generation for each node
     for(int i=0;i<n;i++){
