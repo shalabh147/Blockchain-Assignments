@@ -178,7 +178,7 @@ class Event{
     }
 
     void receive_block_event(double curr_time){
-        cout<<node_id<<endl;
+        //cout<<node_id<<endl;
         id_node_mapping[node_id]->receiveBlock(this->b, curr_time);
     }
 
@@ -725,7 +725,7 @@ void runSimulation()
         //vector<Event*> v = event_queue.begin() -> second;
         
         if(e->event_id == ID_FOR_RECEIVE_BLOCK)
-        {   cout<<"Node "<<e->node_id<<" must now receive genesis block"<<endl;
+        {   //cout<<"Node "<<e->node_id<<" must now receive genesis block"<<endl;
             e->receive_block_event(sim_time);
         }
         else if(e->event_id == ID_FOR_BROADCASTING_BLOCK)
@@ -734,7 +734,7 @@ void runSimulation()
         }
         else if(e->event_id == ID_FOR_GEN_TRANS)
         {
-            //cout<<sim_time<<" Generating transaction"<<endl;
+            cout<<sim_time<<" Node "<<e->node_id<<"has to generate transaction "<<endl;
             e->gen_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_RECEIVE_TRANS)
@@ -778,7 +778,7 @@ void Node::generateTransaction(double T)
   
   
     if(T!=0){ // if T==0, this is the trigger for generating transactions
-
+            //cout<<"About to generate txn, just checking balance\n";
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
             Transaction * Txn = new Transaction(node_id, receiving_id, coins);
@@ -868,6 +868,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
     map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
     set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
     map<int,int> new_btc_balances;
+    
     for(auto txn : current_txns){
          int idx = txn->idx;
             int idy = txn->idy;
@@ -905,7 +906,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
 
         // block is valid. Add to blockTree.
     
-
+    
     BlockTreeNode* tree_node = new BlockTreeNode();
     tree_node->arrival_time = arrival_time;
     tree_node->parent = parent_tree_node;
@@ -926,8 +927,10 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
 }
 
 void Node::checkAndBroadcastBlock(Block *b, double T){
+    
     int parent_id = id_block_mapping[b->block_id]->previous_id;
     if(longest_chain_head->block_id == parent_id){      
+        cout<<"Node "<<node_id<<" generating block with block id "<<b->block_id<<endl;
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
         AddEvent(e, T);
@@ -947,8 +950,10 @@ void Node::receiveBlock(Block *b, double T)
 
      // received genesis block
     if(parent_id == -1){
+        present[b->block_id] = true;
         cout<<"Genesis block received by node "<<node_id<<endl;
         BlockTreeNode* genesis_tree_node = new BlockTreeNode();
+        id_blockTreeNode_mapping[b->block_id] = genesis_tree_node;
         genesis_tree_node->arrival_time = T;
         genesis_tree_node->block_id = b->block_id;
         genesis_tree_node->level = 1;
@@ -964,10 +969,18 @@ void Node::receiveBlock(Block *b, double T)
 
         block_chain_leaves.insert(genesis_tree_node->block_id);
         longest_chain_head = genesis_tree_node;
-        //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
+
+
+        /////// create new txn set //////////////////////
+        set<int> chosen_txns;
+ 
+        generateBlock(chosen_txns, T, longest_chain_head->block_id);
+    //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
         return;
         
     }
+
+    cout<<"Non genesis block received by node "<<node_id<<" having block id "<<b->block_id<<endl;
     // no need to broadcast genesis block, as it is received by all nodes at T=0
     broadcastBlock(b,T);
     
@@ -975,13 +988,14 @@ void Node::receiveBlock(Block *b, double T)
 
 
    
-
+    //cout<<parent_id<<endl;
     //if parent not yet arrived at node, then wait till it comes
     if(!received[parent_id])
     {
         pending_blocks.insert(b->block_id);
         return;
     }
+    //cout<<parent_id<<endl;
     
     ////////////////////// if parent was received but discarded, this block also needs to be discared.//////////
     if(!present[parent_id]){
@@ -991,8 +1005,8 @@ void Node::receiveBlock(Block *b, double T)
 
     //if parent present
     bool valid = validateAndAddTreeNode(T, parent_id, b->block_id);
-
-
+    cout<<valid<<endl;
+    
     // new block is valid and added to tree.
     if(valid){ 
 
@@ -1003,6 +1017,7 @@ void Node::receiveBlock(Block *b, double T)
 
             if(longest_chain_head->block_id == parent_id){
                 // can use longest_chain_txns
+                cout<<"Adding transactions to already existing longest chain ones"<<endl;
                 set<Transaction*> txns = b->transactions;
                 for(auto txn : txns){
                     longest_chain_txns.insert(txn->transac_id);
@@ -1025,7 +1040,7 @@ void Node::receiveBlock(Block *b, double T)
             }
 
             // longest chain changed
-            cout<<"Longest chain for node "<<node_id<<" now becomes "<<b->block_id;
+            cout<<"Longest chain for node "<<node_id<<" now becomes "<<b->block_id<<endl;
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
 
@@ -1100,9 +1115,9 @@ void Node::receiveBlock(Block *b, double T)
 
 void Node::broadcastBlock(Block *b, double T)
 {   
-    if(received[b->block_id]){
-        return;
-    }
+   // if(received[b->block_id]){
+    //    return;
+    //}
    
 
       vector<int> neighbours = adj[node_id];
@@ -1116,7 +1131,7 @@ void Node::broadcastBlock(Block *b, double T)
 
             double latency = rho + 8000*(b->transactions).size()/c + d;
             //some calculation
-
+            //cout<<"Node "<<v<" will receive this block "<<b->block_id<<" after "<<latency<<" seconds."<<endl;
             Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
             f->addBlockInfo(b);
             AddEvent(f,T+latency);
@@ -1203,11 +1218,7 @@ int main()
     AddEvent(e,0);
     }
 
-    for(auto x: event_queue)
-    {
-        cout<<x.second->node_id<<" ";
-    }
-    cout<<endl;
+    
     
     // trigger transaction generation for each node
     for(int i=0;i<n;i++){
@@ -1229,7 +1240,7 @@ int main()
 
     
 
-    threshold = 5;
+    threshold = 2;
 
     runSimulation();    
 
