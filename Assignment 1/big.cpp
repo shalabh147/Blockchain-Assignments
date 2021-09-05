@@ -680,7 +680,8 @@ void Node::receiveBlock(Block *b, double T)
             }
 
             // longest chain changed
-            cout<<"    Longest chain head (on which mining is done) for node "<<node_id<<" now becomes "<<b->block_id<<endl;
+            int l = longest_chain_head->level+1;
+            cout<<"    Longest chain head (on which mining is done) for node "<<node_id<<" now becomes "<<b->block_id<<" (level: "<<l<<" )"<<endl;
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
 
@@ -795,7 +796,52 @@ void Node::broadcastBlock(Block *b, double T)
     
 }
 
+void outpFracOfBlocksInLongestChain(int n){
+    map<int,Block*>::iterator it;
 
+    int total_blocks_generated[n];
+    for(int i=0;i<n;i++){
+        total_blocks_generated[i]=0;
+    }
+    for(it=id_block_mapping.begin();it!=id_block_mapping.end();it++){
+        Block* block = it->second;
+        for(auto txn : block->transactions){
+            int idx = txn->idx;
+            int idy = txn->idy;
+            if(idx==-1){
+                total_blocks_generated[idy]++;
+                break;
+            }
+        }
+    }
+
+
+    map<int,Node*>::iterator iter;
+    ofstream file;
+    file.open("frac_nodes_in_longest_chain.txt");
+    file<<"node    total    in_lgst_chain"<<endl;
+    for(iter=id_node_mapping.begin(); iter!=id_node_mapping.end(); iter++){
+        int blcks_in_lngst_chain=0;
+        Node* node = iter->second;
+        BlockTreeNode* btn = node->longest_chain_head;
+        while(btn){
+            Block* block = id_block_mapping[btn->block_id];
+            for(auto txn : block->transactions){
+                int idx = txn->idx;
+                int idy = txn->idy;
+
+                if(idx==-1 && idy == iter->first){
+                    blcks_in_lngst_chain++;
+                    break;
+                }
+
+            }
+            btn = btn->parent;
+        }
+        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<endl;
+
+    }
+}
 
 
 
@@ -846,6 +892,8 @@ int main()
        id_node_mapping[id]->set_speed_to_slow();
    }
 
+   ///////////////////// differentiate between high and low hashing power/////////////////////////
+
     
    cout<<"Enter mean interarrival time for transactions: ";
    cin>>T_tx;
@@ -891,9 +939,10 @@ int main()
 
     
 
-    threshold = 3.0;
+    threshold = 10.0;
 
-    runSimulation();    
+    runSimulation(); 
+    outpFracOfBlocksInLongestChain(n);   
 
 
 }
