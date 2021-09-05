@@ -527,6 +527,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
         printLongestChainBalances(new_btc_balances);
         if(!all_good){
             cout<<"    balance neg. Not a valid block"<<endl;
+            return false;
         }
 
         // block is valid. Add to blockTree.
@@ -598,7 +599,7 @@ void Node::receiveBlock(Block *b, double T)
         for(auto txn : txns){ // only coin base transaction present
             cout<<"       txn--- "<<txn->c<<" to "<<txn->idy<<endl;
             btc_balances[txn->idy] = txn->c;
-            all_transactions.insert(txn->transac_id);
+            //all_transactions.insert(txn->transac_id);
             longest_chain_txns.insert(txn->transac_id);
         }
         genesis_tree_node->bitcoin_balances = btc_balances;
@@ -686,10 +687,22 @@ void Node::receiveBlock(Block *b, double T)
 
             /////// create new txn set //////////////////////
             set<int> utxos;
-            set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), inserter(utxos, utxos.begin()));
+
+            //set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), inserter(utxos, utxos.begin()));
+            //scam
+
+            for(int s: all_transactions)
+            {
+                if(longest_chain_txns.find(s) != longest_chain_txns.end())
+                {
+                    utxos.insert(s);
+                }
+            }
+
             set<int> chosen_txns;
-            map<int, int> new_balances;
+            //map<int, int> new_balances;
             map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
+
 
 
 /////////////////// can try other strategies for picking txns////////////////////////////////////// 
@@ -710,9 +723,9 @@ void Node::receiveBlock(Block *b, double T)
                 }
 
                 if(idx != -1){
-                    new_balances[idx] = parent_balances[idx] - coins;
+                    parent_balances[idx] = parent_balances[idx] - coins;
                 }
-                new_balances[idy] = parent_balances[idy] + coins;
+                parent_balances[idy] = parent_balances[idy] + coins;
                 chosen_txns.insert(txn_id);
                 
             }
