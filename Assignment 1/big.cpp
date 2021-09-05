@@ -77,6 +77,8 @@ class Node{
 
     set<int> all_transactions;
 
+    set<int> broadcasted_txns;
+
     // transactions in current longest chain
     set<int> longest_chain_txns;
 
@@ -368,6 +370,7 @@ void Node::generateTransaction(double T)
             cout<<"    txn: "<<Txn->transac_id<<" generated at node: "<<node_id<<endl;
             cout<<"       txn--- "<<node_id<<" gives "<<receiving_id<<" "<<coins<<endl;
             id_txn_mapping[Txn->transac_id] = Txn;
+            all_transactions.insert(Txn->transac_id);
             broadcastTransaction(Txn,T,node_id);
         }
         else{
@@ -389,16 +392,18 @@ void Node::receiveTransaction(Transaction *Txn, double T, int sender_node_id)
     all_transactions.insert(Txn->transac_id);
 
                                 // sender_node_id
-    broadcastTransaction(Txn,T, node_id);
+    broadcastTransaction(Txn,T, sender_node_id);
 }
 
 void Node::broadcastTransaction(Transaction *txn, double T, int sender_node_id)
 {
     // node already has received this txn, and has already broadcasted.
     cout<<"    txn "<<txn->transac_id<<" being broadcasted from node "<<node_id<<endl;
-    if(all_transactions.find(txn->transac_id) != all_transactions.end()){ 
+    if(broadcasted_txns.find(txn->transac_id) != broadcasted_txns.end()){ 
+        cout<<"    txn"<<txn->transac_id<<" already has been broadcasted from node "<<node_id<<endl;
         return;
     }
+
     vector<int> neighbours = adj[node_id];
 
     for(int neighbour: neighbours)
@@ -419,6 +424,8 @@ void Node::broadcastTransaction(Transaction *txn, double T, int sender_node_id)
         f->addTransactionInfo(txn);
         AddEvent(f,T+latency);
     }
+
+    broadcasted_txns.insert(txn->transac_id);
 }
 
 
@@ -814,7 +821,7 @@ int main()
     cin>>z;
   
     int frac_slow_nodes = z * n;
-    cout<<"frac of slow nodes: "<<frac_slow_nodes<<endl;
+    cout<<"Number of slow nodes: "<<frac_slow_nodes<<endl;
 
    set<int> id_slow_nodes;
    while(id_slow_nodes.size()<frac_slow_nodes){
@@ -871,7 +878,7 @@ int main()
 
     
 
-    threshold = 10.0;
+    threshold = 3.0;
 
     runSimulation();    
 

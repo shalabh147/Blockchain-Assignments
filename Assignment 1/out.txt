@@ -1,1104 +1,668 @@
 Enter fraction of slow nodes in the network: 
-frac of slow nodes: 0
-Enter mean interarrival time for transactions: Enter mean block mining time: Event dequeued at time: 0 receive block event at node: 0
-receive block id: 0 at node: 0
- parent id: -1
- genesis block received
-block id: 1 created(at t_k) at node: 0
+Number of slow nodes: 3
+0 is a slow node
+1 is a slow node
+2 is a slow node
+Enter mean interarrival time for transactions: Enter mean block mining time: 
+In coinbase of genesis node 2 gets money
+Event dequeued at time: 0 receive block event at node: 0
+    receive block id: 0 at node: 0
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 2
+    block id: 1 created( only created) at node: 0
 Event dequeued at time: 0 receive block event at node: 1
-receive block id: 0 at node: 1
- parent id: -1
- genesis block received
-block id: 2 created(at t_k) at node: 1
+    receive block id: 0 at node: 1
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 2
+    block id: 2 created( only created) at node: 1
 Event dequeued at time: 0 receive block event at node: 2
-receive block id: 0 at node: 2
- parent id: -1
- genesis block received
-block id: 3 created(at t_k) at node: 2
+    receive block id: 0 at node: 2
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 2
+    block id: 3 created( only created) at node: 2
 Event dequeued at time: 0 generate txn event at node: 0
+    Triggering txn generation at node 0
 Event dequeued at time: 0 generate txn event at node: 1
+    Triggering txn generation at node 1
 Event dequeued at time: 0 generate txn event at node: 2
-Event dequeued at time: 0 generate txn event at node: 1
-Event dequeued at time: 0 generate txn event at node: 2
-Event dequeued at time: 0 generate txn event at node: 1
-Event dequeued at time: 0 check and broadcast block event at node: 2
-block: 3received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 0 receive block event at node: 2
-receive block id: 3 at node: 2
- parent id: 0
-444444444
-received block valid
-longest chain reused 
-block id: 4 created(at t_k) at node: 2
-Event dequeued at time: 1 generate txn event at node: 2
-txn: 5 generated at node: 2
-Event dequeued at time: 1 receive txn event at node: 1
-Event dequeued at time: 1 generate txn event at node: 2
-txn: 6 generated at node: 2
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 4received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 receive txn event at node: 1
-Event dequeued at time: 1 generate txn event at node: 2
-txn: 7 generated at node: 2
-Event dequeued at time: 1 receive block event at node: 2
-receive block id: 4 at node: 2
- parent id: 3
-444444444
-received block valid
-longest chain reused 
-block id: 5 created(at t_k) at node: 2
-Event dequeued at time: 1 receive txn event at node: 1
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 5received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 5received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 5received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 receive block event at node: 2
-receive block id: 5 at node: 2
- parent id: 4
-444444444
-received block valid
-longest chain reused 
-block id: 6 created(at t_k) at node: 2
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 6received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 6received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 6received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 check and broadcast block event at node: 2
-block: 6received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 1 receive block event at node: 2
-receive block id: 6 at node: 2
- parent id: 5
-444444444
-received block valid
-longest chain reused 
-block id: 7 created(at t_k) at node: 2
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 2received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 generate txn event at node: 1
-txn: 11 generated at node: 1
-Event dequeued at time: 2 receive block event at node: 1
-receive block id: 2 at node: 1
- parent id: 0
-444444444
-received block valid
-longest chain reused 
-block id: 8 created(at t_k) at node: 1
-Event dequeued at time: 2 receive txn event at node: 0
-Event dequeued at time: 2 receive txn event at node: 2
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 8received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 8received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 8received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 8received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 8received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 receive block event at node: 1
-receive block id: 8 at node: 1
- parent id: 2
-444444444
-received block valid
-longest chain reused 
-block id: 9 created(at t_k) at node: 1
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 check and broadcast block event at node: 1
-block: 9received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 2 receive block event at node: 1
-receive block id: 9 at node: 1
- parent id: 8
-444444444
-received block valid
-longest chain reused 
-block id: 10 created(at t_k) at node: 1
-Event dequeued at time: 3 generate txn event at node: 2
-txn: 15 generated at node: 2
-Event dequeued at time: 3 check and broadcast block event at node: 2
-block: 7received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 3 generate txn event at node: 1
-txn: 16 generated at node: 1
-Event dequeued at time: 3 receive txn event at node: 1
-Event dequeued at time: 3 receive block event at node: 2
-receive block id: 7 at node: 2
- parent id: 6
-444444444
-received block valid
-longest chain reused 
-block id: 11 created(at t_k) at node: 2
-Event dequeued at time: 3 receive txn event at node: 0
-Event dequeued at time: 3 receive txn event at node: 2
-Event dequeued at time: 3 check and broadcast block event at node: 2
-block: 11received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 3 check and broadcast block event at node: 2
-block: 11received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 3 check and broadcast block event at node: 2
-block: 11received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 3 receive block event at node: 2
-receive block id: 11 at node: 2
- parent id: 7
-444444444
-received block valid
-longest chain reused 
-block id: 12 created(at t_k) at node: 2
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 19 generated at node: 2
-Event dequeued at time: 4 generate txn event at node: 1
-txn: 20 generated at node: 1
-Event dequeued at time: 4 check and broadcast block event at node: 1
-block: 10received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 21 generated at node: 2
-Event dequeued at time: 4 receive txn event at node: 0
-Event dequeued at time: 4 receive txn event at node: 2
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 12received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 receive block event at node: 1
-receive block id: 10 at node: 1
- parent id: 9
-444444444
-received block valid
-longest chain reused 
-block id: 13 created(at t_k) at node: 1
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 23 generated at node: 2
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 12 at node: 2
- parent id: 11
-444444444
-received block valid
-longest chain reused 
-block id: 14 created(at t_k) at node: 2
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 25 generated at node: 2
-Event dequeued at time: 4 check and broadcast block event at node: 1
-block: 13received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 26 generated at node: 2
-Event dequeued at time: 4 receive block event at node: 1
-receive block id: 13 at node: 1
- parent id: 10
-444444444
-received block valid
-longest chain reused 
-block id: 15 created(at t_k) at node: 1
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 14received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 28 generated at node: 2
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 14 at node: 2
- parent id: 12
-444444444
-received block valid
-longest chain reused 
-block id: 16 created(at t_k) at node: 2
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 30 generated at node: 2
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 31 generated at node: 2
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 32 generated at node: 2
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 16received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 33 generated at node: 2
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 16 at node: 2
- parent id: 14
-444444444
-received block valid
-longest chain reused 
-block id: 17 created(at t_k) at node: 2
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 generate txn event at node: 2
-txn: 35 generated at node: 2
-Event dequeued at time: 4 receive txn event at node: 1
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 17received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 17received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 17received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 17 at node: 2
- parent id: 16
-444444444
-received block valid
-longest chain reused 
-block id: 18 created(at t_k) at node: 2
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 18received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 18 at node: 2
- parent id: 17
-444444444
-received block valid
-longest chain reused 
-block id: 19 created(at t_k) at node: 2
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 check and broadcast block event at node: 2
-block: 19received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 4 receive block event at node: 2
-receive block id: 19 at node: 2
- parent id: 18
-444444444
-received block valid
-longest chain reused 
-block id: 20 created(at t_k) at node: 2
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 1received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 generate txn event at node: 1
-txn: 39 generated at node: 1
-Event dequeued at time: 5 receive block event at node: 0
-receive block id: 1 at node: 0
- parent id: 0
-444444444
-received block valid
-longest chain reused 
-block id: 21 created(at t_k) at node: 0
-Event dequeued at time: 5 receive txn event at node: 0
-Event dequeued at time: 5 receive txn event at node: 2
-Event dequeued at time: 5 check and broadcast block event at node: 2
-block: 20received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 5 receive block event at node: 2
-receive block id: 20 at node: 2
- parent id: 19
-444444444
-received block valid
-longest chain reused 
-block id: 22 created(at t_k) at node: 2
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 21received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 21received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 receive block event at node: 0
-receive block id: 21 at node: 0
- parent id: 1
-444444444
-received block valid
-longest chain reused 
-block id: 23 created(at t_k) at node: 0
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 23received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 receive block event at node: 0
-receive block id: 23 at node: 0
- parent id: 21
-444444444
-received block valid
-longest chain reused 
-block id: 24 created(at t_k) at node: 0
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 check and broadcast block event at node: 0
-block: 24received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 5 receive block event at node: 0
-receive block id: 24 at node: 0
- parent id: 23
-444444444
-received block valid
-longest chain reused 
-block id: 25 created(at t_k) at node: 0
-Event dequeued at time: 6 generate txn event at node: 0
-txn: 45 generated at node: 0
-Event dequeued at time: 6 generate txn event at node: 2
-txn: 46 generated at node: 2
-Event dequeued at time: 6 check and broadcast block event at node: 1
-block: 15received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 6 generate txn event at node: 2
-txn: 47 generated at node: 2
-Event dequeued at time: 6 generate txn event at node: 1
-txn: 48 generated at node: 1
-Event dequeued at time: 6 receive txn event at node: 1
-Event dequeued at time: 6 generate txn event at node: 0
-txn: 49 generated at node: 0
-Event dequeued at time: 6 receive txn event at node: 1
-Event dequeued at time: 6 generate txn event at node: 2
-txn: 50 generated at node: 2
-Event dequeued at time: 6 receive block event at node: 1
-receive block id: 15 at node: 1
- parent id: 13
-444444444
-received block valid
-longest chain reused 
-block id: 26 created(at t_k) at node: 1
-Event dequeued at time: 6 receive txn event at node: 1
-Event dequeued at time: 6 receive txn event at node: 0
-Event dequeued at time: 6 receive txn event at node: 2
-Event dequeued at time: 6 receive txn event at node: 1
-Event dequeued at time: 6 receive txn event at node: 1
-Event dequeued at time: 7 check and broadcast block event at node: 2
-block: 22received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 52 generated at node: 2
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 25received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 generate txn event at node: 1
-txn: 53 generated at node: 1
-Event dequeued at time: 7 generate txn event at node: 0
-txn: 54 generated at node: 0
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 55 generated at node: 2
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 56 generated at node: 2
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 generate txn event at node: 1
-txn: 57 generated at node: 1
-Event dequeued at time: 7 receive txn event at node: 2
-Event dequeued at time: 7 receive txn event at node: 0
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 25 at node: 0
- parent id: 24
-444444444
-received block valid
-longest chain reused 
-block id: 27 created(at t_k) at node: 0
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 59 generated at node: 2
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 receive block event at node: 2
-receive block id: 22 at node: 2
- parent id: 20
-444444444
-received block valid
-longest chain reused 
-block id: 28 created(at t_k) at node: 2
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 receive txn event at node: 0
-Event dequeued at time: 7 receive txn event at node: 2
-Event dequeued at time: 7 generate txn event at node: 1
-txn: 61 generated at node: 1
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 62 generated at node: 2
-Event dequeued at time: 7 generate txn event at node: 2
-txn: 63 generated at node: 2
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 27received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive txn event at node: 0
-Event dequeued at time: 7 receive txn event at node: 2
-Event dequeued at time: 7 receive txn event at node: 1
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 27 at node: 0
- parent id: 25
-444444444
-received block valid
-longest chain reused 
-block id: 29 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 29received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 29 at node: 0
- parent id: 27
-444444444
-received block valid
-longest chain reused 
-block id: 30 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 30received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 30 at node: 0
- parent id: 29
-444444444
-received block valid
-longest chain reused 
-block id: 31 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 31received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 31 at node: 0
- parent id: 30
-444444444
-received block valid
-longest chain reused 
-block id: 32 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 32received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 32 at node: 0
- parent id: 31
-444444444
-received block valid
-longest chain reused 
-block id: 33 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 33received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 33 at node: 0
- parent id: 32
-444444444
-received block valid
-longest chain reused 
-block id: 34 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 34received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 34 at node: 0
- parent id: 33
-444444444
-received block valid
-longest chain reused 
-block id: 35 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 35received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 35 at node: 0
- parent id: 34
-444444444
-received block valid
-longest chain reused 
-block id: 36 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 36received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 36 at node: 0
- parent id: 35
-444444444
-received block valid
-longest chain reused 
-block id: 37 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 37received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 37 at node: 0
- parent id: 36
-444444444
-received block valid
-longest chain reused 
-block id: 38 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 38received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 38 at node: 0
- parent id: 37
-444444444
-received block valid
-longest chain reused 
-block id: 39 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 39received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 39 at node: 0
- parent id: 38
-444444444
-received block valid
-longest chain reused 
-block id: 40 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 40received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 40 at node: 0
- parent id: 39
-444444444
-received block valid
-longest chain reused 
-block id: 41 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 41received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 41 at node: 0
- parent id: 40
-444444444
-received block valid
-longest chain reused 
-block id: 42 created(at t_k) at node: 0
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 check and broadcast block event at node: 0
-block: 42received for checkAndBroadcastBlock at node: 0 block was valid 
-Event dequeued at time: 7 receive block event at node: 0
-receive block id: 42 at node: 0
- parent id: 41
-444444444
-received block valid
-longest chain reused 
-block id: 43 created(at t_k) at node: 0
-Event dequeued at time: 8 generate txn event at node: 2
-txn: 79 generated at node: 2
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 26received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 80 generated at node: 1
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 28received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 generate txn event at node: 2
-txn: 81 generated at node: 2
-Event dequeued at time: 8 receive txn event at node: 1
-Event dequeued at time: 8 receive txn event at node: 1
-Event dequeued at time: 8 generate txn event at node: 2
-txn: 82 generated at node: 2
-Event dequeued at time: 8 receive block event at node: 1
-receive block id: 26 at node: 1
- parent id: 15
-444444444
-received block valid
-longest chain reused 
-block id: 44 created(at t_k) at node: 1
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 84 generated at node: 1
-Event dequeued at time: 8 receive block event at node: 2
-receive block id: 28 at node: 2
- parent id: 22
-444444444
-received block valid
-longest chain reused 
-block id: 45 created(at t_k) at node: 2
-Event dequeued at time: 8 receive txn event at node: 1
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 45received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 86 generated at node: 1
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 87 generated at node: 1
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 88 generated at node: 1
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 89 generated at node: 1
-Event dequeued at time: 8 receive block event at node: 2
-receive block id: 45 at node: 2
- parent id: 28
-444444444
-received block valid
-longest chain reused 
-block id: 46 created(at t_k) at node: 2
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 44received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 91 generated at node: 1
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 generate txn event at node: 1
-txn: 92 generated at node: 1
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive block event at node: 1
-receive block id: 44 at node: 1
- parent id: 26
-444444444
-received block valid
-longest chain reused 
-block id: 47 created(at t_k) at node: 1
-Event dequeued at time: 8 receive txn event at node: 0
-Event dequeued at time: 8 receive txn event at node: 2
-Event dequeued at time: 8 check and broadcast block event at node: 2
-block: 46received for checkAndBroadcastBlock at node: 2 block was valid 
-Event dequeued at time: 8 receive block event at node: 2
-receive block id: 46 at node: 2
- parent id: 45
-444444444
-received block valid
-longest chain reused 
-block id: 48 created(at t_k) at node: 2
-Event dequeued at time: 8 receive block event at node: 2
-receive block id: 46 at node: 2
- block already received; return receive block
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 check and broadcast block event at node: 1
-block: 47received for checkAndBroadcastBlock at node: 1 block was valid 
-Event dequeued at time: 8 receive block event at node: 1
-receive block id: 47 at node: 1
- parent id: 44
-444444444
-received block valid
-longest chain reused 
-block id: 49 created(at t_k) at node: 1
-Event dequeued at time: 9 generate txn event at node: 0
-txn: 96 generated at node: 0
-Event dequeued at time: 9 generate txn event at node: 2
-txn: 97 generated at node: 2
-Event dequeued at time: 9 generate txn event at node: 2
-txn: 98 generated at node: 2
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 99 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 100 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 101 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 102 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 103 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 104 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 105 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 receive txn event at node: 1
-Event dequeued at time: 9 receive txn event at node: 1
-Event dequeued at time: 9 generate txn event at node: 2
-txn: 106 generated at node: 2
-Event dequeued at time: 9 receive txn event at node: 1
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 107 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 1
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 9 generate txn event at node: 1
-txn: 108 generated at node: 1
-Event dequeued at time: 9 receive txn event at node: 0
-Event dequeued at time: 9 receive txn event at node: 2
-Event dequeued at time: 10 check and broadcast block event at node: 0
-block: 43received for checkAndBroadcastBlock at node: 0 block was valid 
+    Triggering txn generation at node 2
+Event dequeued at time: 0.018926 generate txn event at node: 2
+    txn: 4 generated at node: 2
+       txn--- 2 gives 2 42
+    txn 4 being broadcasted from node 2
+Event dequeued at time: 0.0733504 check and broadcast block event at node: 0
+    block: 1 received for checkAndBroadcastBlock at node: 0
+    block: 1 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 0.0733504 receive block event at node: 0
+    receive block id: 1 at node: 0
+    id of parent block: 0
+    broadcasting block: 1 from node 0
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 1
+    block id: 4 created( only created) at node: 0
+Event dequeued at time: 0.129344 check and broadcast block event at node: 2
+    block: 3 received for checkAndBroadcastBlock at node: 2
+    block: 3 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 0.129344 receive block event at node: 2
+    receive block id: 3 at node: 2
+    id of parent block: 0
+    broadcasting block: 3 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 2 is 100
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 3
+    block id: 5 created( only created) at node: 2
+Event dequeued at time: 0.303796 generate txn event at node: 2
+    txn: 7 generated at node: 2
+       txn--- 2 gives 2 87
+    txn 7 being broadcasted from node 2
+Event dequeued at time: 0.472578 receive txn event at node: 1
+    Node 1 received transaction 4. Adding it to txn bool and then broadcasting
+    txn 4 being broadcasted from node 1
+Event dequeued at time: 0.528092 receive block event at node: 1
+    receive block id: 1 at node: 1
+    id of parent block: 0
+    broadcasting block: 1 from node 1
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 1
+    block id: 6 created( only created) at node: 1
+Event dequeued at time: 0.574586 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 0.585216 receive block event at node: 1
+    receive block id: 3 at node: 1
+    id of parent block: 0
+    broadcasting block: 3 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 2 is 100
+    block inserted in the tree
+Event dequeued at time: 0.732966 check and broadcast block event at node: 2
+    block: 5 received for checkAndBroadcastBlock at node: 2
+    block: 5 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 0.732966 receive block event at node: 2
+    receive block id: 5 at node: 2
+    id of parent block: 3
+    broadcasting block: 5 from node 2
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block---- 50 to 2
+          Balance of node: 2 is 150
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 5
+    block id: 7 created( only created) at node: 2
+Event dequeued at time: 0.740605 generate txn event at node: 2
+    txn: 10 generated at node: 2
+       txn--- 2 gives 1 79
+    txn 10 being broadcasted from node 2
+Event dequeued at time: 0.761314 receive txn event at node: 1
+    Node 1 received transaction 7. Adding it to txn bool and then broadcasting
+    txn 7 being broadcasted from node 1
+Event dequeued at time: 0.84237 generate txn event at node: 0
+    txn: 11 generated at node: 0
+       txn--- 0 gives 1 12
+    txn 11 being broadcasted from node 0
+Event dequeued at time: 0.938461 receive txn event at node: 0
+    Node 0 received transaction 4. Adding it to txn bool and then broadcasting
+    txn 4 being broadcasted from node 0
+Event dequeued at time: 1.00882 receive block event at node: 2
+    receive block id: 1 at node: 2
+    id of parent block: 0
+    broadcasting block: 1 from node 2
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 1.0279 receive block event at node: 0
+    receive block id: 1 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.04509 receive block event at node: 2
+    receive block id: 3 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.05352 receive block event at node: 0
+    receive block id: 3 at node: 0
+    id of parent block: 0
+    broadcasting block: 3 from node 0
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 2 is 100
+    block inserted in the tree
+Event dequeued at time: 1.05444 check and broadcast block event at node: 2
+    block: 7 received for checkAndBroadcastBlock at node: 2
+    block: 7 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.05444 receive block event at node: 2
+    receive block id: 7 at node: 2
+    id of parent block: 5
+    broadcasting block: 7 from node 2
+    validating block txns
+       txn in block----  2 gives 2 87
+       txn in block---- 50 to 2
+          Balance of node: 2 is 200
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 7
+    block id: 8 created( only created) at node: 2
+Event dequeued at time: 1.08935 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 1.20438 receive block event at node: 1
+    receive block id: 5 at node: 1
+    id of parent block: 3
+    broadcasting block: 5 from node 1
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block---- 50 to 2
+          Balance of node: 2 is 150
+    block inserted in the tree
+   longest chain transactins recomputed
+    Longest chain head (on which mining is done) for node 1 now becomes 5
+    block id: 9 created( only created) at node: 1
+Event dequeued at time: 1.2051 receive txn event at node: 1
+    Node 1 received transaction 10. Adding it to txn bool and then broadcasting
+    txn 10 being broadcasted from node 1
+Event dequeued at time: 1.24684 receive txn event at node: 0
+    Node 0 received transaction 7. Adding it to txn bool and then broadcasting
+    txn 7 being broadcasted from node 0
+Event dequeued at time: 1.26022 check and broadcast block event at node: 0
+    block: 4 received for checkAndBroadcastBlock at node: 0
+    block: 4 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.26022 receive block event at node: 0
+    receive block id: 4 at node: 0
+    id of parent block: 1
+    broadcasting block: 4 from node 0
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 100
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 4
+    block id: 10 created( only created) at node: 0
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 check and broadcast block event at node: 0
+    block: 10 received for checkAndBroadcastBlock at node: 0
+    block: 10 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.2836 receive block event at node: 0
+    receive block id: 10 at node: 0
+    id of parent block: 4
+    broadcasting block: 10 from node 0
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block----  0 gives 1 12
+       txn in block---- 50 to 0
+          Balance of node: 0 is 138
+          Balance of node: 1 is 12
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 10
+    block id: 11 created( only created) at node: 0
+Event dequeued at time: 1.30094 receive txn event at node: 1
+    Node 1 received transaction 11. Adding it to txn bool and then broadcasting
+    txn 11 being broadcasted from node 1
+Event dequeued at time: 1.44794 check and broadcast block event at node: 2
+    block: 8 received for checkAndBroadcastBlock at node: 2
+    block: 8 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.44794 receive block event at node: 2
+    receive block id: 8 at node: 2
+    id of parent block: 7
+    broadcasting block: 8 from node 2
+    validating block txns
+       txn in block----  2 gives 1 79
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 171
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 8
+    block id: 12 created( only created) at node: 2
+Event dequeued at time: 1.48601 receive block event at node: 1
+    receive block id: 1 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.50678 receive block event at node: 1
+    receive block id: 3 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.51185 receive block event at node: 1
+    receive block id: 7 at node: 1
+    id of parent block: 5
+    broadcasting block: 7 from node 1
+    validating block txns
+       txn in block----  2 gives 2 87
+       txn in block---- 50 to 2
+          Balance of node: 2 is 200
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 7
+    block id: 13 created( only created) at node: 1
+Event dequeued at time: 1.66861 receive block event at node: 0
+    receive block id: 5 at node: 0
+    id of parent block: 3
+    broadcasting block: 5 from node 0
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block---- 50 to 2
+          Balance of node: 2 is 150
+    block inserted in the tree
+Event dequeued at time: 1.66945 receive block event at node: 2
+    receive block id: 5 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.67528 check and broadcast block event at node: 2
+    block: 12 received for checkAndBroadcastBlock at node: 2
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.67528 check and broadcast block event at node: 2
+    block: 12 received for checkAndBroadcastBlock at node: 2
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.67528 receive block event at node: 2
+    receive block id: 12 at node: 2
+    id of parent block: 8
+    broadcasting block: 12 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 221
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 12
+    block id: 14 created( only created) at node: 2
+Event dequeued at time: 1.68766 receive txn event at node: 0
+    Node 0 received transaction 10. Adding it to txn bool and then broadcasting
+    txn 10 being broadcasted from node 0
+Event dequeued at time: 1.73708 receive block event at node: 1
+    receive block id: 4 at node: 1
+    id of parent block: 1
+    broadcasting block: 4 from node 1
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 100
+          Balance of node: 1 is 0
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 1.73834 check and broadcast block event at node: 1
+    block: 9 received for checkAndBroadcastBlock at node: 1
+    parent of block 9 is 5. No longer mining on parent. Discard block 9
+Event dequeued at time: 1.74695 receive block event at node: 1
+    receive block id: 10 at node: 1
+    id of parent block: 4
+    broadcasting block: 10 from node 1
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block----  0 gives 1 12
+       txn in block---- 50 to 0
+          Balance of node: 0 is 138
+          Balance of node: 1 is 12
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 1.75346 check and broadcast block event at node: 2
+    block: 14 received for checkAndBroadcastBlock at node: 2
+    block: 14 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.75346 receive block event at node: 2
+    receive block id: 14 at node: 2
+    id of parent block: 12
+    broadcasting block: 14 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 271
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 14
+    block id: 15 created( only created) at node: 2
+Event dequeued at time: 1.78028 receive txn event at node: 2
+    Node 2 received transaction 11. Adding it to txn bool and then broadcasting
+    txn 11 being broadcasted from node 2
+Event dequeued at time: 1.83226 check and broadcast block event at node: 1
+    block: 2 received for checkAndBroadcastBlock at node: 1
+    parent of block 2 is 0. No longer mining on parent. Discard block 2
+Event dequeued at time: 1.92045 receive block event at node: 1
+    receive block id: 8 at node: 1
+    id of parent block: 7
+    broadcasting block: 8 from node 1
+    validating block txns
+       txn in block----  2 gives 1 79
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 171
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 8
+    block id: 16 created( only created) at node: 1
+Event dequeued at time: 1.98666 receive block event at node: 0
+    receive block id: 7 at node: 0
+    id of parent block: 5
+    broadcasting block: 7 from node 0
+    validating block txns
+       txn in block----  2 gives 2 87
+       txn in block---- 50 to 2
+          Balance of node: 2 is 200
+    block inserted in the tree
+Event dequeued at time: 1.98717 receive block event at node: 2
+    receive block id: 7 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.1109 check and broadcast block event at node: 0
+    block: 11 received for checkAndBroadcastBlock at node: 0
+    block: 11 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.1109 receive block event at node: 0
+    receive block id: 11 at node: 0
+    id of parent block: 10
+    broadcasting block: 11 from node 0
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 188
+          Balance of node: 1 is 12
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 11
+    block id: 17 created( only created) at node: 0
+Event dequeued at time: 2.13713 receive block event at node: 1
+    receive block id: 12 at node: 1
+    id of parent block: 8
+    broadcasting block: 12 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 221
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 12
+    block id: 18 created( only created) at node: 1
+Event dequeued at time: 2.15508 receive block event at node: 1
+    receive block id: 5 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.15804 generate txn event at node: 2
+    txn: 23 generated at node: 2
+       txn--- 2 gives 1 5
+    txn 23 being broadcasted from node 2
+Event dequeued at time: 2.1912 receive block event at node: 2
+    receive block id: 4 at node: 2
+    id of parent block: 1
+    broadcasting block: 4 from node 2
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 100
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 2.20341 check and broadcast block event at node: 2
+    block: 15 received for checkAndBroadcastBlock at node: 2
+    block: 15 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.20341 receive block event at node: 2
+    receive block id: 15 at node: 2
+    id of parent block: 14
+    broadcasting block: 15 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 321
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 15
+    block id: 19 created( only created) at node: 2
+Event dequeued at time: 2.21738 receive block event at node: 0
+    receive block id: 4 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.21765 receive block event at node: 1
+    receive block id: 14 at node: 1
+    id of parent block: 12
+    broadcasting block: 14 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 271
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 14
+    block id: 20 created( only created) at node: 1
+Event dequeued at time: 2.22486 check and broadcast block event at node: 2
+    block: 19 received for checkAndBroadcastBlock at node: 2
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.22486 check and broadcast block event at node: 2
+    block: 19 received for checkAndBroadcastBlock at node: 2
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.22486 check and broadcast block event at node: 2
+    block: 19 received for checkAndBroadcastBlock at node: 2
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.22486 check and broadcast block event at node: 2
+    block: 19 received for checkAndBroadcastBlock at node: 2
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.22486 receive block event at node: 2
+    receive block id: 19 at node: 2
+    id of parent block: 15
+    broadcasting block: 19 from node 2
+    validating block txns
+       txn in block----  2 gives 1 5
+       txn in block---- 50 to 2
+          Balance of node: 1 is 84
+          Balance of node: 2 is 366
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 19
+    block id: 21 created( only created) at node: 2
+Event dequeued at time: 2.22565 receive block event at node: 2
+    receive block id: 10 at node: 2
+    id of parent block: 4
+    broadcasting block: 10 from node 2
+    validating block txns
+       txn in block----  2 gives 2 42
+       txn in block----  0 gives 1 12
+       txn in block---- 50 to 0
+          Balance of node: 0 is 138
+          Balance of node: 1 is 12
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 2.23831 receive block event at node: 0
+    receive block id: 10 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.38664 receive block event at node: 2
+    receive block id: 8 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.38884 receive block event at node: 0
+    receive block id: 8 at node: 0
+    id of parent block: 7
+    broadcasting block: 8 from node 0
+    validating block txns
+       txn in block----  2 gives 1 79
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 171
+    block inserted in the tree
+Event dequeued at time: 2.44842 receive block event at node: 1
+    receive block id: 7 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.45675 check and broadcast block event at node: 2
+    block: 21 received for checkAndBroadcastBlock at node: 2
+    block: 21 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 2.45675 receive block event at node: 2
+    receive block id: 21 at node: 2
+    id of parent block: 19
+    broadcasting block: 21 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 84
+          Balance of node: 2 is 416
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 21
+    block id: 22 created( only created) at node: 2
+Event dequeued at time: 2.51795 generate txn event at node: 2
+    txn: 28 generated at node: 2
+       txn--- 2 gives 2 376
+    txn 28 being broadcasted from node 2
+Event dequeued at time: 2.5994 receive block event at node: 1
+    receive block id: 11 at node: 1
+    id of parent block: 10
+    broadcasting block: 11 from node 1
+    validating block txns
+       txn in block---- 50 to 0
+          Balance of node: 0 is 188
+          Balance of node: 1 is 12
+          Balance of node: 2 is 50
+    block inserted in the tree
+Event dequeued at time: 2.6049 receive block event at node: 0
+    receive block id: 12 at node: 0
+    id of parent block: 8
+    broadcasting block: 12 from node 0
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 221
+    block inserted in the tree
+   longest chain transactins recomputed
+    Longest chain head (on which mining is done) for node 0 now becomes 12
+    block id: 23 created( only created) at node: 0
+Event dequeued at time: 2.61385 receive txn event at node: 1
+    Node 1 received transaction 23. Adding it to txn bool and then broadcasting
+    txn 23 being broadcasted from node 1
+Event dequeued at time: 2.62358 receive block event at node: 2
+    receive block id: 12 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.66366 receive block event at node: 1
+    receive block id: 15 at node: 1
+    id of parent block: 14
+    broadcasting block: 15 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 321
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 15
+    block id: 24 created( only created) at node: 1
+Event dequeued at time: 2.67101 receive block event at node: 2
+    receive block id: 14 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.67564 receive block event at node: 1
+    receive block id: 4 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.68315 receive block event at node: 0
+    receive block id: 14 at node: 0
+    id of parent block: 12
+    broadcasting block: 14 from node 0
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 79
+          Balance of node: 2 is 271
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 14
+    block id: 25 created( only created) at node: 0
+Event dequeued at time: 2.72735 receive block event at node: 1
+    receive block id: 19 at node: 1
+    id of parent block: 15
+    broadcasting block: 19 from node 1
+    validating block txns
+       txn in block----  2 gives 1 5
+       txn in block---- 50 to 2
+          Balance of node: 1 is 84
+          Balance of node: 2 is 366
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 19
+    block id: 26 created( only created) at node: 1
+Event dequeued at time: 2.73163 receive block event at node: 1
+    receive block id: 10 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.74446 generate txn event at node: 1
+    txn: 33 generated at node: 1
+       txn--- 1 gives 0 27
+    txn 33 being broadcasted from node 1
+Event dequeued at time: 2.78286 check and broadcast block event at node: 0
+    block: 17 received for checkAndBroadcastBlock at node: 0
+    parent of block 17 is 11. No longer mining on parent. Discard block 17
+Event dequeued at time: 2.84953 receive block event at node: 1
+    receive block id: 8 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 2.87445 check and broadcast block event at node: 1
+    block: 18 received for checkAndBroadcastBlock at node: 1
+    parent of block 18 is 12. No longer mining on parent. Discard block 18
+Event dequeued at time: 2.91333 receive block event at node: 1
+    receive block id: 21 at node: 1
+    id of parent block: 19
+    broadcasting block: 21 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 1 is 84
+          Balance of node: 2 is 416
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 21
+    block id: 27 created( only created) at node: 1
+Event dequeued at time: 2.92201 check and broadcast block event at node: 1
+    block: 20 received for checkAndBroadcastBlock at node: 1
+    parent of block 20 is 14. No longer mining on parent. Discard block 20
+Event dequeued at time: 2.99346 receive txn event at node: 1
+    Node 1 received transaction 28. Adding it to txn bool and then broadcasting
+    txn 28 being broadcasted from node 1
