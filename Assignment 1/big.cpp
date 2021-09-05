@@ -803,6 +803,8 @@ void outpFracOfBlocksInLongestChain(int n){
     for(int i=0;i<n;i++){
         total_blocks_generated[i]=0;
     }
+
+    
     for(it=id_block_mapping.begin();it!=id_block_mapping.end();it++){
         Block* block = it->second;
         for(auto txn : block->transactions){
@@ -814,6 +816,35 @@ void outpFracOfBlocksInLongestChain(int n){
             }
         }
     }
+    
+/*
+   for(int i=0;i<n;i++)
+   {
+       Node* node = id_node_mapping[i];
+       set<int> leaves = node->block_chain_leaves;
+       for(int leaf_id: leaves)
+       {    
+           BlockTreeNode* bltn = node->id_blockTreeNode_mapping[leaf_id];
+           while(bltn)
+           {   
+                Block* block = id_block_mapping[bltn->block_id];
+                for(auto txn : block->transactions)
+                    {
+                        int idx = txn->idx;
+                        int idy = txn->idy;
+                        if(idx==-1 && idy==i){
+                            total_blocks_generated[i]++;
+                            break;
+                        }
+                    }
+                bltn = bltn->parent;
+           }
+
+
+       }
+
+   }
+   */
 
 
     map<int,Node*>::iterator iter;
@@ -844,7 +875,10 @@ void outpFracOfBlocksInLongestChain(int n){
 }
 
 
-
+void generateTreeFiles()
+{
+    
+}
 
 int main()
 {
@@ -944,5 +978,6 @@ int main()
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
 
+    generateTreeFiles();
 
 }
