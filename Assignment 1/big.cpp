@@ -441,9 +441,11 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     transac_pool.insert(coinbase_tr->transac_id);
 
     set<Transaction*> txns ;
+    cout<<transac_pool.size();
     for(auto id : transac_pool){
         txns.insert(id_txn_mapping[id]);
     }
+    cout<<"Coinbase txn has been included in block created"<<endl;
     Block* b =new Block(txns, parent_id ); // give transactions
     id_block_mapping[b->block_id] = b;
     cout<<"    block id: "<<b->block_id<<" created( only created) at node: "<<node_id<<endl;
@@ -616,7 +618,12 @@ void Node::receiveBlock(Block *b, double T)
 
         /////// create new txn set //////////////////////
         set<int> chosen_txns;
- 
+        if(set_faulty)
+            {   cout<<"Generating faulty transaction in new invalid block whose parent is "<<b->block_id<<endl;
+                Transaction* txn = new Transaction(1000,60,100);
+                id_txn_mapping[txn->transac_id] = txn;
+                chosen_txns.insert(txn->transac_id);
+            }
         generateBlock(chosen_txns, T, longest_chain_head->block_id);
     //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
         return;
