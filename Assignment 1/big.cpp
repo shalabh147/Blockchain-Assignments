@@ -60,7 +60,7 @@ int num_nodes=0;
 class Node{
     public:
     int node_id;
-    
+    bool set_faulty;
 
     set<int> block_chain_leaves;
     BlockTreeNode* longest_chain_head;
@@ -343,6 +343,7 @@ Node::Node()
     heights[0] =1;
     max_height = 1;
     speed = fast;
+    set_faulty = false;
 }
 
 
@@ -357,7 +358,9 @@ void Node::generateTransaction(double T)
     if(T==0){
         cout<<"    Triggering txn generation at node "<<node_id<<endl;
     }
-    int receiving_id = rand()% num_nodes ;
+    int receiving_id = rand()%(num_nodes-1) ;
+    if(receiving_id >= node_id)
+        receiving_id++;
     
   
   
@@ -469,18 +472,20 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
     cout<<"    validating block txns"<<endl;
     BlockTreeNode* parent_tree_node = id_blockTreeNode_mapping[parent_id];
     map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
-
+    
     set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
     map<int,int> new_btc_balances;
     bool all_good=true;
+    //cout<<"here?"<<endl;
 
     map<int,int>::iterator iter;
     for(iter=parent_btc_balances.begin(); iter!=parent_btc_balances.end();iter++){
         new_btc_balances[iter->first] = iter->second;
     }
+    //cout<<"here?"<<endl;
     
     for(auto txn : current_txns){
-         int idx = txn->idx;
+            int idx = txn->idx;
             int idy = txn->idy;
             int c = txn->c;
             if(idx==-1){
@@ -694,7 +699,7 @@ void Node::receiveBlock(Block *b, double T)
 
             for(int s: all_transactions)
             {
-                if(longest_chain_txns.find(s) != longest_chain_txns.end())
+                if(longest_chain_txns.find(s) == longest_chain_txns.end())
                 {
                     utxos.insert(s);
                 }
@@ -707,7 +712,15 @@ void Node::receiveBlock(Block *b, double T)
 
 
 /////////////////// can try other strategies for picking txns////////////////////////////////////// 
-            for(auto txn_id : utxos){
+            if(set_faulty)
+            {   cout<<"Generating faulty transaction in new invalid block whose parent is "<<b->block_id<<endl;
+                Transaction* txn = new Transaction(1000,60,100);
+                id_txn_mapping[txn->transac_id] = txn;
+                chosen_txns.insert(txn->transac_id);
+            }
+            else
+            {
+                for(auto txn_id : utxos){
                 if(chosen_txns.size() == MAX_TXNS){
                     break;
                 }
@@ -729,6 +742,7 @@ void Node::receiveBlock(Block *b, double T)
                 parent_balances[idy] = parent_balances[idy] + coins;
                 chosen_txns.insert(txn_id);
                 
+                }
             }
 
             generateBlock(chosen_txns, T, longest_chain_head->block_id);
@@ -736,6 +750,9 @@ void Node::receiveBlock(Block *b, double T)
         }
 
 
+    }
+    else{
+        cout<<" Block "<<b->block_id<<" discarded because it was invalid"<<endl;
     }
     
     
@@ -916,6 +933,7 @@ int main()
     int frac_slow_nodes = z * n;
     cout<<"Number of slow nodes: "<<frac_slow_nodes<<endl;
 
+
    set<int> id_slow_nodes;
    while(id_slow_nodes.size()<frac_slow_nodes){
        id_slow_nodes.insert(rand() % n);
@@ -926,15 +944,27 @@ int main()
        id_node_mapping[id]->set_speed_to_slow();
    }
 
+
    ///////////////////// differentiate between high and low hashing power/////////////////////////
 
-    
+    int invalid_block_nodes;
    cout<<"Enter mean interarrival time for transactions: ";
    cin>>T_tx;
 
    
    cout<<"Enter mean block mining time: ";
    cin>>T_k;
+
+    cout<<"How many nodes should produce invalid blocks?";
+    cin>>invalid_block_nodes;
+
+    for(int i=0;i<invalid_block_nodes;i++)
+    {
+        int x;
+        cout<<"Enter node to produce faulty block: ";
+        cin>>x;
+        id_node_mapping[x]->set_faulty = true;
+    }
 
    //decide a random node to be given credit for genesis block having a transaction giving it 50 coins
     int idx = rand() % n;
