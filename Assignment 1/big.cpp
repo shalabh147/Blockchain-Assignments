@@ -55,6 +55,8 @@ struct BlockTreeNode {
 
 };
 
+
+
 int num_nodes=0;
 
 class Node{
@@ -241,6 +243,11 @@ class Transaction{
     
 };
 
+struct compare {
+    bool operator() (const Transaction* x, const Transaction* y) const {
+        return x->transac_id<y->transac_id; 
+    }
+};
 
 // 0 is the genesis block
 map<int, Block*> id_block_mapping;  //to traverse the tree
@@ -253,7 +260,7 @@ public:
     int block_id;
     int previous_id;
 
-    set<Transaction* >  transactions;
+    set<Transaction*,compare >  transactions;
 
     //std::random_device rd; 
     //std::mt19937 gen(rd());
@@ -271,7 +278,7 @@ public:
         block_id = total_blocks_created;
         total_blocks_created++;
         // id_block_mapping[block_id] = this;
-        set<Transaction *> s;
+        set<Transaction *,compare> s;
         s.insert(t);
         transactions = s;
         previous_id = -1;
@@ -279,7 +286,7 @@ public:
 
 
 
-    Block(set<Transaction *> s, int prev_id)
+    Block(set<Transaction *,compare> s, int prev_id)
     {
         block_id = total_blocks_created;
         total_blocks_created++;
@@ -440,7 +447,7 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     id_txn_mapping[coinbase_tr->transac_id] = coinbase_tr;
     transac_pool.insert(coinbase_tr->transac_id);
 
-    set<Transaction*> txns ;
+    set<Transaction*,compare> txns ;
     //cout<<transac_pool.size();
     for(auto id : transac_pool){
         txns.insert(id_txn_mapping[id]);
@@ -475,7 +482,7 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
     BlockTreeNode* parent_tree_node = id_blockTreeNode_mapping[parent_id];
     map<int,int> parent_btc_balances = parent_tree_node->bitcoin_balances;
     
-    set<Transaction*> current_txns = id_block_mapping[b_id]->transactions;
+    set<Transaction*,compare> current_txns = id_block_mapping[b_id]->transactions;
     map<int,int> new_btc_balances;
     bool all_good=true;
     //cout<<"here?"<<endl;
@@ -602,7 +609,7 @@ void Node::receiveBlock(Block *b, double T)
         genesis_tree_node->block_id = b->block_id;
         genesis_tree_node->level = 1;
         id_blockTreeNode_mapping[b->block_id] = genesis_tree_node;
-        set<Transaction*> txns = b->transactions;
+        set<Transaction*,compare> txns = b->transactions;
         map<int,int> btc_balances;
         for(auto txn : txns){ // only coin base transaction present
             cout<<"       txn--- "<<txn->c<<" to "<<txn->idy<<endl;
@@ -670,12 +677,11 @@ void Node::receiveBlock(Block *b, double T)
             if(longest_chain_head->block_id == parent_id){
                 // can use longest_chain_txns
                 cout<<"    Adding transactions to already existing longest chain"<<endl;
-                set<Transaction*> txns = b->transactions;
+                set<Transaction*,compare> txns = b->transactions;
                 for(auto txn : txns){
                     longest_chain_txns.insert(txn->transac_id);
                 }
             }
-
             else{
                 // recompute longest_chain_txns
                 set<int> new_txns;
@@ -683,7 +689,7 @@ void Node::receiveBlock(Block *b, double T)
                 cout<<"   longest chain transactins recomputed"<<endl;
                 while(n->parent){
                     Block* b = id_block_mapping[n->block_id];
-                    set<Transaction*> txns = b->transactions;
+                    set<Transaction*,compare> txns = b->transactions;
                     for(auto txn : txns){
                         new_txns.insert(txn->transac_id);
                     }
@@ -718,7 +724,7 @@ void Node::receiveBlock(Block *b, double T)
             map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
 
 
-
+            
 /////////////////// can try other strategies for picking txns////////////////////////////////////// 
             if(set_faulty)
             {   cout<<"Generating faulty transaction in new invalid block whose parent is "<<b->block_id<<endl;
@@ -727,7 +733,9 @@ void Node::receiveBlock(Block *b, double T)
                 chosen_txns.insert(txn->transac_id);
             }
             else
-            {
+            {   
+                //printLongestChainBalances(parent_balances);
+
                 for(auto txn_id : utxos){
                 if(chosen_txns.size() == MAX_TXNS){
                     break;
@@ -748,6 +756,7 @@ void Node::receiveBlock(Block *b, double T)
                     parent_balances[idx] = parent_balances[idx] - coins;
                 }
                 parent_balances[idy] = parent_balances[idy] + coins;
+                //cout<<idx<<" "<<idy<<" "<<coins<<endl;
                 chosen_txns.insert(txn_id);
                 
                 }
@@ -1011,7 +1020,7 @@ int main()
 
     
 
-    threshold = 10.0;
+    threshold = 30.0;
 
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
