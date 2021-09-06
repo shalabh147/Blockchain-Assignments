@@ -441,11 +441,11 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     transac_pool.insert(coinbase_tr->transac_id);
 
     set<Transaction*> txns ;
-    cout<<transac_pool.size();
+    //cout<<transac_pool.size();
     for(auto id : transac_pool){
         txns.insert(id_txn_mapping[id]);
     }
-    cout<<"Coinbase txn has been included in block created"<<endl;
+    //cout<<"Coinbase txn has been included in block created"<<endl;
     Block* b =new Block(txns, parent_id ); // give transactions
     id_block_mapping[b->block_id] = b;
     cout<<"    block id: "<<b->block_id<<" created( only created) at node: "<<node_id<<endl;
@@ -485,11 +485,12 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
         new_btc_balances[iter->first] = iter->second;
     }
     //cout<<"here?"<<endl;
-    
+    //cout<<current_txns.size()<<endl;
     for(auto txn : current_txns){
             int idx = txn->idx;
             int idy = txn->idy;
             int c = txn->c;
+            //cout<<idx<<" "<<idy<<" "<<c<<endl;
             if(idx==-1){
                 cout<<"       txn in block---- "<<c<<" to "<<idy<<endl;
             }
