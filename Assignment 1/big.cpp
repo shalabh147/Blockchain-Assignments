@@ -883,13 +883,20 @@ void outpFracOfBlocksInLongestChain(int n){
 
     map<int,Node*>::iterator iter;
     ofstream file;
+    ofstream file2;
+    file2.open("Contribution_matrix.txt");
+    file2<<"2D matrix with i,j denoting contribution of jth node to longest chain of ith node\n";
+    file2<<"Length of longest chain given at end of each row\n";
     file.open("frac_nodes_in_longest_chain.txt");
     file<<"node    total    in_lgst_chain"<<endl;
     for(iter=id_node_mapping.begin(); iter!=id_node_mapping.end(); iter++){
         int blcks_in_lngst_chain=0;
+        vector<int> contri_nodes(n,0);
         Node* node = iter->second;
         BlockTreeNode* btn = node->longest_chain_head;
+        int length=0;
         while(btn){
+        	length++;
             Block* block = id_block_mapping[btn->block_id];
             for(auto txn : block->transactions){
                 int idx = txn->idx;
@@ -903,15 +910,64 @@ void outpFracOfBlocksInLongestChain(int n){
             }
             btn = btn->parent;
         }
+//  individual contri of nodes to longest chain
+        btn = node->longest_chain_head;
+        while(btn){
+            Block* block = id_block_mapping[btn->block_id];
+            int fl=0;
+            for(auto txn : block->transactions){
+                int idx = txn->idx;
+                int idy = txn->idy;
+
+                if(idx==-1){
+                	contri_nodes[idy]++;
+                	fl++;
+                }
+
+            }
+            // cout<<fl<<endl;
+            btn = btn->parent;
+        }
+        file2<<"For Node "<<node->node_id<<":\t";
+        for(int i=0;i<n;i++)
+        	file2<<contri_nodes[i]<<"\t";
+        file2<<"Length = "<<length<<endl;
+        // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
         file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<endl;
 
     }
 }
 
-
+// generates tree files and dot files for each node
 void generateTreeFiles()
 {
-    
+    for (auto& v : id_node_mapping){
+        string dotfile= "digraph D{\n";
+        string tp = "tree_"+to_string((*v.second).node_id);
+        // cout<<tp<<endl;
+        ofstream MyFile(tp+".txt");
+        for(auto& block : (*v.second).id_blockTreeNode_mapping){
+            if((*(block.second)).parent == NULL){
+                MyFile<<block.first<<", "<<(*(block.second)).level<<", "<<(*(block.second)).arrival_time<<", "<<-1<<endl;
+            }
+            else{
+                dotfile+=to_string((*(*(block.second)).parent).block_id)+" -> "+
+                                to_string(block.first)+"\n";
+                // dotfile+=to_string((*(*(block.second)).parent).block_id)+"["+to_string((*(*(block.second)).parent).arrival_time)+"]"+" -> "+
+                //                 to_string(block.first)+"["+to_string((*(block.second)).arrival_time)+"]"+"\n";
+                MyFile<<block.first<<", "<<(*(block.second)).level<<", "<<(*(block.second)).arrival_time<<", "<<(*(*(block.second)).parent).block_id<<endl;
+            }
+        }
+        dotfile+="}";
+        MyFile.close();
+        ofstream MyFile2(tp+".dot");
+        MyFile2<<dotfile;
+        MyFile2.close();
+        string comm = "dot -Tpng " + tp+ ".dot" +" -o "+tp+".png" ;
+        // cout<<comm<<endl;
+        system(comm.c_str());
+        // system("dot -Tpng " + tp+ ".dot" +" -o "+tp+".png");
+    }
 }
 
 int main()
