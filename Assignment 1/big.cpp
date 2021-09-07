@@ -97,7 +97,7 @@ class Node{
 
     Block* block_at_t;
     
-    int num_blocks_generated;
+
     
     int max_height;
 
@@ -353,7 +353,6 @@ Node::Node()
     max_height = 1;
     speed = fast;
     set_faulty = false;
-    num_blocks_generated = 0;
 }
 
 
@@ -579,7 +578,6 @@ void Node::checkAndBroadcastBlock(Block *b, double T){
     int parent_id = id_block_mapping[b->block_id]->previous_id;
     if(longest_chain_head->block_id == parent_id){      
         cout<<"    block: "<<b->block_id<<" still valid at t+t_k. Receive at node who created it and then broadcast"<<endl;
-        num_blocks_generated++;
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
         AddEvent(e, T);
@@ -836,6 +834,7 @@ void Node::broadcastBlock(Block *b, double T)
 }
 
 void outpFracOfBlocksInLongestChain(int n){
+    cout<<setprecision(3);
     map<int,Block*>::iterator it;
 
     int total_blocks_generated[n];
@@ -885,7 +884,10 @@ void outpFracOfBlocksInLongestChain(int n){
    }
    */
 
-
+    double slow_sum=0;
+    double fast_sum=0;
+    int num_slow=0;
+    int num_fast=0;
     map<int,Node*>::iterator iter;
     ofstream file;
     ofstream file2;
@@ -893,7 +895,7 @@ void outpFracOfBlocksInLongestChain(int n){
     file2<<"2D matrix with i,j denoting contribution of jth node to longest chain of ith node\n";
     file2<<"Length of longest chain given at end of each row\n";
     file.open("frac_nodes_in_longest_chain.txt");
-    file<<"node    total    in_lgst_chain    power"<<endl;
+    file<<"node    total in_lgst_chain    ratio    power(%)"<<endl;
     for(iter=id_node_mapping.begin(); iter!=id_node_mapping.end(); iter++){
         int blcks_in_lngst_chain=0;
         vector<int> contri_nodes(n,0);
@@ -938,9 +940,25 @@ void outpFracOfBlocksInLongestChain(int n){
         	file2<<contri_nodes[i]<<"\t";
         file2<<"Length = "<<length<<endl;
         // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
-        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
+        if(node->speed==slow){
+            num_slow++;
+            slow_sum+=1.0*blcks_in_lngst_chain/total_blocks_generated[iter->first];
+        }
+        else{
+            num_fast++;
+            fast_sum+=1.0*blcks_in_lngst_chain/total_blocks_generated[iter->first];
+        }
+        if(blcks_in_lngst_chain==0)
+            file<<node->node_id<<"        "<<total_blocks_generated[iter->first]<<"        "<<blcks_in_lngst_chain<<"            "<<1.0*blcks_in_lngst_chain/total_blocks_generated[iter->first]<<"        "<<node->hash_percent<<endl;
+        else
+            file<<node->node_id<<"        "<<total_blocks_generated[iter->first]<<"        "<<blcks_in_lngst_chain<<"        "<<1.0*blcks_in_lngst_chain/total_blocks_generated[iter->first]<<"        "<<node->hash_percent<<endl;
 
     }
+    if(num_slow !=0)
+        cout<<"Average r for slow nodes = "<<slow_sum/num_slow<<endl;
+    if(num_fast!=0)
+        cout<<"Average r for fast nodes = "<<fast_sum/num_fast<<endl;
+    
 }
 
 // generates tree files and dot files for each node
@@ -1034,10 +1052,16 @@ int main()
    cout<<"Enter mean block mining time: ";
    cin>>T_k;
 //  generating random hash power
+// expo used to generate hashing power in an exponential way to compare and contrast
+// give same values for uniform distribution of hash power
    double rand_hashing_power[n];
    double tot_sum=0;
+   double expo=1;
    for(int i=0;i<n;i++){
     rand_hashing_power[i]=rand();
+    // rand_hashing_power[i]=1;
+    // rand_hashing_power[i]=expo;
+    // expo*=1.3;
     tot_sum+=rand_hashing_power[i];
    }
    for(int i=0;i<n;i++){
@@ -1093,22 +1117,26 @@ int main()
     
 
     // simple 1-neighbour connected graph
-    //for(int i=0;i<n-1;i++)
-    //{
-     //   adj[i].push_back(i+1);
-     //   adj[i+1].push_back(i);
-    //}
+    for(int i=0;i<n-1;i++)
+    {
+        adj[i].push_back(i+1);
+        adj[i+1].push_back(i);
+    }
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
 
     //create latency matrix (again global variable) or leave the code as it is
 
     
 
-    threshold = 100.0;
+    threshold = 30.0;
 
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
 
     generateTreeFiles();
+
+    cout<<"Height of tree "<<id_node_mapping[0]->longest_chain_head->level<<endl;
+    cout<<"Mean T_k = "<<T_k<<endl;
+    cout<<"Number of nodes = "<<n<<endl;
 
 }
