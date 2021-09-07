@@ -97,7 +97,7 @@ class Node{
 
     Block* block_at_t;
     
-
+    int num_blocks_generated;
     
     int max_height;
 
@@ -353,6 +353,7 @@ Node::Node()
     max_height = 1;
     speed = fast;
     set_faulty = false;
+    num_blocks_generated = 0;
 }
 
 
@@ -578,6 +579,7 @@ void Node::checkAndBroadcastBlock(Block *b, double T){
     int parent_id = id_block_mapping[b->block_id]->previous_id;
     if(longest_chain_head->block_id == parent_id){      
         cout<<"    block: "<<b->block_id<<" still valid at t+t_k. Receive at node who created it and then broadcast"<<endl;
+        num_blocks_generated++;
         Event * e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
         e->addBlockInfo(b);
         AddEvent(e, T);
@@ -936,7 +938,7 @@ void outpFracOfBlocksInLongestChain(int n){
         	file2<<contri_nodes[i]<<"\t";
         file2<<"Length = "<<length<<endl;
         // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
-        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
+        file<<node->node_id<<"    "<<node->num_blocks_generated<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
 
     }
 }
@@ -1090,11 +1092,11 @@ int main()
     
 
     // simple 1-neighbour connected graph
-    for(int i=0;i<n-1;i++)
-    {
-        adj[i].push_back(i+1);
-        adj[i+1].push_back(i);
-    }
+    //for(int i=0;i<n-1;i++)
+    //{
+     //   adj[i].push_back(i+1);
+     //   adj[i+1].push_back(i);
+    //}
     //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
 
     //create latency matrix (again global variable) or leave the code as it is
