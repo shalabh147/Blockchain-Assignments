@@ -944,11 +944,12 @@ void outpFracOfBlocksInLongestChain(int n){
 // generates tree files and dot files for each node
 void generateTreeFiles()
 {
+    string dir="outputs/";
     for (auto& v : id_node_mapping){
         string dotfile= "digraph D{\n";
         string tp = "tree_"+to_string((*v.second).node_id);
         // cout<<tp<<endl;
-        ofstream MyFile(tp+".txt");
+        ofstream MyFile(dir+tp+".txt");
         for(auto& block : (*v.second).id_blockTreeNode_mapping){
             if((*(block.second)).parent == NULL){
                 MyFile<<block.first<<", "<<(*(block.second)).level<<", "<<(*(block.second)).arrival_time<<", "<<-1<<endl;
@@ -963,10 +964,10 @@ void generateTreeFiles()
         }
         dotfile+="}";
         MyFile.close();
-        ofstream MyFile2(tp+".dot");
+        ofstream MyFile2(dir+tp+".dot");
         MyFile2<<dotfile;
         MyFile2.close();
-        string comm = "dot -Tpng " + tp+ ".dot" +" -o "+tp+".png" ;
+        string comm = "dot -Tpng " + dir+tp+ ".dot" +" -o "+dir+tp+".png" ;
         // cout<<comm<<endl;
         system(comm.c_str());
         // system("dot -Tpng " + tp+ ".dot" +" -o "+tp+".png");
