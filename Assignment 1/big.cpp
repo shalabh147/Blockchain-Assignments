@@ -938,7 +938,7 @@ void outpFracOfBlocksInLongestChain(int n){
         	file2<<contri_nodes[i]<<"\t";
         file2<<"Length = "<<length<<endl;
         // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
-        file<<node->node_id<<"    "<<node->num_blocks_generated<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
+        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
 
     }
 }
@@ -1103,7 +1103,7 @@ int main()
 
     
 
-    threshold = 30.0;
+    threshold = 100.0;
 
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
