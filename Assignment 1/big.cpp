@@ -63,6 +63,8 @@ class Node{
     public:
     int node_id;
     bool set_faulty;
+    exponential_distribution<double> mining_exp_distr;
+    double hash_percent;
 
     set<int> block_chain_leaves;
     BlockTreeNode* longest_chain_head;
@@ -457,7 +459,8 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     id_block_mapping[b->block_id] = b;
     cout<<"    block id: "<<b->block_id<<" created( only created) at node: "<<node_id<<endl;
     
-    std::exponential_distribution<double> mining_exp_distr (1/T_k);
+    // std::exponential_distribution<double> mining_exp_distr (1/T_k);
+    // std::exponential_distribution<double> mining_exp_distr (hash_percent/(100*T_k));
     double t_k = mining_exp_distr(gen);
 
     double new_time = T + t_k;
@@ -888,7 +891,7 @@ void outpFracOfBlocksInLongestChain(int n){
     file2<<"2D matrix with i,j denoting contribution of jth node to longest chain of ith node\n";
     file2<<"Length of longest chain given at end of each row\n";
     file.open("frac_nodes_in_longest_chain.txt");
-    file<<"node    total    in_lgst_chain"<<endl;
+    file<<"node    total    in_lgst_chain    power"<<endl;
     for(iter=id_node_mapping.begin(); iter!=id_node_mapping.end(); iter++){
         int blcks_in_lngst_chain=0;
         vector<int> contri_nodes(n,0);
@@ -933,7 +936,7 @@ void outpFracOfBlocksInLongestChain(int n){
         	file2<<contri_nodes[i]<<"\t";
         file2<<"Length = "<<length<<endl;
         // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
-        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<endl;
+        file<<node->node_id<<"    "<<total_blocks_generated[iter->first]<<"    "<<blcks_in_lngst_chain<<"    "<<node->hash_percent<<endl;
 
     }
 }
@@ -1027,6 +1030,28 @@ int main()
    
    cout<<"Enter mean block mining time: ";
    cin>>T_k;
+//  generating random hash power
+   double rand_hashing_power[n];
+   double tot_sum=0;
+   for(int i=0;i<n;i++){
+    rand_hashing_power[i]=rand();
+    tot_sum+=rand_hashing_power[i];
+   }
+   for(int i=0;i<n;i++){
+	exponential_distribution<double> node_distr ((100*rand_hashing_power[i]/tot_sum)/(100*T_k));
+	id_node_mapping[i]->hash_percent=(100*rand_hashing_power[i]/tot_sum);
+	id_node_mapping[i]->mining_exp_distr = node_distr;
+    cout<<id_node_mapping[i]->hash_percent<<endl;
+   }
+//    cout<<"Enter percent of hashing power of nodes \n";
+//    for(int i=0;i<n;i++){
+//    	double percent;
+// 	cout<<"For node "<<i<<" : ";
+// 	cin>>percent;
+// 	exponential_distribution<double> node_distr (percent/(100*T_k));
+// 	id_node_mapping[i]->hash_percent=percent;
+// 	id_node_mapping[i]->mining_exp_distr = node_distr;
+//    }
 
     cout<<"How many nodes should produce invalid blocks?";
     cin>>invalid_block_nodes;
