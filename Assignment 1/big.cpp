@@ -22,10 +22,9 @@ std::random_device                  rand_dev;
 std::mt19937                        generator(rand_dev());
 
 std::uniform_real_distribution<double>  distr(0.01, 0.5);
-// extern std::uniform_real_distribution<double>  distr();
+
 
 const double rho = distr(generator);
-// const double rho = distr(generator);
 
 class Event;
 class Block;
@@ -102,15 +101,6 @@ class Node{
     int max_height;
 
     node_speed speed;
-
-    // Block b;
-
-    
-  
-    //static exponential_distribution<double> transac_exp_distr(1/T_tx);
-    //static mt19937 gen(1);
-  
-    // static int num_nodes;
 
     int num_node = 0;
     Node();
@@ -206,7 +196,7 @@ class Event{
 
 int num_transactions=0;
 class Transaction{
-    // static int num_transactions;
+ 
     public:
     int transac_id;
     
@@ -219,7 +209,6 @@ class Transaction{
     {
         transac_id = num_transactions;
         num_transactions++;
-        // id_txn_mapping[transac_id] = this;
     }
 
         Transaction(int s_id, int r_id, int co)
@@ -229,7 +218,6 @@ class Transaction{
         idx = s_id;
         idy = r_id;
         c = co;
-        // id_txn_mapping[transac_id] = this;
     }
 
     // this constructor is only used for creating coinbase transactions (r_id?)
@@ -239,8 +227,6 @@ class Transaction{
         idx = -1;
         idy = s_id;
         c = COINBASE_REWARD;
-        // id_txn_mapping[transac_id] = this;
-
     }
     
 };
@@ -257,19 +243,13 @@ map<int, Block*> id_block_mapping;  //to traverse the tree
 int total_blocks_created=0;
 
 class Block{
-    // static int total_blocks_created;
 public:
     int block_id;
     int previous_id;
 
     set<Transaction*,compare >  transactions;
 
-    //std::random_device rd; 
-    //std::mt19937 gen(rd());
-    //std::exponential_distribution<> mining_exp_distr (1/1);
-    
-    
-    
+   
     Block()
     {
         
@@ -279,7 +259,6 @@ public:
     {
         block_id = total_blocks_created;
         total_blocks_created++;
-        // id_block_mapping[block_id] = this;
         set<Transaction *,compare> s;
         s.insert(t);
         transactions = s;
@@ -292,7 +271,6 @@ public:
     {
         block_id = total_blocks_created;
         total_blocks_created++;
-        // id_block_mapping[block_id] = this;
         previous_id = prev_id;
         transactions = s;
     }
@@ -312,7 +290,6 @@ void runSimulation()
         
         Event* e = event_queue.begin() -> second;
         cout<<"Event dequeued at time: "<<sim_time;
-        //vector<Event*> v = event_queue.begin() -> second;
         
         if(e->event_id == ID_FOR_RECEIVE_BLOCK)
         {
@@ -325,11 +302,9 @@ void runSimulation()
         }
         else if(e->event_id == ID_FOR_GEN_TRANS)
         {
-            // cout<<sim_time<<" Node "<<e->node_id<<"has to generate transaction "<<endl;
             e->gen_trans_event(sim_time);
         }
-        else if(e->event_id == ID_FOR_RECEIVE_TRANS)
-        {   //cout<<sim_time<<" Receiving transaction"<<endl;
+        else if(e->event_id == ID_FOR_RECEIVE_TRANS){
             e->receive_trans_event(sim_time);
         }
         else if(e->event_id == ID_FOR_CHECK_AND_BROADCAST_BLOCK){
@@ -346,7 +321,6 @@ Node::Node()
 {
     node_id = num_nodes;
     num_nodes++;
-    // id_node_mapping[node_id] = this;
     
     parent[0] = -1; // genesis block has no parent
     heights[0] =1;
@@ -374,7 +348,7 @@ void Node::generateTransaction(double T)
   
   
     if(T!=0){ // if T==0, this is the trigger for generating transactions
-            //cout<<"About to generate txn, just checking balance\n";
+      
         if(longest_chain_head->bitcoin_balances[node_id] != 0){
             int coins = rand() % longest_chain_head->bitcoin_balances[node_id];
             
@@ -392,7 +366,6 @@ void Node::generateTransaction(double T)
     std::exponential_distribution<double> transac_exp_distr(1/T_tx);
     double sampled_next_interarrival_time =  transac_exp_distr(gen);
     double next_txn_time = T + sampled_next_interarrival_time;
-    //cout<<"Generate next trans at "<<next_txn_time<<endl;
     Event * e = new Event(ID_FOR_GEN_TRANS, node_id);  
     
     AddEvent(e,next_txn_time);
@@ -450,7 +423,6 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     transac_pool.insert(coinbase_tr->transac_id);
 
     set<Transaction*,compare> txns ;
-    //cout<<transac_pool.size();
     for(auto id : transac_pool){
         txns.insert(id_txn_mapping[id]);
     }
@@ -458,9 +430,6 @@ void Node::generateBlock(set<int> transac_pool, double T, int parent_id)
     Block* b =new Block(txns, parent_id ); // give transactions
     id_block_mapping[b->block_id] = b;
     cout<<"    block id: "<<b->block_id<<" created( only created) at node: "<<node_id<<endl;
-    
-    // std::exponential_distribution<double> mining_exp_distr (1/T_k);
-    // std::exponential_distribution<double> mining_exp_distr (hash_percent/(100*T_k));
     double t_k = mining_exp_distr(gen);
 
     double new_time = T + t_k;
@@ -488,19 +457,15 @@ bool Node::validateAndAddTreeNode( double arrival_time, int parent_id, int b_id)
     set<Transaction*,compare> current_txns = id_block_mapping[b_id]->transactions;
     map<int,int> new_btc_balances;
     bool all_good=true;
-    //cout<<"here?"<<endl;
 
     map<int,int>::iterator iter;
     for(iter=parent_btc_balances.begin(); iter!=parent_btc_balances.end();iter++){
         new_btc_balances[iter->first] = iter->second;
     }
-    //cout<<"here?"<<endl;
-    //cout<<current_txns.size()<<endl;
     for(auto txn : current_txns){
             int idx = txn->idx;
             int idy = txn->idy;
             int c = txn->c;
-            //cout<<idx<<" "<<idy<<" "<<c<<endl;
             if(idx==-1){
                 cout<<"       txn in block---- "<<c<<" to "<<idy<<endl;
             }
@@ -617,7 +582,6 @@ void Node::receiveBlock(Block *b, double T)
         for(auto txn : txns){ // only coin base transaction present
             cout<<"       txn--- "<<txn->c<<" to "<<txn->idy<<endl;
             btc_balances[txn->idy] = txn->c;
-            //all_transactions.insert(txn->transac_id);
             longest_chain_txns.insert(txn->transac_id);
         }
         genesis_tree_node->bitcoin_balances = btc_balances;
@@ -636,12 +600,11 @@ void Node::receiveBlock(Block *b, double T)
                 chosen_txns.insert(txn->transac_id);
             }
         generateBlock(chosen_txns, T, longest_chain_head->block_id);
-    //cout<<longest_chain_head->bitcoin_balances[2]<<endl;
         return;
         
     }
 
-    // cout<<"Non genesis block received by node "<<node_id<<" having block id "<<b->block_id<<endl;
+
     // no need to broadcast genesis block, as it is received by all nodes at T=0
     broadcastBlock(b,T);
     
@@ -671,7 +634,6 @@ void Node::receiveBlock(Block *b, double T)
     
     // new block is valid and added to tree.
     if(valid){ 
-        // cout<<"  received block valid"<<endl;
         present[b->block_id] = true;
 
         if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){ // block on which mining is done is changed
@@ -723,7 +685,6 @@ void Node::receiveBlock(Block *b, double T)
             }
 
             set<int> chosen_txns;
-            //map<int, int> new_balances;
             map<int,int> parent_balances = longest_chain_head->bitcoin_balances;
 
 
@@ -737,7 +698,7 @@ void Node::receiveBlock(Block *b, double T)
             }
             else
             {   
-                //printLongestChainBalances(parent_balances);
+            
 
                 for(auto txn_id : utxos){
                 if(chosen_txns.size() == MAX_TXNS){
@@ -759,7 +720,7 @@ void Node::receiveBlock(Block *b, double T)
                     parent_balances[idx] = parent_balances[idx] - coins;
                 }
                 parent_balances[idy] = parent_balances[idy] + coins;
-                //cout<<idx<<" "<<idy<<" "<<coins<<endl;
+      
                 chosen_txns.insert(txn_id);
                 
                 }
@@ -787,8 +748,7 @@ void Node::receiveBlock(Block *b, double T)
 //////////////////////////////////////// change to account for arrival time /////////////////////////////
 
 
-// ********************** discuss this *********************************** //
-            if(valid || present[id_block_mapping[blck_id]->previous_id]){ // same bools??
+            if(valid || present[id_block_mapping[blck_id]->previous_id]){ 
             cout<<"    parent was valid. Created event to process this block: "<<blck_id<<endl;
             Event *e = new Event(ID_FOR_RECEIVE_BLOCK, node_id);
             e->addBlockInfo(id_block_mapping[blck_id]);
@@ -807,9 +767,7 @@ void Node::receiveBlock(Block *b, double T)
 
 void Node::broadcastBlock(Block *b, double T)
 {   
-   // if(received[b->block_id]){
-    //    return;
-    //}
+   
    
     cout<<"    broadcasting block: "<<b->block_id<<" from node "<<node_id<<endl;
       vector<int> neighbours = adj[node_id];
@@ -824,7 +782,6 @@ void Node::broadcastBlock(Block *b, double T)
             double latency = rho + 8000*(b->transactions).size()/c + d;
             //some calculation
             
-            //cout<<"Node "<<v<" will receive this block "<<b->block_id<<" after "<<latency<<" seconds."<<endl;
             Event* f = new Event(ID_FOR_RECEIVE_BLOCK, v);
             f->addBlockInfo(b);
             AddEvent(f,T+latency);
@@ -855,35 +812,6 @@ void outpFracOfBlocksInLongestChain(int n){
         }
     }
     
-/*
-   for(int i=0;i<n;i++)
-   {
-       Node* node = id_node_mapping[i];
-       set<int> leaves = node->block_chain_leaves;
-       for(int leaf_id: leaves)
-       {    
-           BlockTreeNode* bltn = node->id_blockTreeNode_mapping[leaf_id];
-           while(bltn)
-           {   
-                Block* block = id_block_mapping[bltn->block_id];
-                for(auto txn : block->transactions)
-                    {
-                        int idx = txn->idx;
-                        int idy = txn->idy;
-                        if(idx==-1 && idy==i){
-                            total_blocks_generated[i]++;
-                            break;
-                        }
-                    }
-                bltn = bltn->parent;
-           }
-
-
-       }
-
-   }
-   */
-
     double slow_sum=0;
     double fast_sum=0;
     int num_slow=0;
@@ -932,14 +860,12 @@ void outpFracOfBlocksInLongestChain(int n){
                 }
 
             }
-            // cout<<fl<<endl;
             btn = btn->parent;
         }
         file2<<"For Node "<<node->node_id<<":\t";
         for(int i=0;i<n;i++)
         	file2<<contri_nodes[i]<<"\t";
         file2<<"Length = "<<length<<endl;
-        // cout<<"Blocks in longest chain of "<< node->node_id <<" = "<<tmp<<endl;
         if(node->speed==slow){
             num_slow++;
             slow_sum+=1.0*blcks_in_lngst_chain/total_blocks_generated[iter->first];
@@ -968,7 +894,7 @@ void generateTreeFiles()
     for (auto& v : id_node_mapping){
         string dotfile= "digraph D{\n";
         string tp = "tree_"+to_string((*v.second).node_id);
-        // cout<<tp<<endl;
+    
         ofstream MyFile(dir+tp+".txt");
         for(auto& block : (*v.second).id_blockTreeNode_mapping){
             if((*(block.second)).parent == NULL){
@@ -977,8 +903,7 @@ void generateTreeFiles()
             else{
                 dotfile+=to_string((*(*(block.second)).parent).block_id)+" -> "+
                                 to_string(block.first)+"\n";
-                // dotfile+=to_string((*(*(block.second)).parent).block_id)+"["+to_string((*(*(block.second)).parent).arrival_time)+"]"+" -> "+
-                //                 to_string(block.first)+"["+to_string((*(block.second)).arrival_time)+"]"+"\n";
+                
                 MyFile<<block.first<<", "<<(*(block.second)).level<<", "<<(*(block.second)).arrival_time<<", "<<(*(*(block.second)).parent).block_id<<endl;
             }
         }
@@ -988,9 +913,9 @@ void generateTreeFiles()
         MyFile2<<dotfile;
         MyFile2.close();
         string comm = "dot -Tpng " + dir+tp+ ".dot" +" -o "+dir+tp+".png" ;
-        // cout<<comm<<endl;
+  
         system(comm.c_str());
-        // system("dot -Tpng " + tp+ ".dot" +" -o "+tp+".png");
+    
     }
 }
 
@@ -1059,9 +984,7 @@ int main()
    double expo=1;
    for(int i=0;i<n;i++){
     rand_hashing_power[i]=rand();
-    // rand_hashing_power[i]=1;
-    // rand_hashing_power[i]=expo;
-    // expo*=1.3;
+ 
     tot_sum+=rand_hashing_power[i];
    }
    for(int i=0;i<n;i++){
@@ -1070,15 +993,7 @@ int main()
 	id_node_mapping[i]->mining_exp_distr = node_distr;
     cout<<id_node_mapping[i]->hash_percent<<endl;
    }
-//    cout<<"Enter percent of hashing power of nodes \n";
-//    for(int i=0;i<n;i++){
-//    	double percent;
-// 	cout<<"For node "<<i<<" : ";
-// 	cin>>percent;
-// 	exponential_distribution<double> node_distr (percent/(100*T_k));
-// 	id_node_mapping[i]->hash_percent=percent;
-// 	id_node_mapping[i]->mining_exp_distr = node_distr;
-//    }
+
 
     cout<<"How many nodes should produce invalid blocks?";
     cin>>invalid_block_nodes;
@@ -1114,17 +1029,7 @@ int main()
         AddEvent(e,0);
     }
     
-    
 
-    // simple 1-neighbour connected graph
-    for(int i=0;i<n-1;i++)
-    {
-        adj[i].push_back(i+1);
-        adj[i+1].push_back(i);
-    }
-    //create an adjacency matrix out of these nodes (should be a global variable in classes.h)
-
-    //create latency matrix (again global variable) or leave the code as it is
 
     
 
