@@ -30,7 +30,6 @@ with open("edge_list.txt",'w+') as f:
     attacker = input("Enter Attacker Node: ")
     attacker += "\n"
     f.write(attacker)
-
     
 
     invalid_block_nodes = input("How many nodes should produce invalid blocks?")
