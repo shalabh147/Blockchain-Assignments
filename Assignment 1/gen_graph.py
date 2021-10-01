@@ -4,7 +4,7 @@ import networkx as nx
 import sys
 n = int(sys.argv[1])
 
-g = nx.barabasi_albert_graph(n, 2)
+g = nx.barabasi_albert_graph(n, 3)
 
 with open("edge_list.txt",'w+') as f:
     nodes = str(n) + "\n"

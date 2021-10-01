@@ -1128,7 +1128,7 @@ int main()
 
     
 
-    threshold = 30.0;
+    threshold = 20.0;
 
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
