@@ -758,10 +758,22 @@ void Node::receiveBlock(Block *b, double T)
                 if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level - 2) //should cover case 1 and 2 (lead of 1 or 2, and honest node discovers block)
                 {
                     //broadcast attacker blocks that are currently unreleased
+                    for(int blck_id : forked_chain_unreleased)
+                    {
+                        broadcastBlock(id_block_mapping[blck_id],T);
+                    }
+                    forked_chain_unreleased.clear();
                 }
                 else
                 {
-                    //broadcast only the first unreleased block
+                    //broadcast only the first unreleased block (first check if it has any unreleased block)
+
+                    if(forked_chain_unreleased.size())
+                    {   
+                        int first_block_id = *(forked_chain_unreleased.begin());
+                        broadcastBlock(id_block_mapping[first_block_id],T);
+                        forked_chain_unreleased.erase(first_block_id);
+                    }
                 }
             }
         }
