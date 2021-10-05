@@ -62,7 +62,9 @@ class Node{
     public:
     int node_id;
     bool set_faulty;
-    bool is_attacker;
+    bool is_attacker_selfish;
+    bool is_attacker_stubborn;
+    int state;
     exponential_distribution<double> mining_exp_distr;
     double hash_percent;
 
@@ -334,7 +336,9 @@ Node::Node()
     max_height = 1;
     speed = fast;
     set_faulty = false;
-    is_attacker = false;
+    is_attacker_selfish = false;
+    is_attacker_stubborn = false;
+    state = 0;
 }
 
 
@@ -616,9 +620,9 @@ void Node::receiveBlock(Block *b, double T)
 
     // no need to broadcast genesis block, as it is received by all nodes at T=0
 
-    if(is_attacker)
+    if(is_attacker_selfish)
     {
-        if(b->who_created == node_id)
+        if(b->who_created == node_id)    //if the attacker himself created this block, then he can conceal (in case of state >= 1) or reveal(in state 0') but for now we are keeping it privately only
         {
             forked_chain_unreleased.insert(b->block_id);
         }
@@ -659,8 +663,16 @@ void Node::receiveBlock(Block *b, double T)
         present[b->block_id] = true;
 
         if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level){ // block on which mining is done is changed
+        //C1 : in case of selfish miner, this can happen when in state 0 (only genesis block present) and we received either honest or attacker block
+        //C2 : can happen in state 0' (when new block comes and attaches to either the honest or attacker's block)
+        //C3 : in all other cases, will extend the lead of the miner only. 
 
-
+        //C1 already handled, since we are broadcasting our block when honest block comes to take it to state 0'
+        //0 -> 0 handled
+        //0 -> 1 handled
+        //i -> i+1 handled, i>=1
+        //1 -> 0' handled (in else section)
+        //0' -> 0 : 3 cases, all handled
             if(longest_chain_head->block_id == parent_id){
                 // can use longest_chain_txns
                 cout<<"    Adding transactions to already existing longest chain"<<endl;
@@ -690,6 +702,35 @@ void Node::receiveBlock(Block *b, double T)
             cout<<"    Longest chain head (on which mining is done) for node "<<node_id<<" now becomes "<<b->block_id<<" (level: "<<l<<" )"<<endl;
             longest_chain_head = id_blockTreeNode_mapping[b->block_id];
 
+            if(is_attacker_selfish)
+            {
+                if(b->who_created == node_id)
+                {
+                    if(state == -1)         //-1 signifies state 0'
+                    {
+                        broadcastBlock(b,T);
+                        forked_chain_unreleased.erase(b->block_id);
+                        state = 0;
+                    }
+                    else if(state == 0)
+                    {
+                        state = 1;
+                    }
+                    else
+                    {
+                        state++;
+                    }
+                }
+                else
+                {
+                    if(state == -1)
+                    {
+                        state = 0;
+                        forked_chain_unreleased.clear();
+                    }
+                    
+                }
+            }
 
 
             /////// create new txn set //////////////////////
@@ -753,18 +794,41 @@ void Node::receiveBlock(Block *b, double T)
         }
         else
         {
-            if(is_attacker)
+            if(is_attacker_selfish)
             {
-                if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level - 2) //should cover case 1 and 2 (lead of 1 or 2, and honest node discovers block)
+                if(state == 1 && b->who_created!=node_id)
                 {
+                    cout<<"Attacker releases all his blocks!\n";
                     //broadcast attacker blocks that are currently unreleased
                     for(int blck_id : forked_chain_unreleased)
                     {
                         broadcastBlock(id_block_mapping[blck_id],T);
                     }
                     forked_chain_unreleased.clear();
+                    state = -1;
                 }
-                else
+                else if(state == 2 && b->who_created!=node_id)
+                {
+                    cout<<"Attacker releases all his blocks!\n";
+                    //broadcast attacker blocks that are currently unreleased
+                    for(int blck_id : forked_chain_unreleased)
+                    {
+                        broadcastBlock(id_block_mapping[blck_id],T);
+                    }
+                    forked_chain_unreleased.clear();
+                    state = 0;
+                }
+                // if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level - 2) //should cover case 1 and 2 (lead of 1 or 2, and honest node discovers block)
+                // {
+                //     cout<<"Attacker releases all his blocks!\n";
+                //     //broadcast attacker blocks that are currently unreleased
+                //     for(int blck_id : forked_chain_unreleased)
+                //     {
+                //         broadcastBlock(id_block_mapping[blck_id],T);
+                //     }
+                //     forked_chain_unreleased.clear();
+                // }
+                else if(state >= 2 && b->who_created!=node_id)
                 {
                     //broadcast only the first unreleased block (first check if it has any unreleased block)
 
@@ -773,6 +837,7 @@ void Node::receiveBlock(Block *b, double T)
                         int first_block_id = *(forked_chain_unreleased.begin());
                         broadcastBlock(id_block_mapping[first_block_id],T);
                         forked_chain_unreleased.erase(first_block_id);
+                        state--;
                     }
                 }
             }
@@ -1031,7 +1096,7 @@ int main()
     cout<<"Enter Attacker Node: ";
     cin>>attacker;
 
-    id_node_mapping[attacker]->is_attacker = true;
+    id_node_mapping[attacker]->is_attacker_selfish = true;
 
     //  generating random hash power
     // expo used to generate hashing power in an exponential way to compare and contrast
@@ -1041,9 +1106,17 @@ int main()
    double expo=1;
    for(int i=0;i<n;i++){
     rand_hashing_power[i]=rand();
+    //cout<<rand_hashing_power[i]<<" ";
  
     tot_sum+=rand_hashing_power[i];
    }
+
+   rand_hashing_power[attacker] = tot_sum*0.6;
+   tot_sum = 0;
+   for(int i=0;i<n;i++){
+    tot_sum+=rand_hashing_power[i];
+   }
+   cout<<endl;
    for(int i=0;i<n;i++){
 	exponential_distribution<double> node_distr ((100*rand_hashing_power[i]/tot_sum)/(100*T_k));
 	id_node_mapping[i]->hash_percent=(100*rand_hashing_power[i]/tot_sum);
@@ -1051,6 +1124,7 @@ int main()
     cout<<id_node_mapping[i]->hash_percent<<endl;
    }
 
+    id_node_mapping[attacker]->speed = fast;
 
     cout<<"How many nodes should produce invalid blocks?";
     cin>>invalid_block_nodes;
@@ -1090,7 +1164,7 @@ int main()
 
     
 
-    threshold = 20.0;
+    threshold = 15.0;
 
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n);   
