@@ -620,7 +620,7 @@ void Node::receiveBlock(Block *b, double T)
 
     // no need to broadcast genesis block, as it is received by all nodes at T=0
 
-    if(is_attacker_selfish)
+    if(is_attacker_selfish || is_attacker_stubborn)
     {
         if(b->who_created == node_id)    //if the attacker himself created this block, then he can conceal (in case of state >= 1) or reveal(in state 0') but for now we are keeping it privately only
         {
@@ -732,6 +732,33 @@ void Node::receiveBlock(Block *b, double T)
                 }
             }
 
+            if(is_attacker_stubborn)
+            {
+                if(b->who_created == node_id)
+                {
+                    if(state == -1)
+                    {
+                        state = 1;
+                    }
+                    else if(state == 0)
+                    {
+                        state = 1;
+                    }
+                    else
+                    {
+                        state++;
+                    }
+                }
+                else
+                {
+                    if(state == -1)
+                    {
+                        state = 0;
+                        forked_chain_unreleased.clear();
+                    }
+                }
+            }
+
 
             /////// create new txn set //////////////////////
             set<int> utxos;
@@ -832,6 +859,32 @@ void Node::receiveBlock(Block *b, double T)
                 {
                     //broadcast only the first unreleased block (first check if it has any unreleased block)
 
+                    if(forked_chain_unreleased.size())
+                    {   
+                        int first_block_id = *(forked_chain_unreleased.begin());
+                        broadcastBlock(id_block_mapping[first_block_id],T);
+                        forked_chain_unreleased.erase(first_block_id);
+                        state--;
+                    }
+                }
+            }
+
+
+            if(is_attacker_stubborn)
+            {
+                if(state == 1 && b->who_created!=node_id)
+                {
+                    cout<<"Attacker releases all his blocks!\n";
+                    //broadcast attacker blocks that are currently unreleased
+                    for(int blck_id : forked_chain_unreleased)
+                    {
+                        broadcastBlock(id_block_mapping[blck_id],T);
+                    }
+                    forked_chain_unreleased.clear();
+                    state = -1;
+                }
+                else if(state > 1 && b->who_created!=node_id)
+                {
                     if(forked_chain_unreleased.size())
                     {   
                         int first_block_id = *(forked_chain_unreleased.begin());
