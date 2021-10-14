@@ -1087,26 +1087,67 @@ void generateTreeFiles()
 
 int main()
 {
+    srand((unsigned int)time(NULL));
     // creating edge list from input file
-
+    cout<<"Enter number of nodes: ";
     int n; // number of nodes
     cin>>n; // reading from file
+    adj.resize(n);
+    int attacker;
 
-    int num_edges;
-    cin>>num_edges; // reading from file
+    cout<<"Enter Attacker Node: ";
+    cin>>attacker;
 
-    for(int i=0;i<n;i++){
-        vector<int> x;
-        adj.push_back(x);
+    vector<int> v1, v2;
+    v1.push_back(attacker);
+
+    for(int i=0;i<n;i++)
+    {
+        if(i!=attacker)
+            v2.push_back(i);
     }
 
-    //construction edge list
-    for(int i=0;i<num_edges;i++){
-        int x; int y;
-        cin>>x>>y; // reading from file
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+
+    ofstream edge_file("edge_list.txt");
+    
+           
+    
+    
+   //cout<<"Reached here?"<<endl;
+   // cout<<v1.size()<<" "<<v2.size()<<endl;
+    int rand1 = rand()%(v2.size());
+   // cout<<rand1<<endl;
+    v1.push_back(v2[rand1]);
+    adj[attacker].push_back(v2[rand1]);
+    adj[v2[rand1]].push_back(attacker);
+    edge_file<<attacker<<" "<<v2[rand1]<<endl;
+    //cout<<"???????"<<endl;
+    v2.erase(v2.begin()+rand1);
+
+    //cout<<"Reached here?"<<endl;
+    while(v2.size())
+    {
+        int rand2 = rand()%(v2.size());
+        int rand3 = 1+rand()%(v1.size()-1);
+        v1.push_back(v2[rand2]);
+        adj[v1[rand3]].push_back(v2[rand2]);
+        adj[v2[rand2]].push_back(v1[rand3]);
+        edge_file<<v1[rand3]<<" "<<v2[rand2]<<endl;
+        v2.erase(v2.begin()+rand2);
     }
+
+    // for(int i=0;i<n;i++)
+    // {
+    //     if(i!=attacker && adj[i].size()*2.5 < n)
+    //     {
+            
+    //     }
+    // }
+
+    //make dense by adding more edges
+    //take fraction of neighbours for adversary as input and add more edges
+    edge_file.close();
+    
 
     for(int i=0;i<n;i++){
         Node* node =new  Node();
@@ -1144,12 +1185,9 @@ int main()
    cin>>T_k;
 
 
-    int attacker;
+    
 
-    cout<<"Enter Attacker Node: ";
-    cin>>attacker;
-
-    id_node_mapping[attacker]->is_attacker_selfish = true;
+    id_node_mapping[attacker]->is_attacker_stubborn = true;
 
     //  generating random hash power
     // expo used to generate hashing power in an exponential way to compare and contrast
