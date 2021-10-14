@@ -1088,7 +1088,6 @@ void generateTreeFiles()
 int main()
 {
     srand((unsigned int)time(NULL));
-    // creating edge list from input file
     cout<<"Enter number of nodes: ";
     int n; // number of nodes
     cin>>n; // reading from file
@@ -1097,6 +1096,10 @@ int main()
 
     cout<<"Enter Attacker Node: ";
     cin>>attacker;
+
+    double frac_neighbours;
+    cout<<"Enter what fraction of nodes should be neighbours of attacker: ";
+    cin>>frac_neighbours;
 
     vector<int> v1, v2;
     v1.push_back(attacker);
@@ -1107,24 +1110,18 @@ int main()
             v2.push_back(i);
     }
 
-
+    //v1 contains nodes which have been connected, v2 contains unconnected
+    //first take one random node from v2, connect it to attacker and remove from v2
     ofstream edge_file("edge_list.txt");
-    
-           
-    
-    
-   //cout<<"Reached here?"<<endl;
-   // cout<<v1.size()<<" "<<v2.size()<<endl;
+  
     int rand1 = rand()%(v2.size());
-   // cout<<rand1<<endl;
     v1.push_back(v2[rand1]);
     adj[attacker].push_back(v2[rand1]);
     adj[v2[rand1]].push_back(attacker);
     edge_file<<attacker<<" "<<v2[rand1]<<endl;
-    //cout<<"???????"<<endl;
     v2.erase(v2.begin()+rand1);
 
-    //cout<<"Reached here?"<<endl;
+    //now keep on taking random node from v2 and connecting to random node from v1 except attacker
     while(v2.size())
     {
         int rand2 = rand()%(v2.size());
@@ -1136,6 +1133,19 @@ int main()
         v2.erase(v2.begin()+rand2);
     }
 
+    //now add random edges from attacker to satisfy its neighbour fraction
+    int attacker_neighbours = (int)(frac_neighbours*(n-1));
+    int i = 0;
+    while(i<n && adj[attacker].size() < attacker_neighbours)
+    {
+        if(i!=rand1 && i!=attacker)
+            {
+                adj[attacker].push_back(i);
+                adj[i].push_back(attacker);
+                edge_file<<attacker<<" "<<i<<endl;
+            }
+        i++;
+    }
     // for(int i=0;i<n;i++)
     // {
     //     if(i!=attacker && adj[i].size()*2.5 < n)
@@ -1144,8 +1154,7 @@ int main()
     //     }
     // }
 
-    //make dense by adding more edges
-    //take fraction of neighbours for adversary as input and add more edges
+    //make dense by adding more random edges
     edge_file.close();
     
 
