@@ -1,0 +1,104 @@
+simulation time 100
+T_tx=10
+hashing power = 40%
+25%
+
+
+T_k=20
+
+stubborn
+MPU_attacker (node 0) : 0.4
+MPU_overall : 0.0099
+Fraction attacker nodes in longest chain = 0.667
+
+selfish
+MPU_attacker (node 0) : 0
+MPU_overall : 0.00998
+Fraction attacker nodes in longest chain = 0
+
+
+T_k= 10
+
+stubborn
+MPU_attacker (node 0) : 0.2
+MPU_overall : 0.00974
+Fraction attacker nodes in longest chain = 0.667
+
+selfish
+MPU_attacker (node 0) : 0.308
+MPU_overall : 0.0101
+Fraction attacker nodes in longest chain = 0.364
+
+T_k=8
+
+stubborn
+MPU_attacker (node 0) : 0.385
+MPU_overall : 0.0099
+Fraction attacker nodes in longest chain = 0.714
+
+selfish
+MPU_attacker (node 0) : 0.4
+MPU_overall : 0.00993
+Fraction attacker nodes in longest chain = 0.667
+
+T_k=6
+
+stubborn
+MPU_attacker (node 0) : 0.545
+MPU_overall : 0.00995
+Fraction attacker nodes in longest chain = 0.75
+
+selfish
+MPU_attacker (node 0) : 0.857
+MPU_overall : 0.0106
+Fraction attacker nodes in longest chain = 0.857
+
+T_k=5
+
+stubborn
+MPU_attacker (node 0) : 0.6
+MPU_overall : 0.00998
+Fraction attacker nodes in longest chain = 0.667
+
+selfish
+MPU_attacker (node 0) : 0.6
+MPU_overall : 0.00997
+Fraction attacker nodes in longest chain = 0.75
+
+T_k=1
+
+stubborn
+MPU_attacker (node 0) : 0.78
+MPU_overall : 0.00179
+Fraction attacker nodes in longest chain = 0.836
+
+selfish
+MPU_attacker (node 0) : 0.836
+MPU_overall : 0.0133
+Fraction attacker nodes in longest chain = 0.939
+
+T_k=0.5
+
+stubborn
+MPU_attacker (node 0) : 0.929
+MPU_overall : 0.00775
+Fraction attacker nodes in longest chain = 0.987
+
+selfish
+MPU_attacker (node 0) : 0.979
+MPU_overall : 0.0105
+Fraction attacker nodes in longest chain = 0.979
+
+
+Sample output
+
+MPU_attacker (node 0) : 0.929
+MPU_overall : 0.00775
+Fraction attacker nodes in longest chain = 0.987
+Height of tree 29
+Mean T_k = 0.5
+Number of nodes = 100
+T_tx = 10
+T_k = 0.5
+Attacker hashing power : 40 %
+Fraction neighbors of attackers : 0.25
