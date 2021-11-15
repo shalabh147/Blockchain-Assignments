@@ -1,0 +1,123 @@
+simulation time 100
+T_tx=10
+T_k=5
+25% frac neighbors
+
+1 stubborn (100 nodes have 1 on avg each)
+MPU_attacker (node 0) : 0
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0
+
+1 selfish
+MPU_attacker (node 0) : 0
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0
+
+10 stubborn
+MPU_attacker (node 0) : 0.133
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0.133
+Height of tree 15
+
+10 selfish
+MPU_attacker (node 0) : 0.167
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0.167
+Height of tree 15
+
+20 stubborn
+MPU_attacker (node 0) : 0.353
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0.353
+Height of tree 12
+
+20 selfish
+MPU_attacker (node 0) : 0.333
+MPU_overall : 0.00982
+Fraction attacker nodes in longest chain = 0.333
+Height of tree 17
+
+30 stubborn
+MPU_attacker (node 0) : 0.357
+MPU_overall : 0.01
+Fraction attacker nodes in longest chain = 0.357
+Height of tree 14
+
+30 selfish
+MPU_attacker (node 0) : 0.444
+MPU_overall : 0.00996
+Fraction attacker nodes in longest chain = 0.571
+Height of tree 7
+
+40 stubborn
+MPU_attacker (node 0) : 0.5
+MPU_overall : 0.00999
+Fraction attacker nodes in longest chain = 0.5
+Height of tree 10
+
+40 selfish
+MPU_attacker (node 0) : 0.6
+MPU_overall : 0.0065
+Fraction attacker nodes in longest chain = 0.6
+Height of tree 5
+
+50 stubborn
+MPU_attacker (node 0) : 0.438
+MPU_overall : 0.01
+Fraction attacker nodes in longest chain = 0.538
+
+50 selfish
+MPU_attacker (node 0) : 0.6
+MPU_overall : 0.00394
+Fraction attacker nodes in longest chain = 0.857
+Height of tree 11
+
+IGNORE below <=50 onlyyyy
+
+60 stubborn
+MPU_attacker (node 0) : 0.455
+MPU_overall : 0.00979
+Fraction attacker nodes in longest chain = 0.833
+Height of tree 6
+
+60 selfish
+MPU_attacker (node 0) : 0.6
+MPU_overall : 0.01
+Fraction attacker nodes in longest chain = 0.9
+Height of tree 8
+
+70 stubborn
+MPU_attacker (node 0) : 0.286
+MPU_overall : 0.0098
+Fraction attacker nodes in longest chain = 0.8
+Height of tree 5
+
+70 selfish
+MPU_attacker (node 0) : 0.471
+MPU_overall : 0.0099
+Fraction attacker nodes in longest chain = 0.889
+Height of tree 9
+
+80 stubborn
+MPU_attacker (node 0) : 0.444
+MPU_overall : 0.00989
+Fraction attacker nodes in longest chain = 0.889
+Height of tree 6
+
+80 selfish
+MPU_attacker (node 0) : 0.2
+MPU_overall : 0.00969
+Fraction attacker nodes in longest chain = 0.8
+Height of tree 5
+
+90 stubborn
+MPU_attacker (node 0) : 0.0556
+MPU_overall : 0.0116
+Fraction attacker nodes in longest chain = 0.5
+Height of tree 2
+
+90 selfish
+MPU_attacker (node 0) : 0.0741
+MPU_overall : 0.00923
+Fraction attacker nodes in longest chain = 0.667
+Height of tree 3

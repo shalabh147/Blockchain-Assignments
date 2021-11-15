@@ -1,0 +1,40 @@
+simulation time 100
+T_tx=10
+hashing power = 40%
+T_tk=2
+
+
+stubborn
+
+25
+MPU_attacker (node 0) : 0.7
+MPU_overall : 0.0108
+Fraction attacker nodes in longest chain = 0.7
+
+50
+MPU_attacker (node 0) : 0.733
+MPU_overall : 0.0105
+Fraction attacker nodes in longest chain = 0.733
+
+75
+MPU_attacker (node 0) : 0.788
+MPU_overall : 0.00998
+Fraction attacker nodes in longest chain = 0.897
+
+
+selfish
+
+25
+MPU_attacker (node 0) : 0.409
+MPU_overall : 0.0103
+Fraction attacker nodes in longest chain = 0.562
+
+50
+MPU_attacker (node 0) : 0.645
+MPU_overall : 0.0087
+Fraction attacker nodes in longest chain = 0.952
+
+75
+MPU_attacker (node 0) : 0.769
+MPU_overall : 0.00872
+Fraction attacker nodes in longest chain = 0.769
