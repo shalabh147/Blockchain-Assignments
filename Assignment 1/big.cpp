@@ -674,7 +674,6 @@ void Node::receiveBlock(Block *b, double T)
             set<int> utxos;
 
             //set_difference(all_transactions.begin(), all_transactions.end(), longest_chain_txns.begin(), longest_chain_txns.end(), inserter(utxos, utxos.begin()));
-            //scam
 
             for(int s: all_transactions)
             {

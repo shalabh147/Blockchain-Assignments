@@ -1,0 +1,1200 @@
+Enter fraction of slow nodes in the network: 
+Number of slow nodes: 1
+3 is a slow node
+Enter mean interarrival time for transactions: Enter mean block mining time: 7.00205
+40.2226
+24.415
+28.3604
+How many nodes should produce invalid blocks?Enter node to produce faulty block: Enter node to produce faulty block: 
+In coinbase of genesis node 0 gets money
+Event dequeued at time: 0 receive block event at node: 0
+    receive block id: 0 at node: 0
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 0
+Generating faulty transaction in new invalid block whose parent is 0
+    block id: 1 created( only created) at node: 0
+Event dequeued at time: 0 receive block event at node: 1
+    receive block id: 0 at node: 1
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 0
+Generating faulty transaction in new invalid block whose parent is 0
+    block id: 2 created( only created) at node: 1
+Event dequeued at time: 0 receive block event at node: 2
+    receive block id: 0 at node: 2
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 0
+    block id: 3 created( only created) at node: 2
+Event dequeued at time: 0 receive block event at node: 3
+    receive block id: 0 at node: 3
+    id of parent block: -1
+    genesis block received
+       txn--- 50 to 0
+    block id: 4 created( only created) at node: 3
+Event dequeued at time: 0 generate txn event at node: 0
+    Triggering txn generation at node 0
+Event dequeued at time: 0 generate txn event at node: 1
+    Triggering txn generation at node 1
+Event dequeued at time: 0 generate txn event at node: 2
+    Triggering txn generation at node 2
+Event dequeued at time: 0 generate txn event at node: 3
+    Triggering txn generation at node 3
+Event dequeued at time: 0.0567779 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 0.124438 generate txn event at node: 2
+    node 2doesn't have any money to give. No txn created
+Event dequeued at time: 0.351441 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 0.822702 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 0.854611 generate txn event at node: 3
+    node 3doesn't have any money to give. No txn created
+Event dequeued at time: 1.05955 check and broadcast block event at node: 2
+    block: 3 received for checkAndBroadcastBlock at node: 2
+    block: 3 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 1.05955 receive block event at node: 2
+    receive block id: 3 at node: 2
+    id of parent block: 0
+    broadcasting block: 3 from node 2
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 3 (level: 2 )
+    block id: 5 created( only created) at node: 2
+Event dequeued at time: 1.23232 receive block event at node: 0
+    receive block id: 3 at node: 0
+    id of parent block: 0
+    broadcasting block: 3 from node 0
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 3 (level: 2 )
+Generating faulty transaction in new invalid block whose parent is 3
+    block id: 6 created( only created) at node: 0
+Event dequeued at time: 1.40606 receive block event at node: 2
+    receive block id: 3 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.40701 receive block event at node: 1
+    receive block id: 3 at node: 1
+    id of parent block: 0
+    broadcasting block: 3 from node 1
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 0 is 50
+          Balance of node: 1 is 0
+          Balance of node: 2 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 3 (level: 2 )
+Generating faulty transaction in new invalid block whose parent is 3
+    block id: 7 created( only created) at node: 1
+Event dequeued at time: 1.476 receive block event at node: 3
+    receive block id: 3 at node: 3
+    id of parent block: 0
+    broadcasting block: 3 from node 3
+    validating block txns
+       txn in block---- 50 to 2
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 0
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 3 (level: 2 )
+    block id: 8 created( only created) at node: 3
+Event dequeued at time: 1.58014 receive block event at node: 0
+    receive block id: 3 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.58303 generate txn event at node: 3
+    node 3doesn't have any money to give. No txn created
+Event dequeued at time: 1.66683 receive block event at node: 0
+    receive block id: 3 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 1.72376 generate txn event at node: 0
+    txn: 13 generated at node: 0
+       txn--- 0 gives 2 29
+    txn 13 being broadcasted from node 0
+Event dequeued at time: 1.89747 receive txn event at node: 1
+    Node 1 received transaction 13. Adding it to txn bool and then broadcasting
+    txn 13 being broadcasted from node 1
+Event dequeued at time: 1.89774 receive txn event at node: 2
+    Node 2 received transaction 13. Adding it to txn bool and then broadcasting
+    txn 13 being broadcasted from node 2
+Event dequeued at time: 1.90335 receive txn event at node: 3
+    Node 3 received transaction 13. Adding it to txn bool and then broadcasting
+    txn 13 being broadcasted from node 3
+Event dequeued at time: 2.09511 check and broadcast block event at node: 0
+    block: 1 received for checkAndBroadcastBlock at node: 0
+    parent of block 1 is 0. No longer mining on parent. Discard block 1
+Event dequeued at time: 2.63357 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 3.22591 check and broadcast block event at node: 1
+    block: 7 received for checkAndBroadcastBlock at node: 1
+    block: 7 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 3.22591 receive block event at node: 1
+    receive block id: 7 at node: 1
+    id of parent block: 3
+    broadcasting block: 7 from node 1
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 1 is 0
+          Balance of node: 2 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 7 discarded because it was invalid
+Event dequeued at time: 3.39836 receive block event at node: 0
+    receive block id: 7 at node: 0
+    id of parent block: 3
+    broadcasting block: 7 from node 0
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 7 discarded because it was invalid
+Event dequeued at time: 3.40178 generate txn event at node: 3
+    node 3doesn't have any money to give. No txn created
+Event dequeued at time: 3.57094 receive block event at node: 1
+    receive block id: 7 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 3.57117 receive block event at node: 2
+    receive block id: 7 at node: 2
+    id of parent block: 3
+    broadcasting block: 7 from node 2
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 7 discarded because it was invalid
+Event dequeued at time: 3.60561 receive block event at node: 3
+    receive block id: 7 at node: 3
+    id of parent block: 3
+    broadcasting block: 7 from node 3
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 0
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 7 discarded because it was invalid
+Event dequeued at time: 3.68503 generate txn event at node: 2
+    txn: 14 generated at node: 2
+       txn--- 2 gives 0 19
+    txn 14 being broadcasted from node 2
+Event dequeued at time: 3.74306 check and broadcast block event at node: 3
+    block: 8 received for checkAndBroadcastBlock at node: 3
+    block: 8 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 3.74306 receive block event at node: 3
+    receive block id: 8 at node: 3
+    id of parent block: 3
+    broadcasting block: 8 from node 3
+    validating block txns
+       txn in block---- 50 to 3
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 8 (level: 3 )
+    block id: 9 created( only created) at node: 3
+Event dequeued at time: 3.74413 receive block event at node: 0
+    receive block id: 7 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 3.79133 receive block event at node: 0
+    receive block id: 7 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 3.85887 receive txn event at node: 0
+    Node 0 received transaction 14. Adding it to txn bool and then broadcasting
+    txn 14 being broadcasted from node 0
+Event dequeued at time: 3.91738 receive block event at node: 0
+    receive block id: 8 at node: 0
+    id of parent block: 3
+    broadcasting block: 8 from node 0
+    validating block txns
+       txn in block---- 50 to 3
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 8 (level: 3 )
+Generating faulty transaction in new invalid block whose parent is 8
+    block id: 10 created( only created) at node: 0
+Event dequeued at time: 4.03201 receive txn event at node: 1
+    Node 1 received transaction 14. Adding it to txn bool and then broadcasting
+    txn 14 being broadcasted from node 1
+Event dequeued at time: 4.05921 receive txn event at node: 3
+    Node 3 received transaction 14. Adding it to txn bool and then broadcasting
+    txn 14 being broadcasted from node 3
+Event dequeued at time: 4.08995 receive block event at node: 2
+    receive block id: 8 at node: 2
+    id of parent block: 3
+    broadcasting block: 8 from node 2
+    validating block txns
+       txn in block---- 50 to 3
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 8 (level: 3 )
+    block id: 11 created( only created) at node: 2
+Event dequeued at time: 4.09063 receive block event at node: 1
+    receive block id: 8 at node: 1
+    id of parent block: 3
+    broadcasting block: 8 from node 1
+    validating block txns
+       txn in block---- 50 to 3
+          Balance of node: 0 is 50
+          Balance of node: 1 is 0
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 8 (level: 3 )
+Generating faulty transaction in new invalid block whose parent is 8
+    block id: 12 created( only created) at node: 1
+Event dequeued at time: 4.11161 receive block event at node: 3
+    receive block id: 8 at node: 3
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 4.26343 receive block event at node: 0
+    receive block id: 8 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 4.26426 receive block event at node: 0
+    receive block id: 8 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 check and broadcast block event at node: 1
+    block: 12 received for checkAndBroadcastBlock at node: 1
+    block: 12 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 4.47936 receive block event at node: 1
+    receive block id: 12 at node: 1
+    id of parent block: 8
+    broadcasting block: 12 from node 1
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 1 is 0
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 12 discarded because it was invalid
+Event dequeued at time: 4.65316 receive block event at node: 0
+    receive block id: 12 at node: 0
+    id of parent block: 8
+    broadcasting block: 12 from node 0
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 12 discarded because it was invalid
+Event dequeued at time: 4.82565 receive block event at node: 1
+    receive block id: 12 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 4.82736 receive block event at node: 2
+    receive block id: 12 at node: 2
+    id of parent block: 8
+    broadcasting block: 12 from node 2
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 12 discarded because it was invalid
+Event dequeued at time: 4.85128 receive block event at node: 3
+    receive block id: 12 at node: 3
+    id of parent block: 8
+    broadcasting block: 12 from node 3
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 50
+          Balance of node: 2 is 50
+          Balance of node: 3 is 50
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 12 discarded because it was invalid
+Event dequeued at time: 4.92922 generate txn event at node: 3
+    txn: 21 generated at node: 3
+       txn--- 3 gives 0 7
+    txn 21 being broadcasted from node 3
+Event dequeued at time: 5.00035 receive block event at node: 0
+    receive block id: 12 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 5.03539 receive block event at node: 0
+    receive block id: 12 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 5.11702 receive txn event at node: 0
+    Node 0 received transaction 21. Adding it to txn bool and then broadcasting
+    txn 21 being broadcasted from node 0
+Event dequeued at time: 5.28974 receive txn event at node: 2
+    Node 2 received transaction 21. Adding it to txn bool and then broadcasting
+    txn 21 being broadcasted from node 2
+Event dequeued at time: 5.29096 receive txn event at node: 1
+    Node 1 received transaction 21. Adding it to txn bool and then broadcasting
+    txn 21 being broadcasted from node 1
+Event dequeued at time: 5.94047 check and broadcast block event at node: 3
+    block: 4 received for checkAndBroadcastBlock at node: 3
+    parent of block 4 is 0. No longer mining on parent. Discard block 4
+Event dequeued at time: 6.41903 check and broadcast block event at node: 3
+    block: 9 received for checkAndBroadcastBlock at node: 3
+    block: 9 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 6.41903 receive block event at node: 3
+    receive block id: 9 at node: 3
+    id of parent block: 8
+    broadcasting block: 9 from node 3
+    validating block txns
+       txn in block----  0 gives 2 29
+       txn in block---- 50 to 3
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 9 (level: 4 )
+    block id: 13 created( only created) at node: 3
+Event dequeued at time: 6.4356 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 6.61783 check and broadcast block event at node: 2
+    block: 5 received for checkAndBroadcastBlock at node: 2
+    parent of block 5 is 3. No longer mining on parent. Discard block 5
+Event dequeued at time: 6.63014 receive block event at node: 0
+    receive block id: 9 at node: 0
+    id of parent block: 8
+    broadcasting block: 9 from node 0
+    validating block txns
+       txn in block----  0 gives 2 29
+       txn in block---- 50 to 3
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 9 (level: 4 )
+Generating faulty transaction in new invalid block whose parent is 9
+    block id: 14 created( only created) at node: 0
+Event dequeued at time: 6.76299 generate txn event at node: 3
+    txn: 25 generated at node: 3
+       txn--- 3 gives 0 99
+    txn 25 being broadcasted from node 3
+Event dequeued at time: 6.80328 receive block event at node: 2
+    receive block id: 9 at node: 2
+    id of parent block: 8
+    broadcasting block: 9 from node 2
+    validating block txns
+       txn in block----  0 gives 2 29
+       txn in block---- 50 to 3
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 9 (level: 4 )
+    block id: 15 created( only created) at node: 2
+Event dequeued at time: 6.80425 receive block event at node: 1
+    receive block id: 9 at node: 1
+    id of parent block: 8
+    broadcasting block: 9 from node 1
+    validating block txns
+       txn in block----  0 gives 2 29
+       txn in block---- 50 to 3
+          Balance of node: 0 is 21
+          Balance of node: 1 is 0
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 9 (level: 4 )
+Generating faulty transaction in new invalid block whose parent is 9
+    block id: 16 created( only created) at node: 1
+Event dequeued at time: 6.80856 receive block event at node: 3
+    receive block id: 9 at node: 3
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 6.96845 receive txn event at node: 0
+    Node 0 received transaction 25. Adding it to txn bool and then broadcasting
+    txn 25 being broadcasted from node 0
+Event dequeued at time: 6.97573 receive block event at node: 0
+    receive block id: 9 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 6.9767 receive block event at node: 0
+    receive block id: 9 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 7.14102 receive txn event at node: 2
+    Node 2 received transaction 25. Adding it to txn bool and then broadcasting
+    txn 25 being broadcasted from node 2
+Event dequeued at time: 7.1432 receive txn event at node: 1
+    Node 1 received transaction 25. Adding it to txn bool and then broadcasting
+    txn 25 being broadcasted from node 1
+Event dequeued at time: 7.43577 generate txn event at node: 2
+    txn: 29 generated at node: 2
+       txn--- 2 gives 0 66
+    txn 29 being broadcasted from node 2
+Event dequeued at time: 7.61062 receive txn event at node: 0
+    Node 0 received transaction 29. Adding it to txn bool and then broadcasting
+    txn 29 being broadcasted from node 0
+Event dequeued at time: 7.78315 receive txn event at node: 1
+    Node 1 received transaction 29. Adding it to txn bool and then broadcasting
+    txn 29 being broadcasted from node 1
+Event dequeued at time: 7.87349 receive txn event at node: 3
+    Node 3 received transaction 29. Adding it to txn bool and then broadcasting
+    txn 29 being broadcasted from node 3
+Event dequeued at time: 7.91775 generate txn event at node: 3
+    txn: 30 generated at node: 3
+       txn--- 3 gives 1 97
+    txn 30 being broadcasted from node 3
+Event dequeued at time: 8.11427 receive txn event at node: 0
+    Node 0 received transaction 30. Adding it to txn bool and then broadcasting
+    txn 30 being broadcasted from node 0
+Event dequeued at time: 8.28671 receive txn event at node: 2
+    Node 2 received transaction 30. Adding it to txn bool and then broadcasting
+    txn 30 being broadcasted from node 2
+Event dequeued at time: 8.28674 receive txn event at node: 1
+    Node 1 received transaction 30. Adding it to txn bool and then broadcasting
+    txn 30 being broadcasted from node 1
+Event dequeued at time: 8.41015 generate txn event at node: 2
+    txn: 31 generated at node: 2
+       txn--- 2 gives 3 20
+    txn 31 being broadcasted from node 2
+Event dequeued at time: 8.43036 generate txn event at node: 0
+    txn: 32 generated at node: 0
+       txn--- 0 gives 2 8
+    txn 32 being broadcasted from node 0
+Event dequeued at time: 8.58355 receive txn event at node: 0
+    Node 0 received transaction 31. Adding it to txn bool and then broadcasting
+    txn 31 being broadcasted from node 0
+Event dequeued at time: 8.60314 receive txn event at node: 1
+    Node 1 received transaction 32. Adding it to txn bool and then broadcasting
+    txn 32 being broadcasted from node 1
+Event dequeued at time: 8.60343 receive txn event at node: 2
+    Node 2 received transaction 32. Adding it to txn bool and then broadcasting
+    txn 32 being broadcasted from node 2
+Event dequeued at time: 8.61485 receive txn event at node: 3
+    Node 3 received transaction 32. Adding it to txn bool and then broadcasting
+    txn 32 being broadcasted from node 3
+Event dequeued at time: 8.75672 receive txn event at node: 1
+    Node 1 received transaction 31. Adding it to txn bool and then broadcasting
+    txn 31 being broadcasted from node 1
+Event dequeued at time: 8.76597 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 8.79831 receive txn event at node: 3
+    Node 3 received transaction 31. Adding it to txn bool and then broadcasting
+    txn 31 being broadcasted from node 3
+Event dequeued at time: 9.11062 check and broadcast block event at node: 1
+    block: 2 received for checkAndBroadcastBlock at node: 1
+    parent of block 2 is 0. No longer mining on parent. Discard block 2
+Event dequeued at time: 9.60967 generate txn event at node: 2
+    txn: 33 generated at node: 2
+       txn--- 2 gives 1 30
+    txn 33 being broadcasted from node 2
+Event dequeued at time: 9.78243 receive txn event at node: 0
+    Node 0 received transaction 33. Adding it to txn bool and then broadcasting
+    txn 33 being broadcasted from node 0
+Event dequeued at time: 9.95696 receive txn event at node: 1
+    Node 1 received transaction 33. Adding it to txn bool and then broadcasting
+    txn 33 being broadcasted from node 1
+Event dequeued at time: 9.98588 receive txn event at node: 3
+    Node 3 received transaction 33. Adding it to txn bool and then broadcasting
+    txn 33 being broadcasted from node 3
+Event dequeued at time: 10.3066 check and broadcast block event at node: 1
+    block: 16 received for checkAndBroadcastBlock at node: 1
+    block: 16 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 10.3066 receive block event at node: 1
+    receive block id: 16 at node: 1
+    id of parent block: 9
+    broadcasting block: 16 from node 1
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 21
+          Balance of node: 1 is 0
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 16 discarded because it was invalid
+Event dequeued at time: 10.4793 receive block event at node: 0
+    receive block id: 16 at node: 0
+    id of parent block: 9
+    broadcasting block: 16 from node 0
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 16 discarded because it was invalid
+Event dequeued at time: 10.6525 receive block event at node: 2
+    receive block id: 16 at node: 2
+    id of parent block: 9
+    broadcasting block: 16 from node 2
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 16 discarded because it was invalid
+Event dequeued at time: 10.6538 receive block event at node: 1
+    receive block id: 16 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 10.6886 receive block event at node: 3
+    receive block id: 16 at node: 3
+    id of parent block: 9
+    broadcasting block: 16 from node 3
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 21
+          Balance of node: 2 is 79
+          Balance of node: 3 is 100
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 16 discarded because it was invalid
+Event dequeued at time: 10.8252 receive block event at node: 0
+    receive block id: 16 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 10.8684 receive block event at node: 0
+    receive block id: 16 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 11.1577 check and broadcast block event at node: 3
+    block: 13 received for checkAndBroadcastBlock at node: 3
+    block: 13 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 11.1577 receive block event at node: 3
+    receive block id: 13 at node: 3
+    id of parent block: 9
+    broadcasting block: 13 from node 3
+    validating block txns
+       txn in block----  2 gives 0 19
+       txn in block----  3 gives 0 7
+       txn in block---- 50 to 3
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 13 (level: 5 )
+    block id: 17 created( only created) at node: 3
+Event dequeued at time: 11.3958 receive block event at node: 0
+    receive block id: 13 at node: 0
+    id of parent block: 9
+    broadcasting block: 13 from node 0
+    validating block txns
+       txn in block----  2 gives 0 19
+       txn in block----  3 gives 0 7
+       txn in block---- 50 to 3
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 13 (level: 5 )
+Generating faulty transaction in new invalid block whose parent is 13
+    block id: 18 created( only created) at node: 0
+Event dequeued at time: 11.5685 receive block event at node: 1
+    receive block id: 13 at node: 1
+    id of parent block: 9
+    broadcasting block: 13 from node 1
+    validating block txns
+       txn in block----  2 gives 0 19
+       txn in block----  3 gives 0 7
+       txn in block---- 50 to 3
+          Balance of node: 0 is 47
+          Balance of node: 1 is 0
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 13 (level: 5 )
+Generating faulty transaction in new invalid block whose parent is 13
+    block id: 19 created( only created) at node: 1
+Event dequeued at time: 11.5689 receive block event at node: 2
+    receive block id: 13 at node: 2
+    id of parent block: 9
+    broadcasting block: 13 from node 2
+    validating block txns
+       txn in block----  2 gives 0 19
+       txn in block----  3 gives 0 7
+       txn in block---- 50 to 3
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 13 (level: 5 )
+    block id: 20 created( only created) at node: 2
+Event dequeued at time: 11.5863 receive block event at node: 3
+    receive block id: 13 at node: 3
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 11.7414 receive block event at node: 0
+    receive block id: 13 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 11.7435 receive block event at node: 0
+    receive block id: 13 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 12.1024 generate txn event at node: 3
+    txn: 40 generated at node: 3
+       txn--- 3 gives 0 46
+    txn 40 being broadcasted from node 3
+Event dequeued at time: 12.1987 check and broadcast block event at node: 2
+    block: 15 received for checkAndBroadcastBlock at node: 2
+    parent of block 15 is 9. No longer mining on parent. Discard block 15
+Event dequeued at time: 12.2926 receive txn event at node: 0
+    Node 0 received transaction 40. Adding it to txn bool and then broadcasting
+    txn 40 being broadcasted from node 0
+Event dequeued at time: 12.4651 receive txn event at node: 2
+    Node 2 received transaction 40. Adding it to txn bool and then broadcasting
+    txn 40 being broadcasted from node 2
+Event dequeued at time: 12.4659 receive txn event at node: 1
+    Node 1 received transaction 40. Adding it to txn bool and then broadcasting
+    txn 40 being broadcasted from node 1
+Event dequeued at time: 13.1252 check and broadcast block event at node: 1
+    block: 19 received for checkAndBroadcastBlock at node: 1
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 13.1252 check and broadcast block event at node: 1
+    block: 19 received for checkAndBroadcastBlock at node: 1
+    block: 19 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 13.1252 receive block event at node: 1
+    receive block id: 19 at node: 1
+    id of parent block: 13
+    broadcasting block: 19 from node 1
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 1 is 0
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 19 discarded because it was invalid
+Event dequeued at time: 13.2977 receive block event at node: 0
+    receive block id: 19 at node: 0
+    id of parent block: 13
+    broadcasting block: 19 from node 0
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 19 discarded because it was invalid
+Event dequeued at time: 13.36 generate txn event at node: 3
+    txn: 41 generated at node: 3
+       txn--- 3 gives 1 55
+    txn 41 being broadcasted from node 3
+Event dequeued at time: 13.4704 receive block event at node: 2
+    receive block id: 19 at node: 2
+    id of parent block: 13
+    broadcasting block: 19 from node 2
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 19 discarded because it was invalid
+Event dequeued at time: 13.4789 receive block event at node: 3
+    receive block id: 19 at node: 3
+    id of parent block: 13
+    broadcasting block: 19 from node 3
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 19 discarded because it was invalid
+Event dequeued at time: 13.4803 receive block event at node: 1
+    receive block id: 19 at node: 1
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 13.5401 receive txn event at node: 0
+    Node 0 received transaction 41. Adding it to txn bool and then broadcasting
+    txn 41 being broadcasted from node 0
+Event dequeued at time: 13.5711 generate txn event at node: 0
+    txn: 42 generated at node: 0
+       txn--- 0 gives 2 0
+    txn 42 being broadcasted from node 0
+Event dequeued at time: 13.6034 generate txn event at node: 1
+    node 1doesn't have any money to give. No txn created
+Event dequeued at time: 13.6451 receive block event at node: 0
+    receive block id: 19 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 13.689 receive block event at node: 0
+    receive block id: 19 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 13.7126 receive txn event at node: 1
+    Node 1 received transaction 41. Adding it to txn bool and then broadcasting
+    txn 41 being broadcasted from node 1
+Event dequeued at time: 13.7176 receive txn event at node: 2
+    Node 2 received transaction 41. Adding it to txn bool and then broadcasting
+    txn 41 being broadcasted from node 2
+Event dequeued at time: 13.7439 receive txn event at node: 1
+    Node 1 received transaction 42. Adding it to txn bool and then broadcasting
+    txn 42 being broadcasted from node 1
+Event dequeued at time: 13.7442 receive txn event at node: 2
+    Node 2 received transaction 42. Adding it to txn bool and then broadcasting
+    txn 42 being broadcasted from node 2
+Event dequeued at time: 13.758 receive txn event at node: 3
+    Node 3 received transaction 42. Adding it to txn bool and then broadcasting
+    txn 42 being broadcasted from node 3
+Event dequeued at time: 13.9877 generate txn event at node: 0
+    txn: 43 generated at node: 0
+       txn--- 0 gives 3 11
+    txn 43 being broadcasted from node 0
+Event dequeued at time: 14.0546 generate txn event at node: 2
+    txn: 44 generated at node: 2
+       txn--- 2 gives 1 54
+    txn 44 being broadcasted from node 2
+Event dequeued at time: 14.1603 receive txn event at node: 1
+    Node 1 received transaction 43. Adding it to txn bool and then broadcasting
+    txn 43 being broadcasted from node 1
+Event dequeued at time: 14.1617 receive txn event at node: 2
+    Node 2 received transaction 43. Adding it to txn bool and then broadcasting
+    txn 43 being broadcasted from node 2
+Event dequeued at time: 14.2271 receive txn event at node: 0
+    Node 0 received transaction 44. Adding it to txn bool and then broadcasting
+    txn 44 being broadcasted from node 0
+Event dequeued at time: 14.23 generate txn event at node: 3
+    txn: 45 generated at node: 3
+       txn--- 3 gives 1 39
+    txn 45 being broadcasted from node 3
+Event dequeued at time: 14.2838 receive txn event at node: 3
+    Node 3 received transaction 43. Adding it to txn bool and then broadcasting
+    txn 43 being broadcasted from node 3
+Event dequeued at time: 14.4007 receive txn event at node: 1
+    Node 1 received transaction 44. Adding it to txn bool and then broadcasting
+    txn 44 being broadcasted from node 1
+Event dequeued at time: 14.409 receive txn event at node: 3
+    Node 3 received transaction 44. Adding it to txn bool and then broadcasting
+    txn 44 being broadcasted from node 3
+Event dequeued at time: 14.4268 receive txn event at node: 0
+    Node 0 received transaction 45. Adding it to txn bool and then broadcasting
+    txn 45 being broadcasted from node 0
+Event dequeued at time: 14.6008 receive txn event at node: 1
+    Node 1 received transaction 45. Adding it to txn bool and then broadcasting
+    txn 45 being broadcasted from node 1
+Event dequeued at time: 14.6009 receive txn event at node: 2
+    Node 2 received transaction 45. Adding it to txn bool and then broadcasting
+    txn 45 being broadcasted from node 2
+Event dequeued at time: 15.9357 check and broadcast block event at node: 0
+    block: 6 received for checkAndBroadcastBlock at node: 0
+    parent of block 6 is 3. No longer mining on parent. Discard block 6
+Event dequeued at time: 15.963 generate txn event at node: 2
+    txn: 46 generated at node: 2
+       txn--- 2 gives 3 28
+    txn 46 being broadcasted from node 2
+Event dequeued at time: 16.1355 receive txn event at node: 0
+    Node 0 received transaction 46. Adding it to txn bool and then broadcasting
+    txn 46 being broadcasted from node 0
+Event dequeued at time: 16.3086 receive txn event at node: 1
+    Node 1 received transaction 46. Adding it to txn bool and then broadcasting
+    txn 46 being broadcasted from node 1
+Event dequeued at time: 16.3578 receive txn event at node: 3
+    Node 3 received transaction 46. Adding it to txn bool and then broadcasting
+    txn 46 being broadcasted from node 3
+Event dequeued at time: 16.7994 check and broadcast block event at node: 0
+    block: 18 received for checkAndBroadcastBlock at node: 0
+    block: 18 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 16.7994 receive block event at node: 0
+    receive block id: 18 at node: 0
+    id of parent block: 13
+    broadcasting block: 18 from node 0
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 18 discarded because it was invalid
+Event dequeued at time: 16.9104 check and broadcast block event at node: 0
+    block: 14 received for checkAndBroadcastBlock at node: 0
+    parent of block 14 is 9. No longer mining on parent. Discard block 14
+Event dequeued at time: 16.9719 receive block event at node: 1
+    receive block id: 18 at node: 1
+    id of parent block: 13
+    broadcasting block: 18 from node 1
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 1 is 0
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 18 discarded because it was invalid
+Event dequeued at time: 16.9723 receive block event at node: 2
+    receive block id: 18 at node: 2
+    id of parent block: 13
+    broadcasting block: 18 from node 2
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 18 discarded because it was invalid
+Event dequeued at time: 16.9897 receive block event at node: 3
+    receive block id: 18 at node: 3
+    id of parent block: 13
+    broadcasting block: 18 from node 3
+    validating block txns
+       txn in block----  1000 gives 60 100
+          Balance of node: 0 is 47
+          Balance of node: 2 is 60
+          Balance of node: 3 is 143
+          Balance of node: 60 is 100
+          Balance of node: 1000 is -100
+    balance neg. Not a valid block
+ Block 18 discarded because it was invalid
+Event dequeued at time: 17.0662 generate txn event at node: 2
+    txn: 47 generated at node: 2
+       txn--- 2 gives 1 28
+    txn 47 being broadcasted from node 2
+Event dequeued at time: 17.1451 receive block event at node: 0
+    receive block id: 18 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 17.1453 receive block event at node: 0
+    receive block id: 18 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 17.2005 receive block event at node: 0
+    receive block id: 18 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 17.2392 receive txn event at node: 0
+    Node 0 received transaction 47. Adding it to txn bool and then broadcasting
+    txn 47 being broadcasted from node 0
+Event dequeued at time: 17.3005 check and broadcast block event at node: 2
+    block: 20 received for checkAndBroadcastBlock at node: 2
+    block: 20 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.3005 receive block event at node: 2
+    receive block id: 20 at node: 2
+    id of parent block: 13
+    broadcasting block: 20 from node 2
+    validating block txns
+       txn in block----  3 gives 0 99
+       txn in block----  2 gives 3 20
+       txn in block----  0 gives 2 8
+       txn in block----  2 gives 1 30
+       txn in block---- 50 to 2
+          Balance of node: 0 is 138
+          Balance of node: 1 is 30
+          Balance of node: 2 is 68
+          Balance of node: 3 is 64
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 20 (level: 6 )
+    block id: 21 created( only created) at node: 2
+Event dequeued at time: 17.4126 receive txn event at node: 1
+    Node 1 received transaction 47. Adding it to txn bool and then broadcasting
+    txn 47 being broadcasted from node 1
+Event dequeued at time: 17.4318 receive txn event at node: 3
+    Node 3 received transaction 47. Adding it to txn bool and then broadcasting
+    txn 47 being broadcasted from node 3
+Event dequeued at time: 17.479 receive block event at node: 0
+    receive block id: 20 at node: 0
+    id of parent block: 13
+    broadcasting block: 20 from node 0
+    validating block txns
+       txn in block----  3 gives 0 99
+       txn in block----  2 gives 3 20
+       txn in block----  0 gives 2 8
+       txn in block----  2 gives 1 30
+       txn in block---- 50 to 2
+          Balance of node: 0 is 138
+          Balance of node: 1 is 30
+          Balance of node: 2 is 68
+          Balance of node: 3 is 64
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 20 (level: 6 )
+Generating faulty transaction in new invalid block whose parent is 20
+    block id: 22 created( only created) at node: 0
+Event dequeued at time: 17.652 receive block event at node: 2
+    receive block id: 20 at node: 2
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 17.6533 receive block event at node: 1
+    receive block id: 20 at node: 1
+    id of parent block: 13
+    broadcasting block: 20 from node 1
+    validating block txns
+       txn in block----  3 gives 0 99
+       txn in block----  2 gives 3 20
+       txn in block----  0 gives 2 8
+       txn in block----  2 gives 1 30
+       txn in block---- 50 to 2
+          Balance of node: 0 is 138
+          Balance of node: 1 is 30
+          Balance of node: 2 is 68
+          Balance of node: 3 is 64
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 20 (level: 6 )
+Generating faulty transaction in new invalid block whose parent is 20
+    block id: 23 created( only created) at node: 1
+Event dequeued at time: 17.6614 receive block event at node: 3
+    receive block id: 20 at node: 3
+    id of parent block: 13
+    broadcasting block: 20 from node 3
+    validating block txns
+       txn in block----  3 gives 0 99
+       txn in block----  2 gives 3 20
+       txn in block----  0 gives 2 8
+       txn in block----  2 gives 1 30
+       txn in block---- 50 to 2
+          Balance of node: 0 is 138
+          Balance of node: 1 is 30
+          Balance of node: 2 is 68
+          Balance of node: 3 is 64
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 20 (level: 6 )
+    block id: 24 created( only created) at node: 3
+Event dequeued at time: 17.7473 check and broadcast block event at node: 2
+    block: 11 received for checkAndBroadcastBlock at node: 2
+    parent of block 11 is 8. No longer mining on parent. Discard block 11
+Event dequeued at time: 17.8272 receive block event at node: 0
+    receive block id: 20 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 check and broadcast block event at node: 3
+    block: 24 received for checkAndBroadcastBlock at node: 3
+    block: 24 still valid at t+t_k. Receive at node who created it and then broadcast
+Event dequeued at time: 17.8438 receive block event at node: 3
+    receive block id: 24 at node: 3
+    id of parent block: 20
+    broadcasting block: 24 from node 3
+    validating block txns
+       txn in block----  2 gives 0 66
+       txn in block----  3 gives 0 46
+       txn in block----  0 gives 2 0
+       txn in block----  0 gives 3 11
+       txn in block---- 50 to 3
+          Balance of node: 0 is 239
+          Balance of node: 1 is 30
+          Balance of node: 2 is 2
+          Balance of node: 3 is 79
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 3 now becomes 24 (level: 7 )
+    block id: 25 created( only created) at node: 3
+Event dequeued at time: 17.8647 receive block event at node: 0
+    receive block id: 20 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 18.0747 receive block event at node: 0
+    receive block id: 24 at node: 0
+    id of parent block: 20
+    broadcasting block: 24 from node 0
+    validating block txns
+       txn in block----  2 gives 0 66
+       txn in block----  3 gives 0 46
+       txn in block----  0 gives 2 0
+       txn in block----  0 gives 3 11
+       txn in block---- 50 to 3
+          Balance of node: 0 is 239
+          Balance of node: 1 is 30
+          Balance of node: 2 is 2
+          Balance of node: 3 is 79
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 0 now becomes 24 (level: 7 )
+Generating faulty transaction in new invalid block whose parent is 24
+    block id: 26 created( only created) at node: 0
+Event dequeued at time: 18.2486 receive block event at node: 2
+    receive block id: 24 at node: 2
+    id of parent block: 20
+    broadcasting block: 24 from node 2
+    validating block txns
+       txn in block----  2 gives 0 66
+       txn in block----  3 gives 0 46
+       txn in block----  0 gives 2 0
+       txn in block----  0 gives 3 11
+       txn in block---- 50 to 3
+          Balance of node: 0 is 239
+          Balance of node: 1 is 30
+          Balance of node: 2 is 2
+          Balance of node: 3 is 79
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 2 now becomes 24 (level: 7 )
+    block id: 27 created( only created) at node: 2
+Event dequeued at time: 18.2489 receive block event at node: 1
+    receive block id: 24 at node: 1
+    id of parent block: 20
+    broadcasting block: 24 from node 1
+    validating block txns
+       txn in block----  2 gives 0 66
+       txn in block----  3 gives 0 46
+       txn in block----  0 gives 2 0
+       txn in block----  0 gives 3 11
+       txn in block---- 50 to 3
+          Balance of node: 0 is 239
+          Balance of node: 1 is 30
+          Balance of node: 2 is 2
+          Balance of node: 3 is 79
+    block inserted in the tree
+    Adding transactions to already existing longest chain
+    Longest chain head (on which mining is done) for node 1 now becomes 24 (level: 7 )
+Generating faulty transaction in new invalid block whose parent is 24
+    block id: 28 created( only created) at node: 1
+Event dequeued at time: 18.2727 receive block event at node: 3
+    receive block id: 24 at node: 3
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 18.3698 generate txn event at node: 3
+    txn: 60 generated at node: 3
+       txn--- 3 gives 2 10
+    txn 60 being broadcasted from node 3
+Event dequeued at time: 18.4219 receive block event at node: 0
+    receive block id: 24 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 18.4231 receive block event at node: 0
+    receive block id: 24 at node: 0
+    block already received; (stopping broadcast loop)
+Event dequeued at time: 18.5529 receive txn event at node: 0
+    Node 0 received transaction 60. Adding it to txn bool and then broadcasting
+    txn 60 being broadcasted from node 0
+Event dequeued at time: 18.7253 check and broadcast block event at node: 2
+    block: 21 received for checkAndBroadcastBlock at node: 2
+    parent of block 21 is 20. No longer mining on parent. Discard block 21
+Event dequeued at time: 18.7254 receive txn event at node: 1
+    Node 1 received transaction 60. Adding it to txn bool and then broadcasting
+    txn 60 being broadcasted from node 1
+Event dequeued at time: 18.7258 receive txn event at node: 2
+    Node 2 received transaction 60. Adding it to txn bool and then broadcasting
+    txn 60 being broadcasted from node 2
+Event dequeued at time: 19.0077 check and broadcast block event at node: 1
+    block: 23 received for checkAndBroadcastBlock at node: 1
+    parent of block 23 is 20. No longer mining on parent. Discard block 23
+Event dequeued at time: 19.5028 generate txn event at node: 1
+    txn: 61 generated at node: 1
+       txn--- 1 gives 3 0
+    txn 61 being broadcasted from node 1
+Event dequeued at time: 19.677 receive txn event at node: 0
+    Node 0 received transaction 61. Adding it to txn bool and then broadcasting
+    txn 61 being broadcasted from node 0
+Event dequeued at time: 19.8506 receive txn event at node: 2
+    Node 2 received transaction 61. Adding it to txn bool and then broadcasting
+    txn 61 being broadcasted from node 2
+Event dequeued at time: 19.861 receive txn event at node: 3
+    Node 3 received transaction 61. Adding it to txn bool and then broadcasting
+    txn 61 being broadcasted from node 3
+Event dequeued at time: 19.9422 generate txn event at node: 3
+    txn: 62 generated at node: 3
+       txn--- 3 gives 1 12
+    txn 62 being broadcasted from node 3
+Average r for slow nodes = 0.571
+Average r for fast nodes = 0.137
+Height of tree 7
+Mean T_k = 2
+Number of nodes = 4

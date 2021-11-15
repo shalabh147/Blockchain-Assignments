@@ -1,1 +1,0 @@
-Enter number of nodes: Enter Attacker Node: Enter fraction of slow nodes in the network: 

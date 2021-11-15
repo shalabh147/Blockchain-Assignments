@@ -1,8 +1,0 @@
-2D matrix with i,j denoting contribution of jth node to longest chain of ith node
-Length of longest chain given at end of each row
-For Node 0:	0	0	0	1	1	1	Length = 3
-For Node 1:	0	0	0	1	1	1	Length = 3
-For Node 2:	0	0	4	1	1	1	Length = 7
-For Node 3:	0	0	0	1	1	1	Length = 3
-For Node 4:	0	0	0	1	1	1	Length = 3
-For Node 5:	0	0	0	1	1	1	Length = 3

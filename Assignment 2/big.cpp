@@ -704,7 +704,7 @@ void Node::receiveBlock(Block *b, double T)
 
             if(is_attacker_selfish)
             {
-                if(b->who_created == node_id)
+                if(b->who_created == node_id) //if the attacker himself is the creator
                 {
                     if(state == -1)         //-1 signifies state 0'
                     {
@@ -823,7 +823,7 @@ void Node::receiveBlock(Block *b, double T)
         {
             if(is_attacker_selfish)
             {
-                if(state == 1 && b->who_created!=node_id)
+                if(state == 1 && b->who_created!=node_id)       //lead of 1 and honest block received, will release all blocks
                 {
                     cout<<"Attacker releases all his blocks!\n";
                     //broadcast attacker blocks that are currently unreleased
@@ -834,7 +834,7 @@ void Node::receiveBlock(Block *b, double T)
                     forked_chain_unreleased.clear();
                     state = -1;
                 }
-                else if(state == 2 && b->who_created!=node_id)
+                else if(state == 2 && b->who_created!=node_id)      //lead of 2 and honest block received, will release all blocks
                 {
                     cout<<"Attacker releases all his blocks!\n";
                     //broadcast attacker blocks that are currently unreleased
@@ -845,17 +845,7 @@ void Node::receiveBlock(Block *b, double T)
                     forked_chain_unreleased.clear();
                     state = 0;
                 }
-                // if(id_blockTreeNode_mapping[b->block_id]->level > longest_chain_head->level - 2) //should cover case 1 and 2 (lead of 1 or 2, and honest node discovers block)
-                // {
-                //     cout<<"Attacker releases all his blocks!\n";
-                //     //broadcast attacker blocks that are currently unreleased
-                //     for(int blck_id : forked_chain_unreleased)
-                //     {
-                //         broadcastBlock(id_block_mapping[blck_id],T);
-                //     }
-                //     forked_chain_unreleased.clear();
-                // }
-                else if(state >= 2 && b->who_created!=node_id)
+                else if(state >= 2 && b->who_created!=node_id)      //lead of >= 2 and honest block recevied, will release 1 block
                 {
                     //broadcast only the first unreleased block (first check if it has any unreleased block)
 
@@ -872,7 +862,7 @@ void Node::receiveBlock(Block *b, double T)
 
             if(is_attacker_stubborn)
             {
-                if(state == 1 && b->who_created!=node_id)
+                if(state == 1 && b->who_created!=node_id)   //lead of 1 and honest received, release all blocks
                 {
                     cout<<"Attacker releases all his blocks!\n";
                     //broadcast attacker blocks that are currently unreleased
@@ -883,7 +873,7 @@ void Node::receiveBlock(Block *b, double T)
                     forked_chain_unreleased.clear();
                     state = -1;
                 }
-                else if(state > 1 && b->who_created!=node_id)
+                else if(state > 1 && b->who_created!=node_id)       //lead of >1 and honest received, release only one block
                 {
                     if(forked_chain_unreleased.size())
                     {   
@@ -1110,20 +1100,20 @@ void generateTreeFiles()
 int main()
 {
     srand((unsigned int)time(NULL));
-    // cout<<"Enter number of nodes: ";
+    cout<<"Enter number of nodes: ";
     int n; // number of nodes
-    // cin>>n; // reading from file
-    n=100;
+    cin>>n; 
+    //n=100;
     adj.resize(n);
     int attacker;
 
-    // cout<<"Enter Attacker Node: ";
-    // cin>>attacker;
-    attacker=0;
+    cout<<"Enter Attacker Node: ";
+    cin>>attacker;
+    //attacker=0;
     double frac_neighbours;
-    // cout<<"Enter what fraction of nodes should be neighbours of attacker: ";
-    // cin>>frac_neighbours;
-    frac_neighbours=0.25;
+    cout<<"Enter what fraction of nodes should be neighbours of attacker: ";
+    cin>>frac_neighbours;
+    //frac_neighbours=0.25;
     vector<int> v1, v2;
     v1.push_back(attacker);
 
@@ -1169,13 +1159,6 @@ int main()
             }
         i++;
     }
-    // for(int i=0;i<n;i++)
-    // {
-    //     if(i!=attacker && adj[i].size()*2.5 < n)
-    //     {
-            
-    //     }
-    // }
 
     //make dense by adding more random edges
     edge_file.close();
@@ -1188,9 +1171,9 @@ int main()
     }
 
     double z;
-    // cout<<"Enter fraction of slow nodes in the network: "<<endl;
-    // cin>>z;
-    z=0.5;
+    cout<<"Enter fraction of slow nodes in the network: "<<endl;
+    cin>>z;
+    //z=0.5;
   
     int frac_slow_nodes = z * n;
     cout<<"Number of slow nodes: "<<frac_slow_nodes<<endl;
@@ -1210,14 +1193,14 @@ int main()
    ///////////////////// differentiate between high and low hashing power/////////////////////////
 
     int invalid_block_nodes;
-//    cout<<"Enter mean interarrival time for transactions: ";
-//    cin>>T_tx;
-    T_tx=10;
+    cout<<"Enter mean interarrival time for transactions: ";
+    cin>>T_tx;
+    //T_tx=10;
 
    
-//    cout<<"Enter mean block mining time: ";
-//    cin>>T_k;
-    T_k=5;
+    cout<<"Enter mean block mining time: ";
+    cin>>T_k;
+    //T_k=5;
 
     
 
@@ -1232,6 +1215,7 @@ int main()
    double alpha=0.4;
    cout<<"Enter hashing power of attacker "<<endl;
    cin>>alpha;
+   
    double rand_hashing_power[n];
    double tot_sum=0;
    double expo=1;
@@ -1252,6 +1236,7 @@ int main()
    }
    cout<<"Total hashing "<<tot_sum<<endl;
    cout<<endl;
+
    for(int i=0;i<n;i++){
 	exponential_distribution<double> node_distr ((100*rand_hashing_power[i]/tot_sum)/(100*T_k));
 	id_node_mapping[i]->hash_percent=(100*rand_hashing_power[i]/tot_sum);
@@ -1305,7 +1290,7 @@ int main()
     runSimulation(); 
     outpFracOfBlocksInLongestChain(n,attacker);   
 
-    // generateTreeFiles();
+    generateTreeFiles();
 
     cout<<"Height of tree "<<id_node_mapping[1]->longest_chain_head->level<<endl;
     cout<<"Mean T_k = "<<T_k<<endl;
