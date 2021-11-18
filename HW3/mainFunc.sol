@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.4;
+pragma solidity ^0.4.25;
 
 
 contract Coin {
@@ -31,8 +31,8 @@ contract Coin {
     // Errors allow you to provide information about
     // why an operation failed. They are returned
     // to the caller of the function.
-    error InsufficientBalance(uint requested, uint available);
-    error PathNotFound(uint user_id1,uint user_id2);
+   //error InsufficientBalance(uint requested, uint available);
+    //error PathNotFound(uint user_id1,uint user_id2);
 
     function AddAdj(uint user_id) public {
 
@@ -42,6 +42,7 @@ contract Coin {
     function registerUser(uint user_id, string memory username) public {
         register[user_id] = username;
         AddAdj(user_id);
+        visited[user_id] = false;
     }
 
     function createAcc(uint user_id_1, uint user_id_2, uint bal1, uint bal2) public {
@@ -53,7 +54,7 @@ contract Coin {
         
     }
 
-    function sendAmount(uint user_id_1, uint user_id_2, uint amount) public {
+    function sendAmount(uint user_id_1, uint user_id_2, uint amount) public returns(bool){
 
         
         uint i = 0;
@@ -62,7 +63,7 @@ contract Coin {
         j = 1;
         while(i!=j)
         {
-            uint ele = queue[i++];
+            uint ele = queue[i];
             i++;
             if(visited[ele])
                 continue;
@@ -91,42 +92,66 @@ contract Coin {
                     path.push(id);
                     id = parent[id];
                 }
+                
+                path.push(user_id_1);
 
-            for(uint k = path.length-1;k>0;k--)
+            for(uint kl = path.length-1;kl>0;kl--)
             {
 
-                joint_balances[path[k]][path[k-1]] -= amount;
-                joint_balances[path[k-1]][path[k]] += amount;
+                joint_balances[path[kl]][path[kl-1]] -= amount;
+                joint_balances[path[kl-1]][path[kl]] += amount;
             
             }
         }
         else
         {
-            revert PathNotFound({
-                    user_id1: user_id_1,
-                    user_id2: user_id_2
-                    });
+            //revert PathNotFound({
+            //        user_id1: user_id_1,
+            //        user_id2: user_id_2
+            //        });
             //raise some objection about no path between id1 and id2 having sufficient balances
+            while(queue.length > 0)
+            {
+                delete queue[queue.length-1];
+                queue.length--;
+            }
+    
+            while(path.length > 0)
+            {
+                delete path[path.length-1];
+                path.length--;
+            }
+    
+            for(uint num=0;num<adj.length;num++)
+            {
+                visited[adj[num].user_id] = false;
+            }
+          
+          return false;
+          
         }
 
 
         //empty queue and path arrays
         while(queue.length > 0)
         {
-            queue.pop();
+            delete queue[queue.length-1];
+            queue.length--;
         }
 
         while(path.length > 0)
         {
-            path.pop();
+            delete path[path.length-1];
+            path.length--;
         }
 
-        for(uint num=0;num<adj.length;num++)
+        for(uint num2=0;num2<adj.length;num2++)
         {
-            visited[adj[num].user_id] = false;
+            visited[adj[num2].user_id] = false;
         }
 
 
+      return true;
 
 
     }
@@ -140,17 +165,19 @@ contract Coin {
             {
                 (adj[user_id_1].neighbours[i], adj[user_id_1].neighbours[leng-1]) = (adj[user_id_1].neighbours[leng-1], adj[user_id_1].neighbours[i]);
                 delete adj[user_id_1].neighbours[leng-1];
+                adj[user_id_1].neighbours.length--;
                 break;
             }
         }
 
         uint leng2 = adj[user_id_2].neighbours.length;
-        for(uint i=0; i<leng2; i++)
+        for(uint x=0; x<leng2; x++)
         {
-            if(adj[user_id_2].neighbours[i] == user_id_1)
+            if(adj[user_id_2].neighbours[x] == user_id_1)
             {
-                (adj[user_id_2].neighbours[i], adj[user_id_2].neighbours[leng2-1]) = (adj[user_id_2].neighbours[leng2-1], adj[user_id_2].neighbours[i]);
+                (adj[user_id_2].neighbours[x], adj[user_id_2].neighbours[leng2-1]) = (adj[user_id_2].neighbours[leng2-1], adj[user_id_2].neighbours[x]);
                 delete adj[user_id_2].neighbours[leng2-1];
+                adj[user_id_2].neighbours.length--;
                 break;
             }
         }
