@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 
 contract Coin {
@@ -17,37 +17,31 @@ contract Coin {
     mapping (uint => string) register;
    
     Adjacency[] adj;
-
-    // Events allow clients to react to specific
-    // contract changes you declare
-    event Sent(address from, address to, uint amount);
-
-    // Constructor code is only run when the contract
-    // is created
+    uint public count;
+    
+    
     constructor() {
     
     }
+    
+    event send(address indexed from, uint count);       //event to return count in logs
+    
 
-    // Errors allow you to provide information about
-    // why an operation failed. They are returned
-    // to the caller of the function.
-   //error InsufficientBalance(uint requested, uint available);
-    //error PathNotFound(uint user_id1,uint user_id2);
-
-    function AddAdj(uint user_id) public {
+    function AddAdj(uint user_id) public {              //adding new user to adjacency list
 
         Adjacency memory a = Adjacency(user_id, new uint[](0));
         adj.push(a);
     }
-    function registerUser(uint user_id, string memory username) public {
+    function registerUser(uint user_id, string memory username) public {        
         register[user_id] = username;
         AddAdj(user_id);
         visited[user_id] = false;
+        
     }
 
     function createAcc(uint user_id_1, uint user_id_2, uint bal1, uint bal2) public {
         
-        adj[user_id_1].neighbours.push(user_id_2);
+        adj[user_id_1].neighbours.push(user_id_2);              //adding u1 to neighbours of u2 and vice versa, also updating balance
         adj[user_id_2].neighbours.push(user_id_1);
         joint_balances[user_id_1][user_id_2] = bal1;
         joint_balances[user_id_2][user_id_1] = bal2;
@@ -61,6 +55,8 @@ contract Coin {
         uint j = 0;
         queue.push(user_id_1);
         j = 1;
+        
+        //running bfs
         while(i!=j)
         {
             uint ele = queue[i];
@@ -85,9 +81,10 @@ contract Coin {
         }
 
         //reconstructing path
+        bool emitted=false;
         if(visited[user_id_2])
         {   uint id = user_id_2;
-            while(id!=user_id_1)
+                while(id!=user_id_1)
                 {
                     path.push(id);
                     id = parent[id];
@@ -105,29 +102,11 @@ contract Coin {
         }
         else
         {
-            //revert PathNotFound({
-            //        user_id1: user_id_1,
-            //        user_id2: user_id_2
-            //        });
-            //raise some objection about no path between id1 and id2 having sufficient balances
-            while(queue.length > 0)
-            {
-                delete queue[queue.length-1];
-                queue.length--;
-            }
-    
-            while(path.length > 0)
-            {
-                delete path[path.length-1];
-                path.length--;
-            }
-    
-            for(uint num=0;num<adj.length;num++)
-            {
-                visited[adj[num].user_id] = false;
-            }
+            
+          emit send(msg.sender, 0);
+          emitted=true;
+        //   return false;         //transaction not successful
           
-          return false;
           
         }
 
@@ -150,41 +129,32 @@ contract Coin {
             visited[adj[num2].user_id] = false;
         }
 
+      count++;              //transaction was successful so count updated
+      if(emitted){
+          
+      }
+      else{
+           emit send(msg.sender, 1);
+      }
+     
 
-      return true;
+    //   return true;
+      
+
+        
+    }
 
 
+    
+
+    function getCount() public {
+        emit send(msg.sender, count);
     }
 
     function closeAccount(uint user_id_1, uint user_id_2) public {
 
-        uint leng = adj[user_id_1].neighbours.length;
-        for(uint i=0; i<leng; i++)
-        {
-            if(adj[user_id_1].neighbours[i] == user_id_2)
-            {
-                (adj[user_id_1].neighbours[i], adj[user_id_1].neighbours[leng-1]) = (adj[user_id_1].neighbours[leng-1], adj[user_id_1].neighbours[i]);
-                delete adj[user_id_1].neighbours[leng-1];
-                adj[user_id_1].neighbours.length--;
-                break;
-            }
-        }
-
-        uint leng2 = adj[user_id_2].neighbours.length;
-        for(uint x=0; x<leng2; x++)
-        {
-            if(adj[user_id_2].neighbours[x] == user_id_1)
-            {
-                (adj[user_id_2].neighbours[x], adj[user_id_2].neighbours[leng2-1]) = (adj[user_id_2].neighbours[leng2-1], adj[user_id_2].neighbours[x]);
-                delete adj[user_id_2].neighbours[leng2-1];
-                adj[user_id_2].neighbours.length--;
-                break;
-            }
-        }
-
         joint_balances[user_id_1][user_id_2] = 0;
         joint_balances[user_id_2][user_id_1] = 0;
-
         
     }
 }
